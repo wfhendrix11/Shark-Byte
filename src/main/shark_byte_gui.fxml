@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="912.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <tabs>
+    <Tab closable="false" text="Home">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Button layoutX="793.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" text="Manage Account" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <PieChart layoutX="381.0" layoutY="25.0" prefHeight="266.0" prefWidth="243.0" />
+                  <PieChart layoutX="624.0" layoutY="25.0" prefHeight="266.0" prefWidth="243.0" />
+                  <LineChart layoutX="451.0" layoutY="305.0" prefHeight="306.0" prefWidth="462.0">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+                  <TableView layoutX="14.0" layoutY="291.0" prefHeight="306.0" prefWidth="450.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+                    <columns>
+                      <TableColumn prefWidth="103.0" text="Date" />
+                      <TableColumn prefWidth="169.0" text="Merchant" />
+                        <TableColumn prefWidth="163.0" text="Amount" />
+                    </columns>
+                  </TableView>
+                  <Text layoutX="131.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recent Transactions" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab closable="false" text="Transactions">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <DatePicker layoutY="34.0" prefHeight="25.0" prefWidth="125.0" promptText="Date" AnchorPane.leftAnchor="0.0" />
+                  <TextField layoutX="126.0" layoutY="34.0" prefHeight="25.0" prefWidth="163.0" promptText="Amount" />
+                  <ChoiceBox layoutX="289.0" layoutY="34.0" prefHeight="25.0" prefWidth="201.0" />
+                  <ChoiceBox layoutX="490.0" layoutY="34.0" prefHeight="25.0" prefWidth="217.0" />
+                  <RadioButton layoutX="722.0" layoutY="38.0" mnemonicParsing="false" text="Recurring" />
+                  <Button layoutX="801.0" layoutY="34.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Enter Transaction" AnchorPane.rightAnchor="0.0" />
+                  <TableView layoutY="112.0" prefHeight="499.0" prefWidth="912.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <columns>
+                      <TableColumn prefWidth="125.0" text="Date" />
+                      <TableColumn prefWidth="126.0" text="Merchant" />
+                        <TableColumn prefWidth="124.0" text="Amount" />
+                        <TableColumn prefWidth="170.0" text="Bank Account" />
+                        <TableColumn prefWidth="165.0" text="Label" />
+                        <TableColumn prefWidth="201.0" text="Perpetuality" />
+                    </columns>
+                  </TableView>
+                  <ChoiceBox layoutX="2.0" layoutY="87.0" prefHeight="25.0" prefWidth="126.0" AnchorPane.leftAnchor="0.0" />
+                  <Text layoutX="1.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="  Filter By..." wrappingWidth="122.962890625" />
+                  <Text layoutX="8.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Transaction:" />
+                  <Text layoutX="423.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Transactions">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <ChoiceBox layoutX="126.0" layoutY="87.0" prefHeight="25.0" prefWidth="125.0" />
+                  <ChoiceBox layoutX="251.0" layoutY="87.0" prefHeight="25.0" prefWidth="125.0" />
+                  <ChoiceBox layoutX="376.0" layoutY="87.0" prefHeight="25.0" prefWidth="170.0" />
+                  <ChoiceBox layoutX="545.0" layoutY="87.0" prefHeight="25.0" prefWidth="164.0" />
+                  <ChoiceBox layoutX="709.0" layoutY="87.0" prefHeight="25.0" prefWidth="203.0" AnchorPane.rightAnchor="0.0" />
+                  <Button layoutX="546.0" layoutY="63.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" text="Add new label" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab closable="false" text="Bank Accounts">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Text layoutX="396.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bank Accounts" />
+                  <VBox layoutX="195.0" layoutY="74.0" prefHeight="200.0" prefWidth="100.0" />
+                  <Button layoutX="507.0" layoutY="10.0" mnemonicParsing="false" text="Add Bank Account" />
+                  <VBox layoutY="74.0" prefHeight="540.0" prefWidth="912.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <LineChart layoutX="462.0" prefHeight="268.0" prefWidth="450.0" title="Value" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                <xAxis>
+                                  <CategoryAxis side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis side="LEFT" />
+                                </yAxis>
+                              </LineChart>
+                              <GridPane layoutX="1.0" prefHeight="29.0" prefWidth="474.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="60.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="55.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Account Name" textAlignment="CENTER" wrappingWidth="233.486328125" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Balance" textAlignment="CENTER" wrappingWidth="234.60546875" GridPane.columnIndex="1" />
+                                 </children>
+                              </GridPane>
+                              <TableView layoutX="1.0" layoutY="34.0" prefHeight="233.0" prefWidth="473.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+                                <columns>
+                                  <TableColumn prefWidth="130.0" text="Date" />
+                                  <TableColumn prefWidth="172.0" text="Amount" />
+                                    <TableColumn prefWidth="170.0" text="Label" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <LineChart layoutX="462.0" prefHeight="268.0" prefWidth="450.0" title="Value" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                 <xAxis>
+                                    <CategoryAxis side="BOTTOM" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis side="LEFT" />
+                                 </yAxis>
+                              </LineChart>
+                              <GridPane layoutX="1.0" prefHeight="29.0" prefWidth="474.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Account Name" textAlignment="CENTER" wrappingWidth="233.486328125" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Balance" textAlignment="CENTER" wrappingWidth="234.60546875" GridPane.columnIndex="1" />
+                                 </children>
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="60.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="55.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                              </GridPane>
+                              <TableView layoutX="1.0" layoutY="34.0" prefHeight="233.0" prefWidth="473.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+                                 <columns>
+                                    <TableColumn prefWidth="130.0" text="Date" />
+                                    <TableColumn prefWidth="172.0" text="Amount" />
+                                    <TableColumn prefWidth="170.0" text="Label" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+               </children></AnchorPane>
+        </content>
+      </Tab>
+      <Tab closable="false" text="Budgets">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <PieChart layoutY="100.0" prefHeight="313.0" prefWidth="455.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="100.0" />
+                  <PieChart layoutX="456.0" layoutY="100.0" prefHeight="312.0" prefWidth="455.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="100.0" />
+                  <Button layoutX="414.0" layoutY="46.0" mnemonicParsing="false" text="New Budget" />
+                  <TableView layoutX="8.0" layoutY="411.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <columns>
+                      <TableColumn prefWidth="287.0" text="Spending Category" />
+                      <TableColumn minWidth="0.0" prefWidth="318.0" text="Spending Amount" />
+                        <TableColumn minWidth="0.0" prefWidth="306.0" text="Budget Amount" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
+        </content>
+      </Tab>
+      <Tab closable="false" text="Investments">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
+      <Tab closable="false" text="Bank Accounts Testing">
+         <content>
+            <ListView prefHeight="200.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>
