@@ -101,7 +101,41 @@
                <children>
                   <Text layoutX="396.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bank Accounts" />
                   <Button layoutX="507.0" layoutY="10.0" mnemonicParsing="false" text="Add Bank Account" />
-                  <ListView layoutX="45.0" layoutY="164.0" prefHeight="440.0" prefWidth="564.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <GridPane layoutX="14.0" layoutY="125.0" prefHeight="480.0" prefWidth="883.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="480.0" minHeight="10.0" prefHeight="480.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="152.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="57.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <LineChart title="Account Value" GridPane.columnIndex="1">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <Text layoutX="68.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account Name" />
+                              <Text layoutX="244.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Balance: $00000" wrappingWidth="107.306640625" />
+                              <TableView layoutY="51.0" prefHeight="427.0" prefWidth="441.0">
+                                <columns>
+                                  <TableColumn prefWidth="147.0" text="Date" />
+                                  <TableColumn minWidth="3.0" prefWidth="152.0" text="Amount" />
+                                    <TableColumn minWidth="3.0" prefWidth="141.0" text="Label" />
+                                </columns>
+                              </TableView>
+                              <Text layoutX="167.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Transactions" textAlignment="CENTER" wrappingWidth="107.306640625" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </GridPane>
                </children></AnchorPane>
         </content>
       </Tab>
