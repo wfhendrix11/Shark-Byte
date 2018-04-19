@@ -13,10 +13,10 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Button layoutX="793.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" text="Manage Account" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <PieChart layoutX="381.0" layoutY="25.0" prefHeight="266.0" prefWidth="243.0" />
-                  <PieChart layoutX="624.0" layoutY="25.0" prefHeight="266.0" prefWidth="243.0" />
-                  <LineChart layoutX="451.0" layoutY="305.0" prefHeight="306.0" prefWidth="462.0">
+                  <Button fx:id="ManageAccountButton" layoutX="793.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" text="Manage Account" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <PieChart layoutX="374.0" layoutY="25.0" prefHeight="266.0" prefWidth="243.0" title="This Month's Spending" />
+                  <PieChart layoutX="624.0" layoutY="25.0" prefHeight="266.0" prefWidth="243.0" title="This Month's Budget" />
+                  <LineChart layoutX="451.0" layoutY="305.0" prefHeight="306.0" prefWidth="462.0" title="Investments Value">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -31,7 +31,7 @@
                         <TableColumn prefWidth="163.0" text="Amount" />
                     </columns>
                   </TableView>
-                  <Text layoutX="131.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recent Transactions" />
+                  <Text layoutX="129.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recent Transactions" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -72,29 +72,6 @@
                </children></AnchorPane>
       </content>
     </Tab>
-      <Tab closable="false" text="Budgets">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <PieChart layoutY="100.0" prefHeight="313.0" prefWidth="303.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="100.0" />
-                  <PieChart layoutX="317.0" layoutY="101.0" prefHeight="312.0" prefWidth="310.0" AnchorPane.rightAnchor="303.0" AnchorPane.topAnchor="101.0" />
-                  <Button layoutX="414.0" layoutY="46.0" mnemonicParsing="false" text="New Budget" />
-                  <TableView layoutX="8.0" layoutY="411.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                    <columns>
-                      <TableColumn prefWidth="287.0" text="Spending Category" />
-                      <TableColumn minWidth="0.0" prefWidth="318.0" text="Spending Amount" />
-                        <TableColumn minWidth="0.0" prefWidth="306.0" text="Budget Amount" />
-                    </columns>
-                  </TableView>
-                  <PieChart layoutX="612.0" layoutY="101.0" prefHeight="312.0" prefWidth="292.0" />
-               </children></AnchorPane>
-        </content>
-      </Tab>
-      <Tab closable="false" text="Investments">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-        </content>
-      </Tab>
       <Tab closable="false" text="Bank Accounts">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -139,10 +116,57 @@
                </children></AnchorPane>
         </content>
       </Tab>
-      <Tab closable="false" text="Bank Accounts Testing">
-         <content>
-            <ListView prefHeight="200.0" prefWidth="200.0" />
-         </content>
+      <Tab closable="false" text="Budgets">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <PieChart layoutX="93.0" layoutY="101.0" prefHeight="313.0" prefWidth="303.0" title="This Month's Spending" AnchorPane.leftAnchor="93.0" AnchorPane.topAnchor="101.0" />
+                  <PieChart layoutX="496.0" layoutY="101.0" prefHeight="312.0" prefWidth="310.0" title="This Month's Budget" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="101.0" />
+                  <Button layoutX="414.0" layoutY="46.0" mnemonicParsing="false" text="New Budget" />
+                  <TableView layoutX="8.0" layoutY="411.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <columns>
+                      <TableColumn prefWidth="287.0" text="Spending Category" />
+                      <TableColumn minWidth="0.0" prefWidth="318.0" text="Spending Amount" />
+                        <TableColumn minWidth="0.0" prefWidth="306.0" text="Budget Amount" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
+        </content>
+      </Tab>
+      <Tab closable="false" text="Investments">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Text layoutX="129.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Favorites" />
+                  <TextField layoutX="14.0" layoutY="66.0" prefHeight="25.0" prefWidth="90.0" text="Symbol..." />
+                  <TableView layoutX="17.0" layoutY="146.0" prefHeight="450.0" prefWidth="272.0">
+                    <columns>
+                      <TableColumn prefWidth="136.0" text="Symbol" />
+                        <TableColumn prefWidth="135.0" text="Price" />
+                    </columns>
+                  </TableView>
+                  <Text layoutX="104.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stock/Cypto Lookup" />
+                  <ComboBox layoutX="103.0" layoutY="66.0" prefHeight="25.0" prefWidth="109.0" />
+                  <Button layoutX="212.0" layoutY="66.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="Search" />
+                  <LineChart layoutX="349.0" layoutY="66.0" prefHeight="180.0" prefWidth="528.0" title="Portfolio Value">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+                  <TableView layoutX="349.0" layoutY="279.0" prefHeight="336.0" prefWidth="539.0">
+                    <columns>
+                      <TableColumn prefWidth="125.0" text="Asset" />
+                      <TableColumn prefWidth="128.0" text="Amount" />
+                        <TableColumn prefWidth="134.0" text="Unit Price" />
+                        <TableColumn prefWidth="151.0" text="Total Value" />
+                    </columns>
+                  </TableView>
+                  <Text layoutX="587.0" layoutY="259.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Portfolio" wrappingWidth="71.62109375" />
+               </children></AnchorPane>
+        </content>
       </Tab>
   </tabs>
 </TabPane>
