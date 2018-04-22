@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="manageAccountPage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="355.0" prefWidth="295.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="changeUsernameButton" layoutX="61.0" layoutY="73.0" mnemonicParsing="false" onAction="#initChangeUsername" prefHeight="25.0" prefWidth="177.0" text="Change Username" />
+      <Button fx:id="changePasswordButton" layoutX="61.0" layoutY="146.0" mnemonicParsing="false" onAction="#initChangePassword" prefHeight="25.0" prefWidth="177.0" text="Change Password" />
+      <Button fx:id="deleteAccountButton" layoutX="61.0" layoutY="217.0" mnemonicParsing="false" onAction="#initDeleteAccount" prefHeight="25.0" prefWidth="177.0" text="Delete Account" />
+   </children>
+</AnchorPane>

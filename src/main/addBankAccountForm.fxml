@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane fx:id="newBankAccountForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="352.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField fx:id="bankAccountNameField" layoutX="102.0" layoutY="73.0" promptText="Account Name" />
+      <ChoiceBox fx:id="bankAccountTypeChoiceBox" layoutX="101.0" layoutY="130.0" prefWidth="150.0" />
+      <TextField fx:id="initalBalanceField" layoutX="102.0" layoutY="188.0" promptText="Initial Balance" />
+      <TextField fx:id="interestRateField" layoutX="102.0" layoutY="247.0" promptText="Interest Rate" />
+      <Button fx:id="createBankAccountButton" layoutX="102.0" layoutY="315.0" mnemonicParsing="false" onAction="#createBankAccount" prefHeight="25.0" prefWidth="149.0" text="Create Bank Account" />
+   </children>
+</AnchorPane>

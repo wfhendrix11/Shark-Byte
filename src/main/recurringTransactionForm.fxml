@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="recurringTransactionForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="433.0" prefWidth="285.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <CheckBox fx:id="perpetualCheckbox" layoutX="104.0" layoutY="86.0" mnemonicParsing="false" onAction="#togglePerpetual" text="Perpetual?" />
+      <TextField fx:id="intervalField" layoutX="68.0" layoutY="148.0" promptText="Interval (in days)" />
+      <TextField fx:id="numberOfOccurrenceField" layoutX="68.0" layoutY="225.0" promptText="Number of Occurrences" />
+      <Button fx:id="enterTransactionButton" layoutX="89.0" layoutY="316.0" mnemonicParsing="false" onAction="#enterRecurringTransaction" text="Enter Transaction" />
+   </children>
+</AnchorPane>

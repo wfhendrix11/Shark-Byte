@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane fx:id="investmentSearchResults" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="188.0" prefWidth="223.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text fx:id="symbolText" layoutX="92.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Symbol" />
+      <Text fx:id="currentPriceText" layoutX="99.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price" />
+      <Text fx:id="dailyChangeText" layoutX="74.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="24 Hr. Change" />
+      <Text fx:id="weeklyChangeText" layoutX="75.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7 Day Change" />
+   </children>
+</AnchorPane>

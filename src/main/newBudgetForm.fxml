@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane fx:id="newBudgetForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="314.0" prefWidth="245.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ChoiceBox fx:id="monthPickerChoiceBox" layoutX="48.0" layoutY="57.0" prefWidth="150.0" />
+      <TextField fx:id="yearField" layoutX="48.0" layoutY="132.0" promptText="Year" />
+      <Button fx:id="cerateBudgetButton" layoutX="77.0" layoutY="196.0" mnemonicParsing="false" onAction="#createNewBudget" text="Create Budget" />
+   </children>
+</AnchorPane>

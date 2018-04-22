@@ -10,7 +10,7 @@
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="912.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <tabs>
-    <Tab closable="false" text="Home">
+    <Tab fx:id="homeTab" closable="false" onSelectionChanged="#homeTabChanged" text="Home">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -36,7 +36,7 @@
                </children></AnchorPane>
       </content>
     </Tab>
-    <Tab closable="false" text="Transactions">
+    <Tab fx:id="transactionTab" closable="false" onSelectionChanged="#transactionTabChanged" text="Transactions">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -74,7 +74,7 @@
                </children></AnchorPane>
       </content>
     </Tab>
-      <Tab closable="false" text="Bank Accounts">
+      <Tab fx:id="bankAccountTab" closable="false" onSelectionChanged="#bankAccountTabChanged" text="Bank Accounts">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -118,7 +118,7 @@
                </children></AnchorPane>
         </content>
       </Tab>
-      <Tab closable="false" text="Budgets">
+      <Tab fx:id="budgetsTab" closable="false" onSelectionChanged="#budgetsTabChanged" text="Budgets">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -135,7 +135,7 @@
                </children></AnchorPane>
         </content>
       </Tab>
-      <Tab closable="false" text="Investments">
+      <Tab fx:id="investmentsTab" closable="false" onSelectionChanged="#investmentsTabChanged" text="Investments">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>

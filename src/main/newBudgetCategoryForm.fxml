@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane fx:id="newCategoryForm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="297.0" prefWidth="228.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ChoiceBox fx:id="labelPicker" layoutX="39.0" layoutY="48.0" prefWidth="150.0" />
+      <TextField fx:id="categoryNameField" layoutX="40.0" layoutY="116.0" />
+      <TextField fx:id="categoryAmountField" layoutX="40.0" layoutY="173.0" />
+      <Button fx:id="createCategoryButton" layoutX="64.0" layoutY="233.0" mnemonicParsing="false" onAction="#createCategory" text="Create Category" />
+   </children>
+</AnchorPane>
