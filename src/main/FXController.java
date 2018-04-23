@@ -3,6 +3,7 @@ package main;
  * Sample Skeleton for 'shark_byte_gui.fxml' Controller Class
  */
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
@@ -219,7 +220,7 @@ public class FXController {
     private Text accountBalance; // Value injected by FXMLLoader
 
     @FXML
-    void homeTabChanged(ActionEvent event) {
+    void homeTabChanged(Event event) {
 
     }
 
@@ -229,7 +230,7 @@ public class FXController {
     }
 
     @FXML
-    void transactionTabChanged(ActionEvent event) {
+    void transactionTabChanged(Event event) {
 
     }
 
@@ -274,7 +275,7 @@ public class FXController {
     }
 
     @FXML
-    void bankAccountTabChanged(ActionEvent event) {
+    void bankAccountTabChanged(Event event) {
 
     }
 
@@ -284,7 +285,7 @@ public class FXController {
     }
 
     @FXML
-    void budgetsTabChanged(ActionEvent event) {
+    void budgetsTabChanged(Event event) {
 
     }
 
@@ -294,7 +295,7 @@ public class FXController {
     }
 
     @FXML
-    void investmentsTabChanged(ActionEvent event) {
+    void investmentsTabChanged(Event event) {
 
     }
 
