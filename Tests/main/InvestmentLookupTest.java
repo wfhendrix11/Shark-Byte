@@ -9,14 +9,16 @@ public class InvestmentLookupTest {
     @Test
     public void lookupStockDaily() {
         InvestmentLookup lookup = new  InvestmentLookup();
-        lookup.lookupStockDaily("TSLA");
+        String result = lookup.lookupStockDaily("TSLA");
+        System.out.print(result);
         assert(true);
     }
 
     @Test
     public void lookupCryptoDaily() {
         InvestmentLookup lookup = new  InvestmentLookup();
-        lookup.lookupCryptoDaily("ETH");
+        String result = lookup.lookupCryptoDaily("ETH");
+        System.out.print(result);
         assert(true);
     }
 

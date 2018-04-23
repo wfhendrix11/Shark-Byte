@@ -16,7 +16,10 @@ public class InvestmentLookup {
     }
 
 
-    public void lookupStockDaily(String symbol){
+    public static String lookupStockDaily(String symbol){
+
+        String searchResult = "";
+
         try {
             URL url = new URL("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol="
                     + symbol + "&apikey=4CBI4YYCQ46VPK7I");
@@ -36,17 +39,20 @@ public class InvestmentLookup {
             in.close();
             con.disconnect();
 
-            System.out.print(content);
+            searchResult = content.toString();
         } catch (MalformedURLException urlException) {
 
         } catch (IOException ioException) {
 
         }
 
-
+        return searchResult;
     }
 
-    public void lookupCryptoDaily(String symbol){
+    public static String lookupCryptoDaily(String symbol){
+
+        String searchResult = "";
+
         try {
             URL url = new URL("https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol="
                     + symbol + "&market=USD&apikey=4CBI4YYCQ46VPK7I");
@@ -65,12 +71,13 @@ public class InvestmentLookup {
             }
             in.close();
             con.disconnect();
+            searchResult = content.toString();
 
-            System.out.print(content);
         } catch (MalformedURLException urlException) {
 
         } catch (IOException ioException) {
 
         }
+        return searchResult;
     }
 }

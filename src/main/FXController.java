@@ -16,7 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import java.awt.event.ActionEvent;
+import javafx.event.ActionEvent;
 
 public class FXController {
 
