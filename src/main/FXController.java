@@ -16,6 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import java.awt.event.ActionEvent;
 
 public class FXController {
 
@@ -297,10 +298,6 @@ public class FXController {
 
     }
 
-    @FXML
-    void 1f93ff00(ActionEvent event) {
-
-    }
 
     @FXML
     void searchAsset(ActionEvent event) {
