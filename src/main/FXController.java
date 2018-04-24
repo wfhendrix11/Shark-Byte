@@ -247,6 +247,7 @@ public class FXController {
     @FXML
     void transactionTabChanged(Event event) {
         updateTransactionLabels();
+        updateTransactionBankAccounts();
     }
 
     @FXML
@@ -256,6 +257,7 @@ public class FXController {
         // transactionMerchantField
         // transactionAmountField
         // transactionDatePicker
+
     }
 
     @FXML
