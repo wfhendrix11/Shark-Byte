@@ -40,4 +40,16 @@ public class DatabaseConnector {
         accounts.add(new BankAccount("Account2"));
         return accounts;
     }
+
+    public int getNextTransactionId() {
+        return 0;
+    }
+
+    public void insertTransaction(Transaction transaction) {
+        System.out.println("Transaction inserted");
+    }
+
+    public void insertRecurringTransaction(RecurringTransaction recurringTransaction) {
+        System.out.println("RecurringTransaction inserted");
+    }
 }

@@ -28,6 +28,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class FXController {
@@ -289,7 +290,74 @@ public class FXController {
         // transactionMerchantField
         // transactionAmountField
         // transactionDatePicker
+        DatabaseConnector db = new DatabaseConnector();
 
+        LocalDate date = transactionDatePicker.getValue();
+        String merchant = transactionMerchantField.getText();
+        double amount = Double.parseDouble(transactionAmountField.getText());
+        int id = db.getNextTransactionId();
+        String label = transactionLabelChoiceBox.getValue().toString();
+        String account = transactionBankAccountChoiceBox.getValue().toString();
+
+        // recurring transaction
+        if (recurringRadio.isSelected()) {
+            // TODO Lawrence working on this
+            Node source = (Node) event.getSource();
+            Window theStage = source.getScene().getWindow();
+
+            final Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.initOwner(theStage);
+            dialog.setTitle("Add Recurring Transaction");
+            VBox dialogVbox = new VBox(20);
+
+            Text intervalPrompt = new Text("Interval in days: ");
+
+            TextField intervalField = new TextField();
+            intervalField.setPromptText("Interval");
+
+            Text executionsPromprt = new Text("Number of executions: ");
+
+            TextField executionsField = new TextField();
+            intervalField.setPromptText("Executions");
+
+            RadioButton perpetualRadio = new RadioButton();
+            perpetualRadio.setText("Perpetual");
+
+            Button submitButton = new Button();
+            submitButton.setText("Submit");
+
+            EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    boolean perpetual = perpetualRadio.isSelected();
+                    int interval = Integer.parseInt(intervalField.getText());
+                    int executions = Integer.parseInt(executionsField.getText());
+
+                    RecurringTransaction recurringTransaction =
+                            new RecurringTransaction(date, amount, label, id, merchant, account, interval, executions, perpetual);
+                    db.insertRecurringTransaction(recurringTransaction);
+                    dialog.close();
+                }
+            };
+
+            submitButton.setOnAction(handler);
+
+            dialogVbox.getChildren().add(intervalPrompt);
+            dialogVbox.getChildren().add(intervalField);
+            dialogVbox.getChildren().add(executionsPromprt);
+            dialogVbox.getChildren().add(executionsField);
+            dialogVbox.getChildren().add(perpetualRadio);
+            dialogVbox.getChildren().add(submitButton);
+            Scene dialogScene = new Scene(dialogVbox, 300, 300);
+            dialog.setScene(dialogScene);
+            dialog.show();
+        }
+        // transaction
+        else {
+            Transaction transaction = new Transaction(date, amount, label, id, merchant, account);
+            db.insertTransaction(transaction);
+        }
     }
 
     @FXML
