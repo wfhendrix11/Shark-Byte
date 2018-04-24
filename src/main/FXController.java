@@ -239,13 +239,36 @@ public class FXController {
     void manageAccount(ActionEvent event) {
         Node source = (Node) event.getSource();
         Window theStage = source.getScene().getWindow();
-        final Stage dialog = new Stage();
 
+        final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(theStage);
+        dialog.setTitle("Manage Account");
         VBox dialogVbox = new VBox(20);
-        dialogVbox.getChildren().add(new Text("Manage Account"));
-        Scene dialogScene = new Scene(dialogVbox, 900, 600);
+
+        TextField labelField = new TextField();
+        labelField.setPromptText("Password");
+
+        Button submitButton = new Button();
+        submitButton.setText("Submit");
+
+        EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DatabaseConnector db = new DatabaseConnector();
+                String text = labelField.getCharacters().toString();
+
+                // ADD USERNAME TO DATABASE
+                db.replacePassword(text);
+                dialog.close();
+            }
+        };
+
+        submitButton.setOnAction(handler);
+
+        dialogVbox.getChildren().add(labelField);
+        dialogVbox.getChildren().add(submitButton);
+        Scene dialogScene = new Scene(dialogVbox, 400, 600);
         dialog.setScene(dialogScene);
         dialog.show();
     }

@@ -23,4 +23,9 @@ public class DatabaseConnector {
 
         return labels;
     }
+
+    public void replacePassword(String password) {
+        // Add code to change password in the database
+        System.out.print("Password Changed!");
+    }
 }
