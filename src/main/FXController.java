@@ -361,36 +361,6 @@ public class FXController {
     }
 
     @FXML
-    void filterDateClicked(ActionEvent event) {
-
-    }
-
-    @FXML
-    void filterMerchantClicked(ActionEvent event) {
-
-    }
-
-    @FXML
-    void filterAmountClicked(ActionEvent event) {
-
-    }
-
-    @FXML
-    void filterAccountClicked(ActionEvent event) {
-
-    }
-
-    @FXML
-    void filterLabelClicked(ActionEvent event) {
-
-    }
-
-    @FXML
-    void filterPerpetualClicked(ActionEvent event) {
-
-    }
-
-    @FXML
     void addNewLabel(ActionEvent event) {
         // TODO Lawrence working on this
         Node source = (Node) event.getSource();
