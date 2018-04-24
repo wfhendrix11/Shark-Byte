@@ -236,7 +236,9 @@ public class FXController {
 
     @FXML
     void enterTransaction(ActionEvent event) {
-
+        int first = 9;
+        int second = 11;
+        int added = first + second;
     }
 
     @FXML
@@ -307,7 +309,7 @@ public class FXController {
 
     @FXML
     void investmentTypeClicked(ActionEvent event) {
-        
+
     }
 
     @FXML
