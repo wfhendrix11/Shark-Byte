@@ -15,4 +15,8 @@ public class Crypto extends Investment {
     public double getNumberOwned(){
         return numberOwned;
     }
+
+    public String toString(){
+        return (getName() + "\nNumber owned: " + getNumberOwned());
+    }
 }

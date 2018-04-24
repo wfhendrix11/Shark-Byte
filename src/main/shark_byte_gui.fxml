@@ -170,10 +170,15 @@
                   <Text layoutX="583.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Portfolio" wrappingWidth="71.62109375" />
                   <TextField fx:id="newInvestmentSymbolField" layoutX="382.0" layoutY="66.0" promptText="Symbol/Name" />
                   <Text layoutX="569.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Record Investment" />
-                  <ChoiceBox fx:id="newInvestmentTypeChoiceBox" layoutX="557.0" layoutY="66.0" onMouseClicked="#investmentTypeClicked" prefHeight="25.0" prefWidth="134.0" />
-                  <TextField fx:id="newInvestmentQtyField" layoutX="715.0" layoutY="66.0" promptText="Quantity" />
-                  <TextField fx:id="newInvestmentPriceField" layoutX="475.0" layoutY="98.0" promptText="Price (if custom)" />
-                  <Button fx:id="recordInvestmentButton" layoutX="646.0" layoutY="98.0" mnemonicParsing="false" onAction="#recordInvestment" prefHeight="25.0" prefWidth="120.0" text="Record Investment" />
+                  <ChoiceBox fx:id="newInvestmentTypeChoiceBox" layoutX="557.0" layoutY="66.0" prefHeight="25.0" prefWidth="134.0" />
+                  <TextField fx:id="newInvestmentQtyField" layoutX="715.0" layoutY="66.0" promptText="Quantity (if NOT custom)" />
+                  <TextField fx:id="newInvestmentPriceField" layoutX="382.0" layoutY="98.0" promptText="Price (if custom)" />
+                  <Button fx:id="recordInvestmentButton" layoutX="716.0" layoutY="98.0" mnemonicParsing="false" onAction="#recordInvestment" prefHeight="25.0" prefWidth="151.0" text="Record Investment" />
+                  <TextField fx:id="newInvestmentInterestRateField" layoutX="557.0" layoutY="98.0" prefHeight="25.0" prefWidth="134.0" promptText="Interest Rate (if custom)">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </TextField>
                </children></AnchorPane>
         </content>
       </Tab>

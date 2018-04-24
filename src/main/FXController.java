@@ -102,6 +102,9 @@ public class FXController {
     @FXML // fx:id="newInvestmentQtyField"
     private TextField newInvestmentQtyField; // Value injected by FXMLLoader
 
+    @FXML // fx:id="newInvestmentInterestRateField"
+    private TextField newInvestmentInterestRateField; //Value injected by FXMLLoader
+
     @FXML // fx:id="transactionAmountField"
     private TextField transactionAmountField; // Value injected by FXMLLoader
 
@@ -357,6 +360,7 @@ public class FXController {
     @FXML
     void investmentsTabChanged(Event event) {
         populateAssetTypeChoiceBox();
+        populateNewInvestmentTypeChoiceBox();
     }
 
 
@@ -413,13 +417,31 @@ public class FXController {
     }
 
     @FXML
-    void investmentTypeClicked(ActionEvent event) {
-
-    }
-
-    @FXML
     void recordInvestment(ActionEvent event) {
-
+        switch(newInvestmentTypeChoiceBox.getValue().toString()){
+            case "Stock":
+                String stockName = newInvestmentSymbolField.getText();
+                int sharesOwned = Integer.parseInt(newInvestmentQtyField.getText());
+                Stock stockToRecord = new Stock(stockName, sharesOwned);
+                System.out.print(stockToRecord);
+                //TODO: send stock to database
+                break;
+            case "Crypto":
+                String cryptoName = newInvestmentSymbolField.getText();
+                double numberOwned = Double.parseDouble(newInvestmentQtyField.getText());
+                Crypto cryptoToRecord = new Crypto(cryptoName, numberOwned);
+                System.out.print(cryptoToRecord);
+                //TODO: send crypto to database
+                break;
+            case "Custom":
+                String assetName = newInvestmentSymbolField.getText();
+                double price = Double.parseDouble(newInvestmentPriceField.getText());
+                double interestRate = Double.parseDouble(newInvestmentInterestRateField.getText());
+                CustomAsset assetToRecord = new CustomAsset(assetName,interestRate, price);
+                System.out.print(assetToRecord);
+                //TODO: send asset to database
+                break;
+        }
     }
 
     void updateTransactionLabels() {
@@ -436,6 +458,7 @@ public class FXController {
         transactionLabelChoiceBox.getSelectionModel().selectFirst();
     }
 
+    //Fills contents of choice box for searching investments
     void populateAssetTypeChoiceBox(){
         ObservableList assetTypes = FXCollections.observableArrayList();
         assetTypes.add("Stock");
@@ -457,4 +480,13 @@ public class FXController {
         transactionBankAccountChoiceBox.getSelectionModel().selectFirst();
     }
 
+    //Fills contents of choice box for recording investments
+    void populateNewInvestmentTypeChoiceBox(){
+        ObservableList assetTypes = FXCollections.observableArrayList();
+        assetTypes.add("Stock");
+        assetTypes.add("Crypto");
+        assetTypes.add("Custom");
+        newInvestmentTypeChoiceBox.setItems(assetTypes);
+        newInvestmentTypeChoiceBox.getSelectionModel().selectFirst();
+    }
 }

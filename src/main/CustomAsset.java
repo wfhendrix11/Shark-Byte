@@ -25,4 +25,8 @@ public class CustomAsset extends Investment {
     public double getCurrentValue(){
         return currentValue;
     }
+
+    public String toString(){
+        return (getName() + "\nPrice: " + getCurrentValue() + "\nInterest Rate: " + getInterestRate());
+    }
 }

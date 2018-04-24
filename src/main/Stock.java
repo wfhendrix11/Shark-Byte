@@ -16,4 +16,8 @@ public class Stock extends Investment {
     public int getNumberOfShares(){
         return numberOfShares;
     }
+
+    public String toString(){
+        return (getName() + "\nNumber of shares: " + getNumberOfShares());
+    }
 }
