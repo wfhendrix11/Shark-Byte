@@ -24,7 +24,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
-import javafx.collections.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -236,12 +235,45 @@ public class FXController {
 
     @FXML
     void homeTabChanged(Event event) {
-        int x = 3 +2;
+
     }
 
     @FXML
     void manageAccount(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Window theStage = source.getScene().getWindow();
 
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(theStage);
+        dialog.setTitle("Manage Account");
+        VBox dialogVbox = new VBox(20);
+
+        TextField labelField = new TextField();
+        labelField.setPromptText("Password");
+
+        Button submitButton = new Button();
+        submitButton.setText("Submit");
+
+        EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DatabaseConnector db = new DatabaseConnector();
+                String text = labelField.getCharacters().toString();
+
+                // ADD USERNAME TO DATABASE
+                db.replacePassword(text);
+                dialog.close();
+            }
+        };
+
+        submitButton.setOnAction(handler);
+
+        dialogVbox.getChildren().add(labelField);
+        dialogVbox.getChildren().add(submitButton);
+        Scene dialogScene = new Scene(dialogVbox, 400, 200);
+        dialog.setScene(dialogScene);
+        dialog.show();
     }
 
     @FXML
@@ -314,13 +346,6 @@ public class FXController {
                 DatabaseConnector db = new DatabaseConnector();
                 String text = labelField.getCharacters().toString();
 
-                if (text.length() == 0 ) {
-                    return;
-                }
-
-                // TODO REMOVE THIS LATER
-                System.out.println(text);
-
                 // TODO DATABASE
                 db.insertLabel(text);
 
@@ -361,60 +386,15 @@ public class FXController {
 
     @FXML
     void investmentsTabChanged(Event event) {
+
         populateAssetTypeChoiceBox();
         populateNewInvestmentTypeChoiceBox();
+
     }
 
 
     @FXML
     void searchAsset(ActionEvent event) {
-        String symbol = symbolField.getText();
-        String assetType = assetTypeChoiceBox.getValue().toString();
-        String searchResult = "Invalid Search";
-        if(assetType.equals("Stock")) {
-            searchResult = InvestmentLookup.lookupStockDaily(symbol);
-            int indexOfMostRecentClose = searchResult.indexOf("4. close") + 12;
-            String mostRecentClose = searchResult.substring(indexOfMostRecentClose, indexOfMostRecentClose + 7);
-
-            Node source = (Node) event.getSource();
-            Window theStage = source.getScene().getWindow();
-            final Stage dialog = new Stage();
-            dialog.initModality(Modality.APPLICATION_MODAL);
-            dialog.initOwner(theStage);
-            VBox dialogVbox = new VBox(20);
-
-            Text resultText = new Text("Most recent closing price: " + mostRecentClose);
-            dialogVbox.getChildren().add(new Text(symbol));
-            dialogVbox.getChildren().add(resultText);
-
-            Scene dialogScene = new Scene(dialogVbox, 300, 200);
-            dialog.setScene(dialogScene);
-            dialog.show();
-        }
-        else if(assetType.equals("Crypto")){
-            searchResult = InvestmentLookup.lookupCryptoDaily(symbol);
-            int indexOfMostRecentClose = searchResult.indexOf("close") + 15;
-            int indexOfEndOfClose = searchResult.indexOf("\"", indexOfMostRecentClose);
-            String mostRecentClose = searchResult.substring(indexOfMostRecentClose, indexOfEndOfClose);//indexOfMostRecentClose + 12);
-
-            Node source = (Node) event.getSource();
-            Window theStage = source.getScene().getWindow();
-            final Stage dialog = new Stage();
-            dialog.initModality(Modality.APPLICATION_MODAL);
-            dialog.initOwner(theStage);
-            VBox dialogVbox = new VBox(20);
-
-            Text resultText = new Text("Most recent closing price: " + mostRecentClose);
-            dialogVbox.getChildren().add(new Text(symbol));
-            dialogVbox.getChildren().add(resultText);
-
-            Scene dialogScene = new Scene(dialogVbox, 300, 200);
-            dialog.setScene(dialogScene);
-            dialog.show();
-        }
-
-
-
 
     }
 
@@ -425,14 +405,14 @@ public class FXController {
                 String stockName = newInvestmentSymbolField.getText();
                 int sharesOwned = Integer.parseInt(newInvestmentQtyField.getText());
                 Stock stockToRecord = new Stock(stockName, sharesOwned);
-                System.out.print(stockToRecord);
+                //System.out.print(stockToRecord);
                 //TODO: send stock to database
                 break;
             case "Crypto":
                 String cryptoName = newInvestmentSymbolField.getText();
                 double numberOwned = Double.parseDouble(newInvestmentQtyField.getText());
                 Crypto cryptoToRecord = new Crypto(cryptoName, numberOwned);
-                System.out.print(cryptoToRecord);
+                //System.out.print(cryptoToRecord);
                 //TODO: send crypto to database
                 break;
             case "Custom":
@@ -440,7 +420,7 @@ public class FXController {
                 double price = Double.parseDouble(newInvestmentPriceField.getText());
                 double interestRate = Double.parseDouble(newInvestmentInterestRateField.getText());
                 CustomAsset assetToRecord = new CustomAsset(assetName,interestRate, price);
-                System.out.print(assetToRecord);
+                //System.out.print(assetToRecord);
                 //TODO: send asset to database
                 break;
         }

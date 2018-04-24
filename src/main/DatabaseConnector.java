@@ -29,6 +29,11 @@ public class DatabaseConnector {
         return labels;
     }
 
+    public void replacePassword(String password) {
+        // Add code to change password in the database
+        System.out.print("Password Changed!");
+    }
+
     public ArrayList<BankAccount> selectBankAccounts() {
         ArrayList<BankAccount> accounts = new ArrayList<BankAccount>();
         accounts.add(new BankAccount("Account1"));
