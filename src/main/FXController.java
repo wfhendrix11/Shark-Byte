@@ -308,6 +308,13 @@ public class FXController {
                 DatabaseConnector db = new DatabaseConnector();
                 String text = labelField.getCharacters().toString();
 
+                if (text.length() == 0 ) {
+                    return;
+                }
+
+                // TODO REMOVE THIS LATER
+                System.out.println(text);
+
                 // TODO DATABASE
                 db.insertLabel(text);
 
@@ -379,6 +386,20 @@ public class FXController {
 
         transactionLabelChoiceBox.setItems(labelItems);
         transactionLabelChoiceBox.getSelectionModel().selectFirst();
+    }
+
+    void updateTransactionBankAccounts() {
+        DatabaseConnector db = new DatabaseConnector();
+        ArrayList<BankAccount> accounts = db.selectBankAccounts();
+
+        ObservableList accountItems = FXCollections.observableArrayList();
+
+        for (BankAccount ba : accounts) {
+            accountItems.add(ba);
+        }
+
+        transactionBankAccountChoiceBox.setItems(accountItems);
+        transactionBankAccountChoiceBox.getSelectionModel().selectFirst();
     }
 
 }

@@ -23,4 +23,8 @@ public class DatabaseConnector {
 
         return labels;
     }
+
+    public ArrayList<BankAccount> selectBankAccounts() {
+        return new ArrayList<BankAccount>();
+    }
 }
