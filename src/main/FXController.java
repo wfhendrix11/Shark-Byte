@@ -268,7 +268,7 @@ public class FXController {
 
         dialogVbox.getChildren().add(labelField);
         dialogVbox.getChildren().add(submitButton);
-        Scene dialogScene = new Scene(dialogVbox, 400, 600);
+        Scene dialogScene = new Scene(dialogVbox, 400, 200);
         dialog.setScene(dialogScene);
         dialog.show();
     }
