@@ -307,7 +307,7 @@ public class FXController {
 
     @FXML
     void investmentTypeClicked(ActionEvent event) {
-
+        
     }
 
     @FXML
