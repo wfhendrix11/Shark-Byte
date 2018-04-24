@@ -236,7 +236,11 @@ public class FXController {
 
     @FXML
     void enterTransaction(ActionEvent event) {
-
+        // transactionLabelChoiceBox
+        // transactionBankAccountChoiceBox
+        // transactionMerchantField
+        // transactionAmountField
+        // transactionDatePicker
     }
 
     @FXML
@@ -271,6 +275,7 @@ public class FXController {
 
     @FXML
     void addNewLabel(ActionEvent event) {
+        // TODO Lawrence working on this
 
     }
 
