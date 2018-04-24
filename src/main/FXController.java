@@ -227,12 +227,22 @@ public class FXController {
 
     @FXML
     void homeTabChanged(Event event) {
-        int x = 3 +2;
+
     }
 
     @FXML
     void manageAccount(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Window theStage = source.getScene().getWindow();
+        final Stage dialog = new Stage();
 
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(theStage);
+        VBox dialogVbox = new VBox(20);
+        dialogVbox.getChildren().add(new Text("Manage Account"));
+        Scene dialogScene = new Scene(dialogVbox, 900, 600);
+        dialog.setScene(dialogScene);
+        dialog.show();
     }
 
     @FXML
