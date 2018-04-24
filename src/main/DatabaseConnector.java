@@ -8,4 +8,9 @@ public class DatabaseConnector {
     public DatabaseConnector(){
 
     }
+
+    public void addLabel(String label) {
+        // TODO not implemented, just stubbed
+        System.out.println("Label added");
+    }
 }

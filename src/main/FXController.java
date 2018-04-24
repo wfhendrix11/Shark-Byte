@@ -4,6 +4,7 @@ package main;
  */
 
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -288,8 +289,30 @@ public class FXController {
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(theStage);
+        dialog.setTitle("Add Label");
         VBox dialogVbox = new VBox(20);
-        dialogVbox.getChildren().add(new Text("This is a Dialog"));
+
+        TextField labelField = new TextField();
+        labelField.setPromptText("Label");
+
+        Button submitButton = new Button();
+        submitButton.setText("Submit");
+
+        EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DatabaseConnector db = new DatabaseConnector();
+                String text = labelField.getCharacters().toString();
+                // TODO DATABASE
+                db.addLabel(text);
+                dialog.close();
+            }
+        };
+
+        submitButton.setOnAction(handler);
+
+        dialogVbox.getChildren().add(labelField);
+        dialogVbox.getChildren().add(submitButton);
         Scene dialogScene = new Scene(dialogVbox, 300, 200);
         dialog.setScene(dialogScene);
         dialog.show();
