@@ -33,4 +33,9 @@ public class DatabaseConnector {
         // Add code to change password in the database
         System.out.print("Password Changed!");
     }
+
+    public ArrayList<BankAccount> selectBankAccounts(){
+        //TODO
+        return new ArrayList<BankAccount>();
+    }
 }

@@ -384,12 +384,10 @@ public class FXController {
 
     @FXML
     void investmentsTabChanged(Event event) {
-<<<<<<< HEAD
 
-=======
         populateAssetTypeChoiceBox();
         populateNewInvestmentTypeChoiceBox();
->>>>>>> d0b282ed4bb8ec025e702b3fbbba4701efd6f530
+
     }
 
 
@@ -405,14 +403,14 @@ public class FXController {
                 String stockName = newInvestmentSymbolField.getText();
                 int sharesOwned = Integer.parseInt(newInvestmentQtyField.getText());
                 Stock stockToRecord = new Stock(stockName, sharesOwned);
-                System.out.print(stockToRecord);
+                //System.out.print(stockToRecord);
                 //TODO: send stock to database
                 break;
             case "Crypto":
                 String cryptoName = newInvestmentSymbolField.getText();
                 double numberOwned = Double.parseDouble(newInvestmentQtyField.getText());
                 Crypto cryptoToRecord = new Crypto(cryptoName, numberOwned);
-                System.out.print(cryptoToRecord);
+                //System.out.print(cryptoToRecord);
                 //TODO: send crypto to database
                 break;
             case "Custom":
@@ -420,7 +418,7 @@ public class FXController {
                 double price = Double.parseDouble(newInvestmentPriceField.getText());
                 double interestRate = Double.parseDouble(newInvestmentInterestRateField.getText());
                 CustomAsset assetToRecord = new CustomAsset(assetName,interestRate, price);
-                System.out.print(assetToRecord);
+                //System.out.print(assetToRecord);
                 //TODO: send asset to database
                 break;
         }
@@ -440,8 +438,6 @@ public class FXController {
         transactionLabelChoiceBox.getSelectionModel().selectFirst();
     }
 
-<<<<<<< HEAD
-=======
     //Fills contents of choice box for searching investments
     void populateAssetTypeChoiceBox(){
         ObservableList assetTypes = FXCollections.observableArrayList();
@@ -473,5 +469,4 @@ public class FXController {
         newInvestmentTypeChoiceBox.setItems(assetTypes);
         newInvestmentTypeChoiceBox.getSelectionModel().selectFirst();
     }
->>>>>>> d0b282ed4bb8ec025e702b3fbbba4701efd6f530
 }
