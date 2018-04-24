@@ -115,6 +115,7 @@
                         </AnchorPane>
                      </children>
                   </GridPane>
+                  <ChoiceBox fx:id="selectBankAccountChoiceBox" layoutX="206.0" layoutY="10.0" prefWidth="150.0" />
                </children></AnchorPane>
         </content>
       </Tab>
@@ -133,7 +134,7 @@
                     </columns>
                   </TableView>
                   <Button fx:id="newCategoryButton" layoutX="390.0" layoutY="44.0" mnemonicParsing="false" onAction="#newBudgetCategory" text="New Budget Category" />
-                  <Button fx:id="selectBudgetButton" layoutX="562.0" layoutY="44.0" mnemonicParsing="false" onAction="#selectBudget" text="Select Budget" />
+                  <ChoiceBox fx:id="selectBudgetChoiceBox" layoutX="566.0" layoutY="44.0" prefWidth="150.0" />
                </children></AnchorPane>
         </content>
       </Tab>
