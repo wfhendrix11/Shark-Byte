@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 public class DatabaseConnector {
 
+    String driver = "org.apache.derby.jdbc.EmbeddedDriver";
+    String dbName = "sharkByteDatabase";
+    String connectionURL = "jdbc:derby:" + dbName + ";create=true";
+    //String createString
+
     //Attempt to connect to existing Database.
     //If fails, creates the Database.
     public DatabaseConnector(){
