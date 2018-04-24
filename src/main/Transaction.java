@@ -4,26 +4,30 @@ import java.time.LocalDate;
 
 public class Transaction {
     private LocalDate date;
-    private int amount;
+    private double amount;
     private String label;
     private int id;
+    private String merchant;
+    private String account;
 
     Transaction() {
 
     }
 
-    Transaction(LocalDate newDate, int newAmount, String newLabel, int newId) {
+    Transaction(LocalDate newDate, double newAmount, String newLabel, int newId, String newMerchant, String newAccount) {
         date = newDate;
         amount = newAmount;
         label = newLabel;
         id = newId;
+        merchant = newMerchant;
+        account = newAccount;
     }
 
     String getLabel() {
         return label;
     }
 
-    int getAmount() {
+    double getAmount() {
         return amount;
     }
 

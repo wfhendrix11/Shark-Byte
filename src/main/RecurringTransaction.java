@@ -11,9 +11,9 @@ public class RecurringTransaction extends Transaction {
         super();
     }
 
-    RecurringTransaction(LocalDate newDate, int newAmount, String newLabel, int newId,
-            int newInterval, int newExecutions, boolean newIsPerpetual) {
-        super(newDate, newAmount, newLabel, newId);
+    RecurringTransaction(LocalDate newDate, double newAmount, String newLabel, int newId,
+            String newMerchant, String newAccount, int newInterval, int newExecutions, boolean newIsPerpetual) {
+        super(newDate, newAmount, newLabel, newId, newMerchant, newAccount);
 
         intervalInDays = newInterval;
         numberOfExecutions = newExecutions;

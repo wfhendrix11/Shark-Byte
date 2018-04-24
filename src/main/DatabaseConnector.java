@@ -34,8 +34,22 @@ public class DatabaseConnector {
         System.out.print("Password Changed!");
     }
 
-    public ArrayList<BankAccount> selectBankAccounts(){
-        //TODO
-        return new ArrayList<BankAccount>();
+    public ArrayList<BankAccount> selectBankAccounts() {
+        ArrayList<BankAccount> accounts = new ArrayList<BankAccount>();
+        accounts.add(new BankAccount("Account1"));
+        accounts.add(new BankAccount("Account2"));
+        return accounts;
+    }
+
+    public int getNextTransactionId() {
+        return 0;
+    }
+
+    public void insertTransaction(Transaction transaction) {
+        System.out.println("Transaction inserted");
+    }
+
+    public void insertRecurringTransaction(RecurringTransaction recurringTransaction) {
+        System.out.println("RecurringTransaction inserted");
     }
 }
