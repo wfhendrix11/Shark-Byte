@@ -5,6 +5,8 @@ package main;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
@@ -16,8 +18,13 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
+import javafx.collections.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class FXController {
 
@@ -298,12 +305,59 @@ public class FXController {
 
     @FXML
     void investmentsTabChanged(Event event) {
-
+        populateAssetTypeChoiceBox();
     }
 
 
     @FXML
     void searchAsset(ActionEvent event) {
+        String symbol = symbolField.getText();
+        String assetType = assetTypeChoiceBox.getValue().toString();
+        String searchResult = "Invalid Search";
+        if(assetType.equals("Stock")) {
+            searchResult = InvestmentLookup.lookupStockDaily(symbol);
+            int indexOfMostRecentClose = searchResult.indexOf("4. close") + 12;
+            String mostRecentClose = searchResult.substring(indexOfMostRecentClose, indexOfMostRecentClose + 7);
+
+            Node source = (Node) event.getSource();
+            Window theStage = source.getScene().getWindow();
+            final Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.initOwner(theStage);
+            VBox dialogVbox = new VBox(20);
+
+            Text resultText = new Text("Most recent closing price: " + mostRecentClose);
+            dialogVbox.getChildren().add(new Text(symbol));
+            dialogVbox.getChildren().add(resultText);
+
+            Scene dialogScene = new Scene(dialogVbox, 300, 200);
+            dialog.setScene(dialogScene);
+            dialog.show();
+        }
+        else if(assetType.equals("Crypto")){
+            searchResult = InvestmentLookup.lookupCryptoDaily(symbol);
+            int indexOfMostRecentClose = searchResult.indexOf("close") + 15;
+            int indexOfEndOfClose = searchResult.indexOf("\"", indexOfMostRecentClose);
+            String mostRecentClose = searchResult.substring(indexOfMostRecentClose, indexOfEndOfClose);//indexOfMostRecentClose + 12);
+
+            Node source = (Node) event.getSource();
+            Window theStage = source.getScene().getWindow();
+            final Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.initOwner(theStage);
+            VBox dialogVbox = new VBox(20);
+
+            Text resultText = new Text("Most recent closing price: " + mostRecentClose);
+            dialogVbox.getChildren().add(new Text(symbol));
+            dialogVbox.getChildren().add(resultText);
+
+            Scene dialogScene = new Scene(dialogVbox, 300, 200);
+            dialog.setScene(dialogScene);
+            dialog.show();
+        }
+
+
+
 
     }
 
@@ -317,4 +371,11 @@ public class FXController {
 
     }
 
+    void populateAssetTypeChoiceBox(){
+        ObservableList assetTypes = FXCollections.observableArrayList();
+        assetTypes.add("Stock");
+        assetTypes.add("Crypto");
+        assetTypeChoiceBox.setItems(assetTypes);
+        assetTypeChoiceBox.getSelectionModel().selectFirst();
+    }
 }
