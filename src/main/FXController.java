@@ -221,7 +221,7 @@ public class FXController {
 
     @FXML
     void homeTabChanged(Event event) {
-
+        int x = 3 +2;
     }
 
     @FXML
