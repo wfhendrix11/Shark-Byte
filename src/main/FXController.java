@@ -3,6 +3,8 @@ package main;
  * Sample Skeleton for 'shark_byte_gui.fxml' Controller Class
  */
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,6 +27,8 @@ import javafx.event.ActionEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
+import java.util.ArrayList;
 
 public class FXController {
 
@@ -248,7 +252,7 @@ public class FXController {
 
     @FXML
     void transactionTabChanged(Event event) {
-
+        updateTransactionLabels();
     }
 
     @FXML
@@ -313,8 +317,12 @@ public class FXController {
             public void handle(ActionEvent event) {
                 DatabaseConnector db = new DatabaseConnector();
                 String text = labelField.getCharacters().toString();
+
                 // TODO DATABASE
-                db.addLabel(text);
+                db.insertLabel(text);
+
+                // TODO FINISH THIS
+                updateTransactionLabels();
                 dialog.close();
             }
         };
@@ -367,6 +375,20 @@ public class FXController {
     @FXML
     void recordInvestment(ActionEvent event) {
 
+    }
+
+    void updateTransactionLabels() {
+        DatabaseConnector db = new DatabaseConnector();
+        ArrayList<String> labels = db.selectLabels();
+
+        ObservableList labelItems = FXCollections.observableArrayList();
+
+        for (String s : labels) {
+            labelItems.add(s);
+        }
+
+        transactionLabelChoiceBox.setItems(labelItems);
+        transactionLabelChoiceBox.getSelectionModel().selectFirst();
     }
 
 }
