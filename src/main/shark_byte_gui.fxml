@@ -14,7 +14,7 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="ManageAccountButton" layoutX="793.0" layoutY="2.0" mnemonicParsing="false" onAction="#manageAccount" prefHeight="25.0" prefWidth="119.0" text="Manage Account" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="ManageAccountButton" layoutX="793.0" layoutY="2.0" mnemonicParsing="false" onAction="#manageAccount" prefHeight="25.0" prefWidth="119.0" text="Change Password" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <PieChart fx:id="home_thisMonthSpendingChart" layoutX="374.0" layoutY="25.0" prefHeight="266.0" prefWidth="243.0" title="This Month's Spending" />
                   <PieChart fx:id="home_thisMonthBudgetChart" layoutX="624.0" layoutY="25.0" prefHeight="266.0" prefWidth="243.0" title="This Month's Budget" />
                   <LineChart fx:id="home_investmentValueChart" layoutX="451.0" layoutY="305.0" prefHeight="306.0" prefWidth="462.0" title="Investments Value">
@@ -33,6 +33,7 @@
                     </columns>
                   </TableView>
                   <Text layoutX="129.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recent Transactions" />
+                  <Button fx:id="quitButton" layoutX="650.0" mnemonicParsing="false" onAction="#quitProgram" prefHeight="25.0" prefWidth="143.0" text="Quit" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -167,7 +168,7 @@
                   <TextField fx:id="newInvestmentSymbolField" layoutX="382.0" layoutY="66.0" promptText="Symbol/Name" />
                   <Text layoutX="569.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Record Investment" />
                   <ChoiceBox fx:id="newInvestmentTypeChoiceBox" layoutX="557.0" layoutY="66.0" prefHeight="25.0" prefWidth="134.0" />
-                  <TextField fx:id="newInvestmentQtyField" layoutX="715.0" layoutY="66.0" promptText="Quantity (if NOT custom)" />
+                  <TextField fx:id="newInvestmentQtyField" layoutX="715.0" layoutY="66.0" promptText="Quantity" />
                   <TextField fx:id="newInvestmentPriceField" layoutX="382.0" layoutY="98.0" promptText="Price (if custom)" />
                   <Button fx:id="recordInvestmentButton" layoutX="716.0" layoutY="98.0" mnemonicParsing="false" onAction="#recordInvestment" prefHeight="25.0" prefWidth="151.0" text="Record Investment" />
                   <TextField fx:id="newInvestmentInterestRateField" layoutX="557.0" layoutY="98.0" prefHeight="25.0" prefWidth="134.0" promptText="Interest Rate (if custom)">

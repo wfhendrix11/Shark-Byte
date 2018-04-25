@@ -3,6 +3,7 @@ package main;
  * Sample Skeleton for 'shark_byte_gui.fxml' Controller Class
  */
 
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -32,6 +33,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class FXController {
+
+    @FXML // fx:id="quitButton"
+    private Button quitButton; //Value injected by FXMLLoader
 
     @FXML // fx:id="accountTransactionsTable"
     private TableView<?> accountTransactionsTable; // Value injected by FXMLLoader
@@ -85,7 +89,7 @@ public class FXController {
     private PieChart thisMonthSpendingChart; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioAmountColumn"
-    private TableColumn<?, ?> portfolioAmountColumn; // Value injected by FXMLLoader
+    private TableColumn<Investment, String> portfolioAmountColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="TransactionPerpetualColumn"
     private TableColumn<?, ?> TransactionPerpetualColumn; // Value injected by FXMLLoader
@@ -94,7 +98,7 @@ public class FXController {
     private TableColumn<?, ?> budgetSpendingColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioValueColumn"
-    private TableColumn<?, ?> portfolioValueColumn; // Value injected by FXMLLoader
+    private TableColumn<Investment, String> portfolioValueColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="filterAmountChoiceBox"
     private ChoiceBox<?> filterAmountChoiceBox; // Value injected by FXMLLoader
@@ -127,7 +131,7 @@ public class FXController {
     private ChoiceBox<?> filterLabelChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioAssetColumn"
-    private TableColumn<?, ?> portfolioAssetColumn; // Value injected by FXMLLoader
+    private TableColumn<Investment, String> portfolioAssetColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="symbolField"
     private TextField symbolField; // Value injected by FXMLLoader
@@ -163,7 +167,7 @@ public class FXController {
     private ChoiceBox<?> transactionBankAccountChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioTable"
-    private TableView<?> portfolioTable; // Value injected by FXMLLoader
+    private TableView<Investment> portfolioTable; // Value injected by FXMLLoader
 
     @FXML // fx:id="home_transactionAmountColumn"
     private TableColumn<?, ?> home_transactionAmountColumn; // Value injected by FXMLLoader
@@ -174,8 +178,6 @@ public class FXController {
     @FXML // fx:id="accountValueChart"
     private LineChart<?, ?> accountValueChart; // Value injected by FXMLLoader
 
-    @FXML // fx:id="filterPerpetualChoiceBox"
-    private ChoiceBox<?> filterPerpetualChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="enterTransactionButton"
     private Button enterTransactionButton; // Value injected by FXMLLoader
@@ -208,7 +210,7 @@ public class FXController {
     private TableView<?> TransactionsTable; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioPriceColumn"
-    private TableColumn<?, ?> portfolioPriceColumn; // Value injected by FXMLLoader
+    private TableColumn<Investment, String> portfolioPriceColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="home_thisMonthBudgetChart"
     private PieChart home_thisMonthBudgetChart; // Value injected by FXMLLoader
@@ -233,6 +235,12 @@ public class FXController {
 
     @FXML // fx:id="accountBalance"
     private Text accountBalance; // Value injected by FXMLLoader
+
+
+    @FXML
+    void quitProgram(ActionEvent event){
+        
+    }
 
     @FXML
     void homeTabChanged(Event event) {
@@ -432,13 +440,56 @@ public class FXController {
 
         populateAssetTypeChoiceBox();
         populateNewInvestmentTypeChoiceBox();
-
+        fillPortfolio();
     }
 
 
     @FXML
     void searchAsset(ActionEvent event) {
+        String symbol = symbolField.getText();
 
+        String assetType = assetTypeChoiceBox.getValue().toString();
+
+        String searchResult = "Invalid Search";
+
+        if(assetType.equals("Stock")) {
+            searchResult = InvestmentLookup.lookupStockDaily(symbol);
+            int indexOfMostRecentClose = searchResult.indexOf("4. close") + 12;
+            String mostRecentClose = searchResult.substring(indexOfMostRecentClose, indexOfMostRecentClose + 7);
+            Node source = (Node) event.getSource();
+            Window theStage = source.getScene().getWindow();
+            final Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.initOwner(theStage);
+            VBox dialogVbox = new VBox(20);
+            Text resultText = new Text("Most recent closing price: " + mostRecentClose);
+            dialogVbox.getChildren().add(new Text(symbol));
+            dialogVbox.getChildren().add(resultText);
+            Scene dialogScene = new Scene(dialogVbox, 300, 200);
+            dialog.setScene(dialogScene);
+            dialog.show();
+        }
+        else if(assetType.equals("Crypto")){
+            searchResult = InvestmentLookup.lookupCryptoDaily(symbol);
+            int indexOfMostRecentClose = searchResult.indexOf("close") + 15;
+            int indexOfEndOfClose = searchResult.indexOf("\"", indexOfMostRecentClose);
+            String mostRecentClose = searchResult.substring(indexOfMostRecentClose, indexOfEndOfClose);//indexOfMostRecentClose + 12);
+
+            Node source = (Node) event.getSource();
+            Window theStage = source.getScene().getWindow();
+            final Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.initOwner(theStage);
+            VBox dialogVbox = new VBox(20);
+
+            Text resultText = new Text("Most recent closing price: " + mostRecentClose);
+            dialogVbox.getChildren().add(new Text(symbol));
+            dialogVbox.getChildren().add(resultText);
+
+            Scene dialogScene = new Scene(dialogVbox, 300, 200);
+            dialog.setScene(dialogScene);
+            dialog.show();
+        }
     }
 
     @FXML
@@ -462,7 +513,8 @@ public class FXController {
                 String assetName = newInvestmentSymbolField.getText();
                 double price = Double.parseDouble(newInvestmentPriceField.getText());
                 double interestRate = Double.parseDouble(newInvestmentInterestRateField.getText());
-                CustomAsset assetToRecord = new CustomAsset(assetName,interestRate, price);
+                int quantity = Integer.parseInt(newInvestmentQtyField.getText());
+                CustomAsset assetToRecord = new CustomAsset(assetName, quantity, interestRate, price);
                 //System.out.print(assetToRecord);
                 //TODO: send asset to database
                 break;
@@ -516,7 +568,41 @@ public class FXController {
     }
 
 
+ //Fill the content of the portfolio table
+    private void fillPortfolio(){
 
+        DatabaseConnector db = new DatabaseConnector();
+        ObservableList<Investment> portfolio = db.getPortfolio();
+
+        //portfolioAssetColumn
+        //portfolioAmountColumn
+        //portfolioPriceColumn
+        //portfolioValueColumn
+
+        portfolioAssetColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getName()));
+        portfolioAmountColumn.setCellValueFactory(data -> {
+            if(data.getValue() instanceof Stock)return new ReadOnlyStringWrapper(Integer.toString(((Stock) data.getValue()).getNumberOfShares()));
+            else if(data.getValue() instanceof Crypto) return new ReadOnlyStringWrapper(Double.toString(((Crypto) data.getValue()).getNumberOwned()));
+            else return new ReadOnlyStringWrapper(Double.toString(((CustomAsset) data.getValue()).getQuantity()));
+        });
+        portfolioPriceColumn.setCellValueFactory(data -> {
+            if(data.getValue() instanceof Stock) return new ReadOnlyStringWrapper(Double.toString(InvestmentLookup.getMostRecentStockPrice(data.getValue().getName())));
+            else if(data.getValue() instanceof Crypto) return new ReadOnlyStringWrapper(Double.toString(InvestmentLookup.getMostRecentCryptoPrice(data.getValue().getName())));
+            else return new ReadOnlyStringWrapper(Double.toString(((CustomAsset) data.getValue()).getCurrentValue()));
+        });
+        portfolioValueColumn.setCellValueFactory(data -> {
+           if(data.getValue() instanceof Stock) return new ReadOnlyStringWrapper(
+                   Double.toString(((Stock) data.getValue()).getNumberOfShares()*(InvestmentLookup.getMostRecentStockPrice(data.getValue().getName())))
+           );
+           else if(data.getValue() instanceof Crypto) return new ReadOnlyStringWrapper(
+                   Double.toString(((Crypto) data.getValue()).getNumberOwned() * InvestmentLookup.getMostRecentCryptoPrice(data.getValue().getName()))
+           );
+           else return new ReadOnlyStringWrapper(
+                   Double.toString((((CustomAsset) data.getValue()).getQuantity()) * (((CustomAsset) data.getValue()).getCurrentValue()))
+                   );
+        });
+        portfolioTable.setItems(portfolio);
+    }
 
 
 
