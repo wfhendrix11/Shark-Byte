@@ -39,8 +39,8 @@ public class DatabaseConnector {
 
     public ArrayList<BankAccount> selectBankAccounts() {
         ArrayList<BankAccount> accounts = new ArrayList<BankAccount>();
-        accounts.add(new BankAccount("Account1"));
-        accounts.add(new BankAccount("Account2"));
+        accounts.add(new BankAccount("Account1", 0));
+        accounts.add(new BankAccount("Account2", 0));
         return accounts;
     }
 
