@@ -2,20 +2,46 @@ package main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.DatabaseMetaData;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+
 import java.util.ArrayList;
 
 public class DatabaseConnector {
 
-    String driver = "org.apache.derby.jdbc.EmbeddedDriver";
-    String dbName = "sharkByteDatabase";
-    String connectionURL = "jdbc:derby:" + dbName + ";create=true";
+    private static final String driver = "org.apache.derby.jdbc.EmbeddedDriver";
+    private static final String dbName = "sharkByteDatabase";
+    private static final String connectionURL = "jdbc:derby:" + dbName + ";create=true";
     //String createString
+
+    private Connection conn = null;
 
     //Attempt to connect to existing Database.
     //If fails, creates the Database.
     public DatabaseConnector(){
+        try {
+            conn = DriverManager.getConnection(connectionURL);
+            DatabaseMetaData metaData = conn.getMetaData();
+            ResultSet theTables = metaData.getTables(null, null, "%", null);
+            if (theTables.next()) {
+                // database was just created, we must create the tables
+                // TODO create tables
+            }
 
+            theTables.close();
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void close() {
+        // 
     }
 
     public void insertLabel(String label) {
