@@ -15,7 +15,7 @@ public class MonthlyBudget {
     private Set<String> labels;
     private Map<String, Integer> budgets;
 
-    MonthlyBudget(int newMonth, int newYear, int newBudgetAmount) {
+    MonthlyBudget(int newMonth, int newYear, double newBudgetAmount) {
         month = newMonth;
         year = newYear;
         spendingAmount = 0;
