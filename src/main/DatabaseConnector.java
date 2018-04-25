@@ -1,4 +1,7 @@
 package main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -51,5 +54,22 @@ public class DatabaseConnector {
 
     public void insertRecurringTransaction(RecurringTransaction recurringTransaction) {
         System.out.println("RecurringTransaction inserted");
+    }
+
+    public void insertInvestment(Investment newInvestment){
+        //TODO
+    }
+
+    public ObservableList<Investment> getPortfolio(){
+        //Some dummy investments
+        Stock stock1 = new Stock("TSLA", 10);
+        Crypto crypto1 = new Crypto("ETH", 3.6200);
+
+        ObservableList<Investment> portfolio = FXCollections.observableArrayList();
+
+        //Add dummies to portfolio
+        portfolio.add(stock1);
+        portfolio.add(crypto1);
+        return portfolio;
     }
 }
