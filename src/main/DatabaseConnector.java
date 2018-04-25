@@ -41,7 +41,32 @@ public class DatabaseConnector {
     }
 
     public void close() {
-        // 
+        // shutdown connection to the database
+        try {
+            // the shutdown=true attribute shuts down Derby
+            DriverManager.getConnection("jdbc:derby:;shutdown=true");
+        }
+        catch (SQLException se) {
+            if (( (se.getErrorCode() == 50000)
+                    && ("XJ015".equals(se.getSQLState()) ))) {
+                // we got the expected exception
+                System.out.println("Derby shut down normally");
+                // Note that for single database shutdown, the expected
+                // SQL state is "08006", and the error code is 45000.
+            }
+            else {
+                // if the error code or SQLState is different, we have
+                // an unexpected exception (shutdown failed)
+                System.err.println("Derby did not shut down normally");
+            }
+        }
+
+        try {
+            conn.close();
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void insertLabel(String label) {
