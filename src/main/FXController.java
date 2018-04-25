@@ -520,4 +520,46 @@ public class FXController {
 
         portfolioTable.setItems(portfolio);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
+        USELESS BELOW
+     */
+    @FXML
+    void filterDateClicked(ActionEvent event) {
+    }
+    @FXML
+    void filterMerchantClicked(ActionEvent event) {
+    }
+    @FXML
+    void filterAmountClicked(ActionEvent event) {
+    }
+    @FXML
+    void filterAccountClicked(ActionEvent event) {
+    }
+    @FXML
+    void filterLabelClicked(ActionEvent event) {
+    }
+    @FXML
+    void filterPerpetualClicked(ActionEvent event) {
+    }
 }
