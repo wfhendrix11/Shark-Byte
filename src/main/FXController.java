@@ -13,15 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
@@ -255,11 +247,18 @@ public class FXController {
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(theStage);
-        dialog.setTitle("Manage Account");
+        dialog.setTitle("Change Password");
         VBox dialogVbox = new VBox(20);
 
-        TextField labelField = new TextField();
-        labelField.setPromptText("Password");
+        Text oldPasswordText = new Text("Enter OLD password: ");
+
+        TextField oldPasswordField = new TextField();
+        oldPasswordField.setPromptText("OLD Password");
+
+        Text newPasswordText = new Text("Enter NEW password: ");
+
+        TextField newPasswordField = new TextField();
+        newPasswordField.setPromptText("NEW Password");
 
         Button submitButton = new Button();
         submitButton.setText("Submit");
@@ -268,7 +267,7 @@ public class FXController {
             @Override
             public void handle(ActionEvent event) {
                 DatabaseConnector db = new DatabaseConnector();
-                String text = labelField.getCharacters().toString();
+                String text = newPasswordField.getCharacters().toString();
 
                 // ADD USERNAME TO DATABASE
                 db.replacePassword(text);
@@ -278,9 +277,12 @@ public class FXController {
 
         submitButton.setOnAction(handler);
 
-        dialogVbox.getChildren().add(labelField);
+        dialogVbox.getChildren().add(oldPasswordText);
+        dialogVbox.getChildren().add(oldPasswordField);
+        dialogVbox.getChildren().add(newPasswordText);
+        dialogVbox.getChildren().add(newPasswordField);
         dialogVbox.getChildren().add(submitButton);
-        Scene dialogScene = new Scene(dialogVbox, 400, 200);
+        Scene dialogScene = new Scene(dialogVbox, 400, 250);
         dialog.setScene(dialogScene);
         dialog.show();
     }
@@ -422,7 +424,42 @@ public class FXController {
 
     @FXML
     void addBankAccount(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Window theStage = source.getScene().getWindow();
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(theStage);
+        dialog.setTitle("Create New Bank Account");
+        VBox dialogVbox = new VBox(20);
 
+        TextField field = new TextField();
+        field.setPromptText("Executions");
+
+        TextField labelField = new TextField();
+        labelField.setPromptText("Name");
+
+        Button submitButton = new Button();
+        submitButton.setText("Submit");
+
+        EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DatabaseConnector db = new DatabaseConnector();
+                String text = labelField.getCharacters().toString();
+
+                // ADD USERNAME TO DATABASE
+                //db.replacePassword(text);
+                dialog.close();
+            }
+        };
+
+        submitButton.setOnAction(handler);
+
+        dialogVbox.getChildren().add(labelField);
+        dialogVbox.getChildren().add(submitButton);
+        Scene dialogScene = new Scene(dialogVbox, 400, 200);
+        dialog.setScene(dialogScene);
+        dialog.show();
     }
 
     @FXML
@@ -432,6 +469,52 @@ public class FXController {
 
     @FXML
     void addNewBudget(ActionEvent event) {
+
+        Node source = (Node) event.getSource();
+        Window theStage = source.getScene().getWindow();
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(theStage);
+        dialog.setTitle("Create New Budget");
+        VBox dialogVbox = new VBox(20);
+
+        Text field1 = new Text("Choose budget type: ");
+
+        ChoiceBox cb = new ChoiceBox(FXCollections.observableArrayList(
+                "Monthly Budget", "Yearly Budget")
+        );
+
+        Text field2 = new Text("Enter the name: ");
+
+
+        TextField field3 = new TextField();
+        field3.setPromptText("Name");
+
+        Button submitButton = new Button();
+        submitButton.setText("Submit");
+
+        EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DatabaseConnector db = new DatabaseConnector();
+                String text = field3.getCharacters().toString();
+
+                // ADD TO DATABASE
+                //db.replacePassword(text);
+                dialog.close();
+            }
+        };
+
+        submitButton.setOnAction(handler);
+
+        dialogVbox.getChildren().add(field1);
+        dialogVbox.getChildren().add(cb);
+        dialogVbox.getChildren().add(field2);
+        dialogVbox.getChildren().add(field3);
+        dialogVbox.getChildren().add(submitButton);
+        Scene dialogScene = new Scene(dialogVbox, 400, 250);
+        dialog.setScene(dialogScene);
+        dialog.show();
 
     }
 
