@@ -9,10 +9,6 @@ public class BankAccount {
     private boolean isFrozen;
     private ArrayList<Transaction> transactionList;
 
-    BankAccount() {
-
-    }
-
     BankAccount(String newName, double newBalance) {
         name = newName;
         balance = newBalance;
