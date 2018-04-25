@@ -131,7 +131,7 @@ public class FXController {
     private ChoiceBox<?> filterLabelChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioAssetColumn"
-    private TableColumn<?, ?> portfolioAssetColumn; // Value injected by FXMLLoader
+    private TableColumn<Investment, String> portfolioAssetColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="symbolField"
     private TextField symbolField; // Value injected by FXMLLoader
@@ -167,7 +167,7 @@ public class FXController {
     private ChoiceBox<?> transactionBankAccountChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioTable"
-    private TableView<?> portfolioTable; // Value injected by FXMLLoader
+    private TableView<Investment> portfolioTable; // Value injected by FXMLLoader
 
     @FXML // fx:id="home_transactionAmountColumn"
     private TableColumn<?, ?> home_transactionAmountColumn; // Value injected by FXMLLoader
@@ -440,7 +440,7 @@ public class FXController {
 
         populateAssetTypeChoiceBox();
         populateNewInvestmentTypeChoiceBox();
-
+        fillPortfolio();
     }
 
 
