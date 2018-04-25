@@ -27,10 +27,11 @@ public class DatabaseConnector {
         try {
             conn = DriverManager.getConnection(connectionURL);
             DatabaseMetaData metaData = conn.getMetaData();
-            ResultSet theTables = metaData.getTables(null, null, "%", null);
-            if (theTables.next()) {
+            ResultSet theTables = metaData.getTables(null, null, "%", new String[] {"TABLE"});
+            if (!theTables.next()) {
                 // database was just created, we must create the tables
                 // TODO create tables
+                System.out.println("There are no tables");
             }
 
             theTables.close();
@@ -42,6 +43,7 @@ public class DatabaseConnector {
 
     public void close() {
         // shutdown connection to the database
+        /*
         try {
             // the shutdown=true attribute shuts down Derby
             DriverManager.getConnection("jdbc:derby:;shutdown=true");
@@ -59,10 +61,13 @@ public class DatabaseConnector {
                 // an unexpected exception (shutdown failed)
                 System.err.println("Derby did not shut down normally");
             }
-        }
+        } */
 
         try {
             conn.close();
+        }
+        catch (NullPointerException e){
+            System.out.println("No connection to close");
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());

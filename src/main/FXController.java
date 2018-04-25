@@ -272,6 +272,7 @@ public class FXController {
 
                 // ADD USERNAME TO DATABASE
                 db.replacePassword(text);
+                db.close();
                 dialog.close();
             }
         };
@@ -366,6 +367,7 @@ public class FXController {
             Transaction transaction = new Transaction(date, amount, label, id, merchant, account);
             db.insertTransaction(transaction);
         }
+        db.close();
     }
 
     @FXML
@@ -399,6 +401,7 @@ public class FXController {
 
                 // TODO DATABASE
                 db.insertLabel(text);
+                db.close();
 
                 // TODO FINISH THIS
                 updateTransactionLabels();
@@ -524,6 +527,7 @@ public class FXController {
     void updateTransactionLabels() {
         DatabaseConnector db = new DatabaseConnector();
         ArrayList<String> labels = db.selectLabels();
+        db.close();
 
         ObservableList labelItems = FXCollections.observableArrayList();
 
@@ -546,6 +550,7 @@ public class FXController {
     void updateTransactionBankAccounts() {
         DatabaseConnector db = new DatabaseConnector();
         ArrayList<BankAccount> accounts = db.selectBankAccounts();
+        db.close();
 
         ObservableList accountItems = FXCollections.observableArrayList();
 
@@ -573,6 +578,7 @@ public class FXController {
 
         DatabaseConnector db = new DatabaseConnector();
         ObservableList<Investment> portfolio = db.getPortfolio();
+        db.close();
 
         //portfolioAssetColumn
         //portfolioAmountColumn
