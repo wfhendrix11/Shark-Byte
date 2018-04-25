@@ -62,7 +62,7 @@ public class FXController {
     private TableView<?> favoritesTable; // Value injected by FXMLLoader
 
     @FXML // fx:id="home_recentTransactions"
-    private TableView<?> home_recentTransactions; // Value injected by FXMLLoader
+    private TableView<Transaction> home_recentTransactions; // Value injected by FXMLLoader
 
     @FXML // fx:id="newInvestmentSymbolField"
     private TextField newInvestmentSymbolField; // Value injected by FXMLLoader
@@ -140,7 +140,7 @@ public class FXController {
     private TextField transactionMerchantField; // Value injected by FXMLLoader
 
     @FXML // fx:id="home_transactionMerchantColumn"
-    private TableColumn<?, ?> home_transactionMerchantColumn; // Value injected by FXMLLoader
+    private TableColumn<Transaction, String> home_transactionMerchantColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="thisMonthBudgetChart"
     private PieChart thisMonthBudgetChart; // Value injected by FXMLLoader
@@ -170,7 +170,7 @@ public class FXController {
     private TableView<Investment> portfolioTable; // Value injected by FXMLLoader
 
     @FXML // fx:id="home_transactionAmountColumn"
-    private TableColumn<?, ?> home_transactionAmountColumn; // Value injected by FXMLLoader
+    private TableColumn<Transaction, String> home_transactionAmountColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="budgetCategoriesTable"
     private TableView<?> budgetCategoriesTable; // Value injected by FXMLLoader
@@ -195,7 +195,7 @@ public class FXController {
     private LineChart<?, ?> home_investmentValueChart; // Value injected by FXMLLoader
 
     @FXML // fx:id="home_transactionDateColumn"
-    private TableColumn<?, ?> home_transactionDateColumn; // Value injected by FXMLLoader
+    private TableColumn<Transaction, String> home_transactionDateColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="TransactionBankAccountColumn"
     private TableColumn<?, ?> TransactionBankAccountColumn; // Value injected by FXMLLoader
@@ -244,7 +244,9 @@ public class FXController {
 
     @FXML
     void homeTabChanged(Event event) {
-
+        if(homeTab.isSelected()){
+            fillHomeScreenTransactionsTable();
+        }
     }
 
     @FXML
@@ -437,10 +439,11 @@ public class FXController {
 
     @FXML
     void investmentsTabChanged(Event event) {
-
-        populateAssetTypeChoiceBox();
-        populateNewInvestmentTypeChoiceBox();
-        fillPortfolio();
+        if(investmentsTab.isSelected()) {
+            populateAssetTypeChoiceBox();
+            populateNewInvestmentTypeChoiceBox();
+            fillPortfolio();
+        }
     }
 
 
@@ -602,6 +605,21 @@ public class FXController {
                    );
         });
         portfolioTable.setItems(portfolio);
+    }
+
+    private void fillHomeScreenTransactionsTable(){
+
+        DatabaseConnector db = new DatabaseConnector();
+        ObservableList<Transaction> recentTransactions = db.getRecentTransactions();
+
+        //home_transactionAmountColumn
+        //_transactionDateColumn
+        //_transactionMerchantColumn
+        home_transactionDateColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getDate().toString()));
+        home_transactionMerchantColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getMerchant()));
+        home_transactionAmountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getAmount())));
+
+        home_recentTransactions.setItems(recentTransactions);
     }
 
 
