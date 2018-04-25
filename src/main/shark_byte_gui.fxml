@@ -56,19 +56,12 @@
                         <TableColumn fx:id="TransactionPerpetualColumn" prefWidth="201.0" text="Perpetuality" />
                     </columns>
                   </TableView>
-                  <ChoiceBox fx:id="filterDateChoiceBox" layoutX="2.0" layoutY="87.0" onMouseClicked="#filterDateClicked" prefHeight="25.0" prefWidth="126.0" AnchorPane.leftAnchor="0.0" />
-                  <Text layoutX="1.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="  Filter By..." wrappingWidth="122.962890625" />
                   <Text layoutX="8.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Transaction:" />
                   <Text layoutX="423.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Transactions">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <ChoiceBox fx:id="filterMerchantChoiceBox" layoutX="126.0" layoutY="87.0" onMouseClicked="#filterMerchantClicked" prefHeight="25.0" prefWidth="125.0" />
-                  <ChoiceBox fx:id="filterAmountChoiceBox" layoutX="251.0" layoutY="87.0" onMouseClicked="#filterAmountClicked" prefHeight="25.0" prefWidth="125.0" />
-                  <ChoiceBox fx:id="filterBankAccountChoiceBox" layoutX="376.0" layoutY="87.0" onMouseClicked="#filterAccountClicked" prefHeight="25.0" prefWidth="170.0" />
-                  <ChoiceBox fx:id="filterLabelChoiceBox" layoutX="545.0" layoutY="87.0" onMouseClicked="#filterLabelClicked" prefHeight="25.0" prefWidth="164.0" />
-                  <ChoiceBox fx:id="filterPerpetualChoiceBox" layoutX="709.0" layoutY="87.0" onMouseClicked="#filterPerpetualClicked" prefHeight="25.0" prefWidth="203.0" AnchorPane.rightAnchor="0.0" />
                   <Button fx:id="newLabelButton" layoutX="546.0" layoutY="63.0" mnemonicParsing="false" onAction="#addNewLabel" prefHeight="25.0" prefWidth="163.0" text="Add new label" />
                   <TextField fx:id="transactionMerchantField" layoutX="124.0" layoutY="34.0" prefHeight="25.0" prefWidth="128.0" promptText="Merchant" />
                </children></AnchorPane>

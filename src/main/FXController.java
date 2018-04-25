@@ -41,8 +41,6 @@ public class FXController {
     @FXML // fx:id="addBankAccountButton"
     private Button addBankAccountButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="filterMerchantChoiceBox"
-    private ChoiceBox<?> filterMerchantChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="budgetsTab"
     private Tab budgetsTab; // Value injected by FXMLLoader
@@ -89,8 +87,6 @@ public class FXController {
     @FXML // fx:id="portfolioValueColumn"
     private TableColumn<Investment, Double> portfolioValueColumn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="filterAmountChoiceBox"
-    private ChoiceBox<?> filterAmountChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="newInvestmentQtyField"
     private TextField newInvestmentQtyField; // Value injected by FXMLLoader
@@ -104,8 +100,6 @@ public class FXController {
     @FXML // fx:id="TransactionLabelColumn"
     private TableColumn<?, ?> TransactionLabelColumn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="filterBankAccountChoiceBox"
-    private ChoiceBox<?> filterBankAccountChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="searchAssetButton"
     private Button searchAssetButton; // Value injected by FXMLLoader
@@ -116,8 +110,6 @@ public class FXController {
     @FXML // fx:id="newInvestmentPriceField"
     private TextField newInvestmentPriceField; // Value injected by FXMLLoader
 
-    @FXML // fx:id="filterLabelChoiceBox"
-    private ChoiceBox<?> filterLabelChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioAssetColumn"
     private TableColumn<Investment, String> portfolioAssetColumn; // Value injected by FXMLLoader
@@ -149,8 +141,6 @@ public class FXController {
     @FXML // fx:id="ManageAccountButton"
     private Button ManageAccountButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="filterDateChoiceBox"
-    private ChoiceBox<?> filterDateChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="transactionBankAccountChoiceBox"
     private ChoiceBox<?> transactionBankAccountChoiceBox; // Value injected by FXMLLoader
@@ -166,9 +156,7 @@ public class FXController {
 
     @FXML // fx:id="accountValueChart"
     private LineChart<?, ?> accountValueChart; // Value injected by FXMLLoader
-
-    @FXML // fx:id="filterPerpetualChoiceBox"
-    private ChoiceBox<?> filterPerpetualChoiceBox; // Value injected by FXMLLoader
+    
 
     @FXML // fx:id="enterTransactionButton"
     private Button enterTransactionButton; // Value injected by FXMLLoader
@@ -357,7 +345,7 @@ public class FXController {
     void newBudgetCategory(ActionEvent event){
 
     }
-    
+
     @FXML
     void addNewLabel(ActionEvent event) {
         // TODO Lawrence working on this
