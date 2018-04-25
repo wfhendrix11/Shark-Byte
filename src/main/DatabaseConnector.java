@@ -64,12 +64,14 @@ public class DatabaseConnector {
         //Some dummy investments
         Stock stock1 = new Stock("TSLA", 10);
         Crypto crypto1 = new Crypto("ETH", 3.6200);
+        CustomAsset asset1 = new CustomAsset("Boy with a Pipe", 1, 1, 104000000);
 
         ObservableList<Investment> portfolio = FXCollections.observableArrayList();
 
         //Add dummies to portfolio
         portfolio.add(stock1);
         portfolio.add(crypto1);
+        portfolio.add(asset1);
         return portfolio;
     }
 }
