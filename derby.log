@@ -1,0 +1,19 @@
+----------------------------------------------------------------
+Wed Apr 25 16:41:37 CDT 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0162-fec1-32fa-00000cd8eee8 
+on database directory C:\Users\Lawrence\Documents\comp3700\Implementation\shark-byte\derbyDB with class loader sun.misc.Launcher$AppClassLoader@2a84aee7 
+Loaded from file:/C:/Program%20Files/Java/jdk1.8.0_71/db/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_71-b15
+user.dir=C:\Users\Lawrence\Documents\comp3700\Implementation\shark-byte
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Wed Apr 25 16:41:39 CDT 2018: Shutting down Derby engine
+----------------------------------------------------------------
+Wed Apr 25 16:41:39 CDT 2018:
+Shutting down instance a816c00e-0162-fec1-32fa-00000cd8eee8 on database directory C:\Users\Lawrence\Documents\comp3700\Implementation\shark-byte\derbyDB with class loader sun.misc.Launcher$AppClassLoader@2a84aee7 
+----------------------------------------------------------------
