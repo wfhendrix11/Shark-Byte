@@ -342,11 +342,11 @@ public class FXController {
     }
 
     @FXML
-    void newBudgetCategory(ActionEvent event){
-
-    }
+    void newBudgetCategory(ActionEvent event) {
 
     @FXML
+    
+    }
     void addNewLabel(ActionEvent event) {
         // TODO Lawrence working on this
         Node source = (Node) event.getSource();
