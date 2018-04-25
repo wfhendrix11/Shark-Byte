@@ -3,7 +3,6 @@ package main;
  * Sample Skeleton for 'shark_byte_gui.fxml' Controller Class
  */
 
-import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -13,7 +12,15 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
@@ -41,6 +48,8 @@ public class FXController {
     @FXML // fx:id="addBankAccountButton"
     private Button addBankAccountButton; // Value injected by FXMLLoader
 
+    @FXML // fx:id="filterMerchantChoiceBox"
+    private ChoiceBox<?> filterMerchantChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="budgetsTab"
     private Tab budgetsTab; // Value injected by FXMLLoader
@@ -76,7 +85,7 @@ public class FXController {
     private PieChart thisMonthSpendingChart; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioAmountColumn"
-    private TableColumn<Investment, Double> portfolioAmountColumn; // Value injected by FXMLLoader
+    private TableColumn<?, ?> portfolioAmountColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="TransactionPerpetualColumn"
     private TableColumn<?, ?> TransactionPerpetualColumn; // Value injected by FXMLLoader
@@ -85,8 +94,10 @@ public class FXController {
     private TableColumn<?, ?> budgetSpendingColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioValueColumn"
-    private TableColumn<Investment, Double> portfolioValueColumn; // Value injected by FXMLLoader
+    private TableColumn<?, ?> portfolioValueColumn; // Value injected by FXMLLoader
 
+    @FXML // fx:id="filterAmountChoiceBox"
+    private ChoiceBox<?> filterAmountChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="newInvestmentQtyField"
     private TextField newInvestmentQtyField; // Value injected by FXMLLoader
@@ -100,6 +111,8 @@ public class FXController {
     @FXML // fx:id="TransactionLabelColumn"
     private TableColumn<?, ?> TransactionLabelColumn; // Value injected by FXMLLoader
 
+    @FXML // fx:id="filterBankAccountChoiceBox"
+    private ChoiceBox<?> filterBankAccountChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="searchAssetButton"
     private Button searchAssetButton; // Value injected by FXMLLoader
@@ -110,9 +123,11 @@ public class FXController {
     @FXML // fx:id="newInvestmentPriceField"
     private TextField newInvestmentPriceField; // Value injected by FXMLLoader
 
+    @FXML // fx:id="filterLabelChoiceBox"
+    private ChoiceBox<?> filterLabelChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioAssetColumn"
-    private TableColumn<Investment, String> portfolioAssetColumn; // Value injected by FXMLLoader
+    private TableColumn<?, ?> portfolioAssetColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="symbolField"
     private TextField symbolField; // Value injected by FXMLLoader
@@ -141,12 +156,14 @@ public class FXController {
     @FXML // fx:id="ManageAccountButton"
     private Button ManageAccountButton; // Value injected by FXMLLoader
 
+    @FXML // fx:id="filterDateChoiceBox"
+    private ChoiceBox<?> filterDateChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="transactionBankAccountChoiceBox"
     private ChoiceBox<?> transactionBankAccountChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioTable"
-    private TableView<Investment> portfolioTable; // Value injected by FXMLLoader
+    private TableView<?> portfolioTable; // Value injected by FXMLLoader
 
     @FXML // fx:id="home_transactionAmountColumn"
     private TableColumn<?, ?> home_transactionAmountColumn; // Value injected by FXMLLoader
@@ -156,7 +173,9 @@ public class FXController {
 
     @FXML // fx:id="accountValueChart"
     private LineChart<?, ?> accountValueChart; // Value injected by FXMLLoader
-    
+
+    @FXML // fx:id="filterPerpetualChoiceBox"
+    private ChoiceBox<?> filterPerpetualChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="enterTransactionButton"
     private Button enterTransactionButton; // Value injected by FXMLLoader
@@ -189,7 +208,7 @@ public class FXController {
     private TableView<?> TransactionsTable; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioPriceColumn"
-    private TableColumn<Investment, Double> portfolioPriceColumn; // Value injected by FXMLLoader
+    private TableColumn<?, ?> portfolioPriceColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="home_thisMonthBudgetChart"
     private PieChart home_thisMonthBudgetChart; // Value injected by FXMLLoader
@@ -342,7 +361,7 @@ public class FXController {
     }
 
     @FXML
-    void newBudgetCategory(ActionEvent event){
+    void newBudgetCategory(ActionEvent event) {
 
     }
 
@@ -413,7 +432,7 @@ public class FXController {
 
         populateAssetTypeChoiceBox();
         populateNewInvestmentTypeChoiceBox();
-        fillPortfolio();
+
     }
 
 
@@ -465,7 +484,7 @@ public class FXController {
     }
 
     //Fills contents of choice box for searching investments
-    private void populateAssetTypeChoiceBox(){
+    void populateAssetTypeChoiceBox(){
         ObservableList assetTypes = FXCollections.observableArrayList();
         assetTypes.add("Stock");
         assetTypes.add("Crypto");
@@ -487,31 +506,13 @@ public class FXController {
     }
 
     //Fills contents of choice box for recording investments
-    private void populateNewInvestmentTypeChoiceBox(){
+    void populateNewInvestmentTypeChoiceBox(){
         ObservableList assetTypes = FXCollections.observableArrayList();
         assetTypes.add("Stock");
         assetTypes.add("Crypto");
         assetTypes.add("Custom");
         newInvestmentTypeChoiceBox.setItems(assetTypes);
         newInvestmentTypeChoiceBox.getSelectionModel().selectFirst();
-    }
-
-    //Fill the content of the portfolio table
-    private void fillPortfolio(){
-
-        DatabaseConnector db = new DatabaseConnector();
-        ObservableList<Investment> portfolio = db.getPortfolio();
-
-        //portfolioAssetColumn
-        //portfolioAmountColumn
-        //portfolioPriceColumn
-        //portfolioValueColumn
-
-        portfolioAssetColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getName()));
-        
-
-
-        portfolioTable.setItems(portfolio);
     }
 
 
