@@ -485,10 +485,24 @@ public class FXController {
         );
 
         Text field2 = new Text("Enter the name: ");
-
-
         TextField field3 = new TextField();
         field3.setPromptText("Name");
+
+        Text field4 = new Text("Enter the budget amount: ");
+        TextField field5 = new TextField();
+        field5.setPromptText("Budget Amount");
+
+        Text field6 = new Text("Enter the budget category: ");
+        TextField field7 = new TextField();
+        field7.setPromptText("Budget Category");
+
+        Text field8 = new Text("Enter the month: ");
+        TextField field9 = new TextField();
+        field9.setPromptText("Budget Month");
+
+        Text field10 = new Text("Enter the year: ");
+        TextField field11 = new TextField();
+        field11.setPromptText("Budget Year");
 
         Button submitButton = new Button();
         submitButton.setText("Submit");
@@ -497,9 +511,13 @@ public class FXController {
             @Override
             public void handle(ActionEvent event) {
                 DatabaseConnector db = new DatabaseConnector();
-                String text = field3.getCharacters().toString();
+
+                String name = field3.getCharacters().toString();
+                String budgetAmount = field5.getCharacters().toString();
+                String budgetCategory = field7.getCharacters().toString();
 
                 // ADD TO DATABASE
+                MonthlyBudget newMonthlyBudget = new MonthlyBudget();
                 //db.replacePassword(text);
                 dialog.close();
             }
@@ -511,8 +529,16 @@ public class FXController {
         dialogVbox.getChildren().add(cb);
         dialogVbox.getChildren().add(field2);
         dialogVbox.getChildren().add(field3);
+        dialogVbox.getChildren().add(field4);
+        dialogVbox.getChildren().add(field5);
+        dialogVbox.getChildren().add(field6);
+        dialogVbox.getChildren().add(field7);
+        dialogVbox.getChildren().add(field8);
+        dialogVbox.getChildren().add(field9);
+        dialogVbox.getChildren().add(field10);
+        dialogVbox.getChildren().add(field11);
         dialogVbox.getChildren().add(submitButton);
-        Scene dialogScene = new Scene(dialogVbox, 400, 250);
+        Scene dialogScene = new Scene(dialogVbox, 500, 600);
         dialog.setScene(dialogScene);
         dialog.show();
 
