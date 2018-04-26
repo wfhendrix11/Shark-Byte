@@ -23,7 +23,7 @@ public class StockDatabase {
 
     }
 
-    static void createTable(Connection connIn, String dbNameIn) throws SQLException {
+    public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " +dbNameIn+ ".STOCKS " +
                 "(SYMBOL varchar(10) NOT NULL, " + "SHARES int NOT NULL, " +
                 "TOTAL double NOT NULL, " + "USER_ID int NOT NULL, " +

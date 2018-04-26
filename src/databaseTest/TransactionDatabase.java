@@ -23,7 +23,7 @@ public class TransactionDatabase {
 
     }
 
-    static void createTable(Connection connIn, String dbNameIn) throws SQLException {
+    public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table "+ dbNameIn + ".TRANSACTIONS " + "(DATEOF date NOT NULL, " +
                 "AMOUNT double NOT NULL, " + "LABEL varchar(32) NOT NULL, " +
                 "ID int NOT NULL, " + "RECURRING bit NOT NULL, " +

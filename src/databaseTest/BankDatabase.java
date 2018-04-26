@@ -23,7 +23,7 @@ public class BankDatabase {
 
     }
 
-    static void createTable(Connection connIn, String dbNameIn) throws SQLException {
+    public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".BANKACCOUNTS " +
                 "(ACCOUNT_NAME varchar(32) NOT NULL, " +
                 "BALANCE double NOT NULL, " + "FROZEN bit NOT NULL, " +

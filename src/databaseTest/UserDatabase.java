@@ -25,7 +25,7 @@ public class UserDatabase {
 
     // This method creates the initial user database table.
 
-    static void createTable(Connection connIn, String dbNameIn) throws SQLException {
+    public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".USERS " + "(USERNAME varchar(32) NOT NULL, " +
                 "PASSWORD varchar(32) NOT NULL, " + "USER_ID int NOT NULL, " +
                 "PRIMARY KEY (USER_ID))";

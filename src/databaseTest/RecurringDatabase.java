@@ -24,7 +24,7 @@ public class RecurringDatabase {
 
     }
 
-    static void createTable(Connection connIn, String dbNameIn) throws SQLException {
+    public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".RECURRING " + "(DATE_OF date NOT NULL, " +
                 "LAST_DATE date NOT NULL, " + "AMOUNT double NOT NULL, " +
                 "LABEL varchar(32) NOT NULL, " + "ID int NOT NULL, " +

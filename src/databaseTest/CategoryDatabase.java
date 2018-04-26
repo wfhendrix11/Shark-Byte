@@ -23,7 +23,7 @@ public class CategoryDatabase {
 
     }
 
-    static void createTable(Connection connIn, String dbNameIn) throws SQLException {
+    public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".CATEGORY " +
                 "(MONTH int NOT NULL, " + "YEAR_OF int NOT NULL, " +
                 "LABEL varchar(32) NOT NULL, " +

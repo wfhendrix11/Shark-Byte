@@ -23,7 +23,7 @@ public class AssetDatabase {
 
     }
 
-    static void createTable(Connection connIn, String dbNameIn) throws SQLException {
+    public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".ASSETS " +
                 "(NAME varchar(32) NOT NULL, " + "VALUE_OF double NOT NULL, " +
                 "INTEREST_RATE double NOT NULL, " + "USER_ID int NOT NULL, " +

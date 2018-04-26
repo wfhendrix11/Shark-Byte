@@ -23,7 +23,7 @@ public class LabelDatabase {
 
     }
 
-    static void createTable(Connection connIn, String dbNameIn) throws SQLException {
+    public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".LABELS " +
                 "(LABEL varchar(32) NOT NULL, " +  "USER_ID int NOT NULL, " +
                 "FOREIGN KEY (USER_ID) REFERENCES USERS(USER_ID))";
