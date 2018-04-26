@@ -30,7 +30,8 @@ public class RecurringDatabase {
                 "REC_LABEL varchar(32) NOT NULL, " + "REC_ID int NOT NULL, " +
                 "INTERVAL_OF int NOT NULL, " + "EXECUTIONS int NOT NULL, " +
                 "PERPETUAL boolean NOT NULL, " + "REC_MERCHANT varchar(32) NOT NULL, " +
-                "REC_BANK_ACC varchar(32) NOT NULL, " + "R_USER_ID int NOT NULL)";
+                "REC_BANK_ACC varchar(32) NOT NULL, " + "USER_ID int NOT NULL, " +
+                "foreign key (USER_ID) references " + dbNameIn + ".USERS(USER_ID))";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();
