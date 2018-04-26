@@ -555,7 +555,7 @@ public class FXController {
         EventHandler<ActionEvent> handler3 = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                populateSelectBudgetChoiceBox();
+                //populateSelectBudgetChoiceBox();
                 dialog.close();
             }
         };
