@@ -14,7 +14,7 @@ public class Category {
     }
 
     public double getAmountSpent(){
-        DatabaseConnector db = new DatabaseConnector;
+        DatabaseConnector db = new DatabaseConnector();
         double amountSpent = db.getCategorySpending(label, month, year);
         return amountSpent;
     }
