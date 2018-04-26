@@ -39,9 +39,6 @@ public class UserDatabase {
             if (stmt != null) {
                 stmt.close();
             }
-            if (connIn != null) {
-                connIn.close();
-            }
         }
     }
 
