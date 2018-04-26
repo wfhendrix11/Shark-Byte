@@ -26,8 +26,7 @@ public class AssetDatabase {
     public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".ASSETS " +
                 "(ASSET_NAME varchar(32) NOT NULL, " + "ASSET_VALUE double NOT NULL, " +
-                "INTEREST_RATE double NOT NULL, " + "USER_ID int NOT NULL, " +
-                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID))";
+                "INTEREST_RATE double NOT NULL, " + "A_USER_ID int NOT NULL)";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();

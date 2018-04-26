@@ -28,8 +28,7 @@ public class TransactionDatabase {
                 "TRANS_AMOUNT double NOT NULL, " + "TRANS_LABEL varchar(32) NOT NULL, " +
                 "TRANS_ID int NOT NULL, " + "RECURRING bit NOT NULL, " +
                 "TRANS_MERCHANT varchar(32) NOT NULL, " + "TRANS_BANK_ACC varchar(32) NOT NULL, " +
-                "USER_ID int NOT NULL, " +
-                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID))";
+                "T_USER_ID int NOT NULL)";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();

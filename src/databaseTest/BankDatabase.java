@@ -27,8 +27,7 @@ public class BankDatabase {
         String createString = "create table " + dbNameIn + ".BANKACCOUNTS " +
                 "(ACCOUNT_NAME varchar(32) NOT NULL, " +
                 "BALANCE double NOT NULL, " + "FROZEN bit NOT NULL, " +
-                "BANK_INTEREST double NOT NULL, " + "USER_ID int NOT NULL, " +
-                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID))";
+                "BANK_INTEREST double NOT NULL, " + "B_USER_ID int NOT NULL)";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();
