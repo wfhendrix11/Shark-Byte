@@ -29,6 +29,9 @@ public class FXController {
     @FXML // fx:id="quitButton"
     private Button quitButton; //Value injected by FXMLLoader
 
+    @FXML // fx:id="selectBudgetChoiceBox"
+    private ChoiceBox<MonthlyBudget> selectBudgetChoiceBox; // Value injected by FXMLLoader
+
     @FXML // fx:id="selectBankAccountChoiceBox"
     private ChoiceBox<BankAccount> selectBankAccountChoiceBox; // Value injected by FXMLLoader
 
@@ -444,7 +447,9 @@ public class FXController {
 
     @FXML
     void bankAccountTabChanged(Event event) {
-
+        populateSelectBankAccountChoiceBox();
+        fillBankAccountTransactionsTable();
+        setBankAccountBalanceText();
     }
 
     @FXML
@@ -489,7 +494,8 @@ public class FXController {
 
     @FXML
     void budgetsTabChanged(Event event) {
-
+        populateSelectBudgetChoiceBox();
+        fillBudgetTransactionsTable();
     }
 
     @FXML
