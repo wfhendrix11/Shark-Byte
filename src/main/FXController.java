@@ -30,7 +30,7 @@ public class FXController {
     private Button quitButton; //Value injected by FXMLLoader
 
     @FXML // fx:id="selectBankAccountChoiceBox
-    private ChoiceBox<?> selectBankAccountChoiceBox; // Value injected by FXMLLoader
+    private ChoiceBox<BankAccount> selectBankAccountChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="accountTransactionsTable"
     private TableView<Transaction> accountTransactionsTable; // Value injected by FXMLLoader
@@ -90,7 +90,7 @@ public class FXController {
     private TableColumn<Transaction, String> TransactionPerpetualColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="budgetSpendingColumn"
-    private TableColumn<Transaction, String> budgetSpendingColumn; // Value injected by FXMLLoader
+    private TableColumn<Category, String> budgetSpendingColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioValueColumn"
     private TableColumn<Investment, String> portfolioValueColumn; // Value injected by FXMLLoader
@@ -173,6 +173,8 @@ public class FXController {
     @FXML // fx:id="accountValueChart"
     private LineChart<?, ?> accountValueChart; // Value injected by FXMLLoader
 
+    @FXML // fx:id="selectBudgetChoiceBox
+    private ChoiceBox<MonthlyBudget> selectBudgetChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="enterTransactionButton"
     private Button enterTransactionButton; // Value injected by FXMLLoader
@@ -428,7 +430,9 @@ public class FXController {
 
     @FXML
     void bankAccountTabChanged(Event event) {
-
+        populateSelectBankAccountChoiceBox();
+        fillBankAccountTransactionsTable();
+        setBankAccountBalanceText();
     }
 
     @FXML
@@ -732,7 +736,7 @@ public class FXController {
 
         DatabaseConnector db = new DatabaseConnector();
         ObservableList<Transaction> recentTransactions = db.getRecentTransactions();
-
+        db.close();
         //home_transactionAmountColumn
         //_transactionDateColumn
         //_transactionMerchantColumn
@@ -747,7 +751,7 @@ public class FXController {
 
         DatabaseConnector db = new DatabaseConnector();
         ObservableList<Transaction> transactions = db.getRecentTransactions(); //Maybe need different DB method TODO: Verify
-
+        db.close();
         //TransactionDateColumn
         //TransactionAmountColumn
         //TransactionLabelColumn
@@ -772,18 +776,21 @@ public class FXController {
     }
 
     private void fillBudgetTransactionsTable(){
-        DatabaseConnector db = new DatabaseConnector();
-        //ObservableList<Category> categories = db.get
-        //TODO
-
-        //budgetCategoriesTable.setItems(categories);
+        ObservableList<Category> categories = selectBudgetChoiceBox.getValue().getCategories();
+        //budgetCategoryColumn
+        //budgetSpendingColumn
+        //budgetAmountColumn
+        budgetCategoryColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLabel()));
+        budgetSpendingColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getAmountSpent())));
+        budgetAmountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getPriceLimit())));
+        budgetCategoriesTable.setItems(categories);
     }
 
     private void fillBankAccountTransactionsTable(){
         DatabaseConnector db = new DatabaseConnector();
         //String bankAccount = selectBankAccountChoiceBox.getValue(); //Maybe BankAccount type
         //ObservableList<Transaction> transactions = db.getBankAccountTransactions(bankAccount);
-
+        db.close();
         //accountTransactionDateColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getDate().toString()));
         //accountTransactionAmountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getAmount())));
         //accountTransactionLabelColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLabel()));
@@ -791,7 +798,24 @@ public class FXController {
         //accountTransactionsTable.setItems(transactions);
     }
 
+    private void populateSelectBankAccountChoiceBox(){
+        DatabaseConnector db = new DatabaseConnector();
+        ObservableList<BankAccount> bankAccounts = db.getBankAccounts();
+        db.close();
+        selectBankAccountChoiceBox.setItems(bankAccounts);
+    }
 
+    private void setBankAccountBalanceText(){
+        accountBalance.setText("Balance: $" + selectBankAccountChoiceBox.getValue().getName());
+    }
+
+    private void populateSelectBudgetChoiceBox(){
+        DatabaseConnector db = new DatabaseConnector();
+        ObservableList<MonthlyBudget> budgets = db.getMonthlyBudgets();
+        db.close();
+
+        selectBudgetChoiceBox.setItems(budgets);
+    }
 
 
 

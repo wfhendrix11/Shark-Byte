@@ -167,4 +167,15 @@ public class DatabaseConnector {
         return null;
     }
 
+    public ObservableList<BankAccount> getBankAccounts(){
+        return  FXCollections.observableArrayList();
+    }
+
+    public ObservableList<MonthlyBudget> getMonthlyBudgets(){
+        return FXCollections.observableArrayList();
+    }
+
+    public double getCategorySpending(String label, int month, int year){
+        return 0.0;
+    }
 }
