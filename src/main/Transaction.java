@@ -38,4 +38,8 @@ public class Transaction {
     LocalDate getDate() {
         return date;
     }
+
+    String getMerchant() {return merchant;}
+
+    String getAccount() {return account;}
 }

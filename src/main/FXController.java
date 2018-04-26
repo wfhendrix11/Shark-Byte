@@ -29,8 +29,11 @@ public class FXController {
     @FXML // fx:id="quitButton"
     private Button quitButton; //Value injected by FXMLLoader
 
+    @FXML // fx:id="selectBankAccountChoiceBox
+    private ChoiceBox<?> selectBankAccountChoiceBox; // Value injected by FXMLLoader
+
     @FXML // fx:id="accountTransactionsTable"
-    private TableView<?> accountTransactionsTable; // Value injected by FXMLLoader
+    private TableView<Transaction> accountTransactionsTable; // Value injected by FXMLLoader
 
     @FXML // fx:id="favoritesPriceColumn"
     private TableColumn<?, ?> favoritesPriceColumn; // Value injected by FXMLLoader
@@ -54,7 +57,7 @@ public class FXController {
     private TableView<?> favoritesTable; // Value injected by FXMLLoader
 
     @FXML // fx:id="home_recentTransactions"
-    private TableView<?> home_recentTransactions; // Value injected by FXMLLoader
+    private TableView<Transaction> home_recentTransactions; // Value injected by FXMLLoader
 
     @FXML // fx:id="newInvestmentSymbolField"
     private TextField newInvestmentSymbolField; // Value injected by FXMLLoader
@@ -66,13 +69,13 @@ public class FXController {
     private Tab investmentsTab; // Value injected by FXMLLoader
 
     @FXML // fx:id="accountTransactionAmountColumn"
-    private TableColumn<?, ?> accountTransactionAmountColumn; // Value injected by FXMLLoader
+    private TableColumn<Transaction, String> accountTransactionAmountColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="homeTab"
     private Tab homeTab; // Value injected by FXMLLoader
 
     @FXML // fx:id="TransactionAmountColumn"
-    private TableColumn<?, ?> TransactionAmountColumn; // Value injected by FXMLLoader
+    private TableColumn<Transaction, String> TransactionAmountColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="transactionLabelChoiceBox"
     private ChoiceBox<?> transactionLabelChoiceBox; // Value injected by FXMLLoader
@@ -84,10 +87,10 @@ public class FXController {
     private TableColumn<Investment, String> portfolioAmountColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="TransactionPerpetualColumn"
-    private TableColumn<?, ?> TransactionPerpetualColumn; // Value injected by FXMLLoader
+    private TableColumn<Transaction, String> TransactionPerpetualColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="budgetSpendingColumn"
-    private TableColumn<?, ?> budgetSpendingColumn; // Value injected by FXMLLoader
+    private TableColumn<Transaction, String> budgetSpendingColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioValueColumn"
     private TableColumn<Investment, String> portfolioValueColumn; // Value injected by FXMLLoader
@@ -105,7 +108,7 @@ public class FXController {
     private TextField transactionAmountField; // Value injected by FXMLLoader
 
     @FXML // fx:id="TransactionLabelColumn"
-    private TableColumn<?, ?> TransactionLabelColumn; // Value injected by FXMLLoader
+    private TableColumn<Transaction, String> TransactionLabelColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="filterBankAccountChoiceBox"
     private ChoiceBox<?> filterBankAccountChoiceBox; // Value injected by FXMLLoader
@@ -132,7 +135,7 @@ public class FXController {
     private TextField transactionMerchantField; // Value injected by FXMLLoader
 
     @FXML // fx:id="home_transactionMerchantColumn"
-    private TableColumn<?, ?> home_transactionMerchantColumn; // Value injected by FXMLLoader
+    private TableColumn<Transaction, String> home_transactionMerchantColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="thisMonthBudgetChart"
     private PieChart thisMonthBudgetChart; // Value injected by FXMLLoader
@@ -162,10 +165,10 @@ public class FXController {
     private TableView<Investment> portfolioTable; // Value injected by FXMLLoader
 
     @FXML // fx:id="home_transactionAmountColumn"
-    private TableColumn<?, ?> home_transactionAmountColumn; // Value injected by FXMLLoader
+    private TableColumn<Transaction, String> home_transactionAmountColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="budgetCategoriesTable"
-    private TableView<?> budgetCategoriesTable; // Value injected by FXMLLoader
+    private TableView<Category> budgetCategoriesTable; // Value injected by FXMLLoader
 
     @FXML // fx:id="accountValueChart"
     private LineChart<?, ?> accountValueChart; // Value injected by FXMLLoader
@@ -178,7 +181,7 @@ public class FXController {
     private TableColumn<?, ?> favoritesSymbolColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="budgetAmountColumn"
-    private TableColumn<?, ?> budgetAmountColumn; // Value injected by FXMLLoader
+    private TableColumn<Category, String> budgetAmountColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="recordInvestmentButton"
     private Button recordInvestmentButton; // Value injected by FXMLLoader
@@ -187,19 +190,19 @@ public class FXController {
     private LineChart<?, ?> home_investmentValueChart; // Value injected by FXMLLoader
 
     @FXML // fx:id="home_transactionDateColumn"
-    private TableColumn<?, ?> home_transactionDateColumn; // Value injected by FXMLLoader
+    private TableColumn<Transaction, String> home_transactionDateColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="TransactionBankAccountColumn"
-    private TableColumn<?, ?> TransactionBankAccountColumn; // Value injected by FXMLLoader
+    private TableColumn<Transaction, String> TransactionBankAccountColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="accountTransactionDateColumn"
-    private TableColumn<?, ?> accountTransactionDateColumn; // Value injected by FXMLLoader
+    private TableColumn<Transaction, String> accountTransactionDateColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="budgetCategoryColumn"
-    private TableColumn<?, ?> budgetCategoryColumn; // Value injected by FXMLLoader
+    private TableColumn<Category, String> budgetCategoryColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="TransactionsTable"
-    private TableView<?> TransactionsTable; // Value injected by FXMLLoader
+    private TableView<Transaction> TransactionsTable; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioPriceColumn"
     private TableColumn<Investment, String> portfolioPriceColumn; // Value injected by FXMLLoader
@@ -208,10 +211,10 @@ public class FXController {
     private PieChart home_thisMonthBudgetChart; // Value injected by FXMLLoader
 
     @FXML // fx:id="TransactionMerchantColumn"
-    private TableColumn<?, ?> TransactionMerchantColumn; // Value injected by FXMLLoader
+    private TableColumn<Transaction, String> TransactionMerchantColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="TransactionDateColumn"
-    private TableColumn<?, ?> TransactionDateColumn; // Value injected by FXMLLoader
+    private TableColumn<Transaction, String> TransactionDateColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="transactionTab"
     private Tab transactionTab; // Value injected by FXMLLoader
@@ -223,7 +226,7 @@ public class FXController {
     private ComboBox<?> assetTypeChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="accountTransactionLabelColumn"
-    private TableColumn<?, ?> accountTransactionLabelColumn; // Value injected by FXMLLoader
+    private TableColumn<Transaction, String> accountTransactionLabelColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="accountBalance"
     private Text accountBalance; // Value injected by FXMLLoader
@@ -236,7 +239,9 @@ public class FXController {
 
     @FXML
     void homeTabChanged(Event event) {
-
+        if(homeTab.isSelected()){
+            fillHomeScreenTransactionsTable();
+        }
     }
 
     @FXML
@@ -292,6 +297,7 @@ public class FXController {
     void transactionTabChanged(Event event) {
         updateTransactionLabels();
         updateTransactionBankAccounts();
+        fillTransactionsTable();
     }
 
     @FXML
@@ -551,10 +557,11 @@ public class FXController {
 
     @FXML
     void investmentsTabChanged(Event event) {
-
-        populateAssetTypeChoiceBox();
-        populateNewInvestmentTypeChoiceBox();
-        fillPortfolio();
+        if(investmentsTab.isSelected()) {
+            populateAssetTypeChoiceBox();
+            populateNewInvestmentTypeChoiceBox();
+            fillPortfolio();
+        }
     }
 
 
@@ -721,6 +728,68 @@ public class FXController {
         portfolioTable.setItems(portfolio);
     }
 
+    private void fillHomeScreenTransactionsTable(){
+
+        DatabaseConnector db = new DatabaseConnector();
+        ObservableList<Transaction> recentTransactions = db.getRecentTransactions();
+
+        //home_transactionAmountColumn
+        //_transactionDateColumn
+        //_transactionMerchantColumn
+        home_transactionDateColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getDate().toString()));
+        home_transactionMerchantColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getMerchant()));
+        home_transactionAmountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getAmount())));
+
+        home_recentTransactions.setItems(recentTransactions);
+    }
+
+    private void fillTransactionsTable(){
+
+        DatabaseConnector db = new DatabaseConnector();
+        ObservableList<Transaction> transactions = db.getRecentTransactions(); //Maybe need different DB method TODO: Verify
+
+        //TransactionDateColumn
+        //TransactionAmountColumn
+        //TransactionLabelColumn
+        //TransactionMerchantColumn
+        //TransactionBankAccountColumn
+        //TransactionPerpetualColumn
+
+        TransactionDateColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getDate().toString()));
+        TransactionAmountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getAmount())));
+        TransactionMerchantColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getMerchant()));
+        TransactionLabelColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLabel()));
+        TransactionBankAccountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getAccount()));
+        TransactionPerpetualColumn.setCellValueFactory(data -> {
+            if(data.getValue() instanceof Transaction && !(data.getValue() instanceof RecurringTransaction)) return new ReadOnlyStringWrapper("No");
+            else {
+                if(((RecurringTransaction) data.getValue()).isPerpetual()) return new ReadOnlyStringWrapper("Yes");
+                else return new ReadOnlyStringWrapper("No");
+            }
+        });
+
+        TransactionsTable.setItems(transactions);
+    }
+
+    private void fillBudgetTransactionsTable(){
+        DatabaseConnector db = new DatabaseConnector();
+        //ObservableList<Category> categories = db.get
+        //TODO
+
+        //budgetCategoriesTable.setItems(categories);
+    }
+
+    private void fillBankAccountTransactionsTable(){
+        DatabaseConnector db = new DatabaseConnector();
+        //String bankAccount = selectBankAccountChoiceBox.getValue(); //Maybe BankAccount type
+        //ObservableList<Transaction> transactions = db.getBankAccountTransactions(bankAccount);
+
+        //accountTransactionDateColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getDate().toString()));
+        //accountTransactionAmountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getAmount())));
+        //accountTransactionLabelColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLabel()));
+
+        //accountTransactionsTable.setItems(transactions);
+    }
 
 
 
@@ -738,9 +807,11 @@ public class FXController {
 
 
 
-    /*
+
+
+    /*****************************************
         USELESS BELOW
-     */
+     ******************************************/
     @FXML
     void filterDateClicked(ActionEvent event) {
     }

@@ -2,6 +2,7 @@ package main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.time.LocalDate;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.DatabaseMetaData;
@@ -130,4 +131,26 @@ public class DatabaseConnector {
         portfolio.add(asset1);
         return portfolio;
     }
+
+    public ObservableList<Transaction> getRecentTransactions(){
+        //Some dummy transactions
+        Transaction x1 = new Transaction(LocalDate.now(), 20, "Label", 001, "Wally World", "Checking");
+        Transaction x2 = new Transaction(LocalDate.now(), 23, "Label", 002, "Moe's", "Savings");
+        Transaction x3 = new Transaction(LocalDate.now(), 40, "Label", 003, "AU Bookstore", "Checking");
+        Transaction x4 = new RecurringTransaction(LocalDate.now(), 69, "Entertainment", 004, "Love Stuff", "Checking", 30, 4, false);
+        Transaction x5 = new RecurringTransaction(LocalDate.now(), 42, "Grocery", 005, "Kroger", "Checking", 30, 0, true);
+
+        ObservableList<Transaction> recentTransactions = FXCollections.observableArrayList();
+        recentTransactions.add(x1);
+        recentTransactions.add(x2);
+        recentTransactions.add(x3);
+        recentTransactions.add(x4);
+        recentTransactions.add(x5);
+        return recentTransactions;
+    }
+
+    public ObservableList<Transaction> getBankAccountTransactions(String accountName){
+        return null;
+    }
+
 }
