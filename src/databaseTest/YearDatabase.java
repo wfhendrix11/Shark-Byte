@@ -26,19 +26,16 @@ public class YearDatabase {
     public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".YEARS " +
                 "(YEAR_OF int NOT NULL, " + "USER_ID int NOT NULL, " +
-                "FOREIGN KEY (USER_ID) REFERENCES USERS(USER_ID))";
+                "FOREIGN KEY (USER_ID) REFERENCES " + dbNameIn + ".USERS(USER_ID))";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();
             stmt.executeUpdate(createString);
         } catch (SQLException d){
-
+            System.out.println("No create");
         } finally {
             if (stmt != null) {
                 stmt.close();
-            }
-            if (connIn != null) {
-                connIn.close();
             }
         }
     }
@@ -59,9 +56,6 @@ public class YearDatabase {
         } finally {
             if (insertStmt != null) {
                 insertStmt.close();
-            }
-            if (con != null) {
-                con.close();
             }
         }
     }

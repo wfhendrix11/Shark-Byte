@@ -27,19 +27,16 @@ public class CryptoDatabase {
         String createString = "create table " + dbNameIn + ".CRYPTO " +
                 "(SYMBOL varchar(10) NOT NULL, " + "OWNED double NOT NULL, " +
                 "TOTAL double NOT NULL, " + "USER_ID int NOT NULL, " +
-                "FOREIGN KEY (USER_ID) REFERENCES USERS(USER_ID))";
+                "FOREIGN KEY (USER_ID) REFERENCES " + dbNameIn + ".USERS(USER_ID))";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();
             stmt.executeUpdate(createString);
         } catch (SQLException d){
-
+            System.out.println("No create");
         } finally {
             if (stmt != null) {
                 stmt.close();
-            }
-            if (connIn != null) {
-                connIn.close();
             }
         }
     }
@@ -63,9 +60,6 @@ public class CryptoDatabase {
         } finally {
             if (insertStmt != null) {
                 insertStmt.close();
-            }
-            if (con != null) {
-                con.close();
             }
         }
     }
