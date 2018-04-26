@@ -24,26 +24,23 @@ public class RecurringDatabase {
 
     }
 
-    static void createTable(Connection connIn, String dbNameIn) throws SQLException {
+    public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".RECURRING " + "(DATE_OF date NOT NULL, " +
-                "LAST_DATE date NOT NULL, " + "AMOUNT double NOT NULL, " +
-                "LABEL varchar(32) NOT NULL, " + "ID int NOT NULL, " +
+                "LAST_DATE date NOT NULL, " + "REC_AMOUNT double NOT NULL, " +
+                "REC_LABEL varchar(32) NOT NULL, " + "REC_ID int NOT NULL, " +
                 "INTERVAL_OF int NOT NULL, " + "EXECUTIONS int NOT NULL, " +
-                "PERPETUAL bit NOT NULL, " + "MERCHANT varchar(32) NOT NULL, " +
-                "BANK_ACC varchar(32) NOT NULL, " + "USER_ID int NOT NULL, " +
-                "FOREIGN KEY (USER_ID) REFERENCES USERS(USER_ID))";
+                "PERPETUAL bit NOT NULL, " + "REC_MERCHANT varchar(32) NOT NULL, " +
+                "REC_BANK_ACC varchar(32) NOT NULL, " + "USER_ID int NOT NULL, " +
+                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID)";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();
             stmt.executeUpdate(createString);
         } catch (SQLException d){
-
+            System.out.println("No create Recurring");
         } finally {
             if (stmt != null) {
                 stmt.close();
-            }
-            if (connIn != null) {
-                connIn.close();
             }
         }
     }
@@ -76,9 +73,6 @@ public class RecurringDatabase {
         } finally {
             if (insertStmt != null) {
                 insertStmt.close();
-            }
-            if (con != null) {
-                con.close();
             }
         }
     }

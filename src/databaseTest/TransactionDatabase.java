@@ -23,24 +23,22 @@ public class TransactionDatabase {
 
     }
 
-    static void createTable(Connection connIn, String dbNameIn) throws SQLException {
+    public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table "+ dbNameIn + ".TRANSACTIONS " + "(DATEOF date NOT NULL, " +
-                "AMOUNT double NOT NULL, " + "LABEL varchar(32) NOT NULL, " +
-                "ID int NOT NULL, " + "RECURRING bit NOT NULL, " +
-                "MERCHANT varchar(32) NOT NULL, " + "BANK_ACC varchar(32) NOT NULL, " +
-                "USER_ID int NOT NULL, " + "FOREIGN KEY (USER_ID) REFERENCES USERS(USER_ID))";
+                "TRANS_AMOUNT double NOT NULL, " + "TRANS_LABEL varchar(32) NOT NULL, " +
+                "TRANS_ID int NOT NULL, " + "RECURRING bit NOT NULL, " +
+                "TRANS_MERCHANT varchar(32) NOT NULL, " + "TRANS_BANK_ACC varchar(32) NOT NULL, " +
+                "USER_ID int NOT NULL, " +
+                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID)";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();
             stmt.executeUpdate(createString);
         } catch (SQLException d){
-
+            System.out.println("No create Transaction");
         } finally {
             if (stmt != null) {
                 stmt.close();
-            }
-            if (connIn != null) {
-                connIn.close();
             }
         }
     }
@@ -70,9 +68,6 @@ public class TransactionDatabase {
         } finally {
             if (insertStmt != null) {
                 insertStmt.close();
-            }
-            if (con != null) {
-                con.close();
             }
         }
     }

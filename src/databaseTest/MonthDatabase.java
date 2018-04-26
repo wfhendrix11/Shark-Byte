@@ -23,23 +23,20 @@ public class MonthDatabase {
 
     }
 
-    static void createTable(Connection connIn, String dbNameIn) throws SQLException {
+    public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".MONTHS " +
-                "(MONTH_OF int NOT NULL, " +  "YEAR_OF int NOT NULL, " +
+                "(BUDGET_MONTH int NOT NULL, " +  "BUDGET_YEAR int NOT NULL, " +
                 "USER_ID int NOT NULL, " +
-                "FOREIGN KEY (USER_ID) REFERENCES USERS(USER_ID))";
+                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID)";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();
             stmt.executeUpdate(createString);
         } catch (SQLException d){
-
+            System.out.println("No create Month");
         } finally {
             if (stmt != null) {
                 stmt.close();
-            }
-            if (connIn != null) {
-                connIn.close();
             }
         }
     }

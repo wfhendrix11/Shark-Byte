@@ -90,7 +90,7 @@ public class FXController {
     private TableColumn<Transaction, String> TransactionPerpetualColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="budgetSpendingColumn"
-    private TableColumn<Category, String> budgetSpendingColumn; // Value injected by FXMLLoader
+    private TableColumn<Transaction, String> budgetSpendingColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioValueColumn"
     private TableColumn<Investment, String> portfolioValueColumn; // Value injected by FXMLLoader
@@ -173,8 +173,6 @@ public class FXController {
     @FXML // fx:id="accountValueChart"
     private LineChart<?, ?> accountValueChart; // Value injected by FXMLLoader
 
-    @FXML // fx:id="selectBudgetChoiceBox
-    private ChoiceBox<MonthlyBudget> selectBudgetChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="enterTransactionButton"
     private Button enterTransactionButton; // Value injected by FXMLLoader
@@ -236,7 +234,7 @@ public class FXController {
 
     @FXML
     void quitProgram(ActionEvent event){
-        
+
     }
 
     @FXML
@@ -446,9 +444,7 @@ public class FXController {
 
     @FXML
     void bankAccountTabChanged(Event event) {
-        populateSelectBankAccountChoiceBox();
-        fillBankAccountTransactionsTable();
-        setBankAccountBalanceText();
+
     }
 
     @FXML
@@ -507,69 +503,103 @@ public class FXController {
         dialog.setTitle("Create New Budget");
         VBox dialogVbox = new VBox(20);
 
-        Text field1 = new Text("Choose budget type: ");
+        Text chooseBudgetText = new Text("Choose budget type: ");
 
-        ChoiceBox cb = new ChoiceBox(FXCollections.observableArrayList(
-                "Monthly Budget", "Yearly Budget")
-        );
+        Button monthlyBudgetButton = new Button();
+        monthlyBudgetButton.setText("Monthly Budget");
 
-        Text field2 = new Text("Enter the name: ");
-        TextField field3 = new TextField();
-        field3.setPromptText("Name");
-
-        Text field4 = new Text("Enter the budget amount: ");
-        TextField field5 = new TextField();
-        field5.setPromptText("Budget Amount");
-
-        Text field6 = new Text("Enter the budget category: ");
-        TextField field7 = new TextField();
-        field7.setPromptText("Budget Category");
-
-        Text field8 = new Text("Enter the month: ");
-        TextField field9 = new TextField();
-        field9.setPromptText("Budget Month");
-
-        Text field10 = new Text("Enter the year: ");
-        TextField field11 = new TextField();
-        field11.setPromptText("Budget Year");
+        Button yearlyBudgetButton = new Button();
+        yearlyBudgetButton.setText("Yearly Budget");
 
         Button submitButton = new Button();
         submitButton.setText("Submit");
 
-        EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
+        EventHandler<ActionEvent> handler3 = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DatabaseConnector db = new DatabaseConnector();
-
-                String name = field3.getCharacters().toString();
-                String budgetAmount = field5.getCharacters().toString();
-                String budgetCategory = field7.getCharacters().toString();
-                String budgetMonth = field9.getCharacters().toString();
-                String budgetYear = field11.getCharacters().toString();
-
-                // ADD TO DATABASE
-                //MonthlyBudget newMonthlyBudget = new MonthlyBudget(Integer.parseInt(budgetMonth), Integer.parseInt(budgetYear), Double.parseDouble(budgetAmount));
-                //db.replacePassword(text);
+                populateSelectBudgetChoiceBox();
                 dialog.close();
             }
         };
 
-        submitButton.setOnAction(handler);
+        submitButton.setOnAction(handler3);
 
-        dialogVbox.getChildren().add(field1);
-        dialogVbox.getChildren().add(cb);
-        dialogVbox.getChildren().add(field2);
-        dialogVbox.getChildren().add(field3);
-        dialogVbox.getChildren().add(field4);
-        dialogVbox.getChildren().add(field5);
-        dialogVbox.getChildren().add(field6);
-        dialogVbox.getChildren().add(field7);
-        dialogVbox.getChildren().add(field8);
-        dialogVbox.getChildren().add(field9);
-        dialogVbox.getChildren().add(field10);
-        dialogVbox.getChildren().add(field11);
-        dialogVbox.getChildren().add(submitButton);
-        Scene dialogScene = new Scene(dialogVbox, 500, 600);
+        // MONTHLY BUDGET FORM
+        EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //dialog.close();
+                Node source = (Node) event.getSource();
+                Window theStage = source.getScene().getWindow();
+                final Stage dialog = new Stage();
+                dialog.initModality(Modality.APPLICATION_MODAL);
+                dialog.initOwner(theStage);
+                dialog.setTitle("Create New MONTHLY Budget");
+                VBox dialogVbox = new VBox(20);
+
+                Text monthText = new Text("Enter Month: ");
+
+                TextField monthField = new TextField();
+                monthField.setPromptText("Month");
+
+                Text yearText = new Text("Enter Year: ");
+
+                TextField yearField = new TextField();
+                yearField.setPromptText("Year");
+
+
+                // ADD TO DATABASE
+                //MonthlyBudget newMonthlyBudget = new MonthlyBudget(Integer.parseInt(budgetMonth), Integer.parseInt(budgetYear));
+
+                dialogVbox.getChildren().add(monthText);
+                dialogVbox.getChildren().add(monthField);
+                dialogVbox.getChildren().add(yearText);
+                dialogVbox.getChildren().add(yearField);
+                dialogVbox.getChildren().add(submitButton);
+                Scene dialogScene = new Scene(dialogVbox, 300, 250);
+                dialog.setScene(dialogScene);
+                dialog.show();
+                }
+        };
+
+        monthlyBudgetButton.setOnAction(handler);
+
+        // YEARLY BUDGET FORM
+        EventHandler<ActionEvent> handler2 = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //dialog.close();
+                Node source = (Node) event.getSource();
+                Window theStage = source.getScene().getWindow();
+                final Stage dialog = new Stage();
+                dialog.initModality(Modality.APPLICATION_MODAL);
+                dialog.initOwner(theStage);
+                dialog.setTitle("Create New YEARLY Budget");
+                VBox dialogVbox = new VBox(20);
+
+                Text yearText = new Text("Enter Year: ");
+
+                TextField yearField = new TextField();
+                yearField.setPromptText("Year");
+
+                // ADD TO DATABASE
+                //MonthlyBudget newMonthlyBudget = new MonthlyBudget(Integer.parseInt(budgetMonth), Integer.parseInt(budgetYear));
+
+                dialogVbox.getChildren().add(yearText);
+                dialogVbox.getChildren().add(yearField);
+                dialogVbox.getChildren().add(submitButton);
+                Scene dialogScene = new Scene(dialogVbox, 300, 200);
+                dialog.setScene(dialogScene);
+                dialog.show();
+            }
+        };
+
+        yearlyBudgetButton.setOnAction(handler2);
+
+        dialogVbox.getChildren().add(chooseBudgetText);
+        dialogVbox.getChildren().add(monthlyBudgetButton);
+        dialogVbox.getChildren().add(yearlyBudgetButton);
+        Scene dialogScene = new Scene(dialogVbox, 200, 150);
         dialog.setScene(dialogScene);
         dialog.show();
 
@@ -752,7 +782,7 @@ public class FXController {
 
         DatabaseConnector db = new DatabaseConnector();
         ObservableList<Transaction> recentTransactions = db.getRecentTransactions();
-        db.close();
+
         //home_transactionAmountColumn
         //_transactionDateColumn
         //_transactionMerchantColumn
@@ -767,7 +797,7 @@ public class FXController {
 
         DatabaseConnector db = new DatabaseConnector();
         ObservableList<Transaction> transactions = db.getRecentTransactions(); //Maybe need different DB method TODO: Verify
-        db.close();
+
         //TransactionDateColumn
         //TransactionAmountColumn
         //TransactionLabelColumn
@@ -792,14 +822,11 @@ public class FXController {
     }
 
     private void fillBudgetTransactionsTable(){
-        ObservableList<Category> categories = selectBudgetChoiceBox.getValue().getCategories();
-        //budgetCategoryColumn
-        //budgetSpendingColumn
-        //budgetAmountColumn
-        budgetCategoryColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLabel()));
-        budgetSpendingColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getAmountSpent())));
-        budgetAmountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getPriceLimit())));
-        budgetCategoriesTable.setItems(categories);
+        DatabaseConnector db = new DatabaseConnector();
+        //ObservableList<Category> categories = db.get
+        //TODO
+
+        //budgetCategoriesTable.setItems(categories);
     }
 
     private void fillBankAccountTransactionsTable(){
@@ -826,6 +853,7 @@ public class FXController {
         accountBalance.setText("Balance: $" + selectBankAccountChoiceBox.getValue().getBalance());
     }
 
+
     private void populateSelectBudgetChoiceBox(){
         DatabaseConnector db = new DatabaseConnector();
         ObservableList<MonthlyBudget> budgets = db.getMonthlyBudgets();
@@ -834,9 +862,6 @@ public class FXController {
         selectBudgetChoiceBox.setItems(budgets);
         selectBudgetChoiceBox.getSelectionModel().selectFirst();
     }
-
-
-
 
 
 
