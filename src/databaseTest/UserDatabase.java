@@ -1,3 +1,5 @@
+package databaseTest;
+
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -40,6 +42,10 @@ public class UserDatabase {
             if (connIn != null) {
                 connIn.close();
             }
+        }
+        catch (SQLException se) {
+            // TODO probably should do something here
+            System.out.println(se.getMessage());
         }
     }
 
