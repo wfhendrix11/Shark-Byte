@@ -25,14 +25,13 @@ public class LabelDatabase {
 
     public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".LABELS " +
-                "(LABEL varchar(32) NOT NULL, " +  "USER_ID int NOT NULL, " +
-                "FOREIGN KEY (USER_ID) REFERENCES " + dbNameIn + ".USERS(USER_ID))";
+                "(LABEL varchar(32) NOT NULL, " +  "USER_ID int NOT NULL)";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();
             stmt.executeUpdate(createString);
         } catch (SQLException d){
-            System.out.println("No create");
+            System.out.println("No create Label");
         } finally {
             if (stmt != null) {
                 stmt.close();

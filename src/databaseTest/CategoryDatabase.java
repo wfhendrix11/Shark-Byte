@@ -27,14 +27,13 @@ public class CategoryDatabase {
         String createString = "create table " + dbNameIn + ".CATEGORY " +
                 "(MONTH int NOT NULL, " + "YEAR_OF int NOT NULL, " +
                 "LABEL varchar(32) NOT NULL, " +
-                "LIMIT double NOT NULL, " + "USER_ID int NOT NULL, " +
-                "FOREIGN KEY (USER_ID) REFERENCES " + dbNameIn + ".USERS(USER_ID))";
+                "LIMIT double NOT NULL, " + "USER_ID int NOT NULL)";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();
             stmt.executeUpdate(createString);
         } catch (SQLException d){
-            System.out.println("No create");
+            System.out.println("No create Category");
         } finally {
             if (stmt != null) {
                 stmt.close();

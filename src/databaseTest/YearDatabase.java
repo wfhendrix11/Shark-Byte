@@ -25,14 +25,13 @@ public class YearDatabase {
 
     public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".YEARS " +
-                "(YEAR_OF int NOT NULL, " + "USER_ID int NOT NULL, " +
-                "FOREIGN KEY (USER_ID) REFERENCES " + dbNameIn + ".USERS(USER_ID))";
+                "(YEAR_OF int NOT NULL, " + "USER_ID int NOT NULL)";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();
             stmt.executeUpdate(createString);
         } catch (SQLException d){
-            System.out.println("No create");
+            System.out.println("No create Year");
         } finally {
             if (stmt != null) {
                 stmt.close();

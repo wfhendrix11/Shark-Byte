@@ -26,14 +26,13 @@ public class StockDatabase {
     public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " +dbNameIn+ ".STOCKS " +
                 "(SYMBOL varchar(10) NOT NULL, " + "SHARES int NOT NULL, " +
-                "TOTAL double NOT NULL, " + "USER_ID int NOT NULL, " +
-                "FOREIGN KEY (USER_ID) REFERENCES " + dbNameIn + ".USERS(USER_ID))";
+                "TOTAL double NOT NULL, " + "USER_ID int NOT NULL)";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();
             stmt.executeUpdate(createString);
         } catch (SQLException d){
-            System.out.println("No create");
+            System.out.println("No create Stock");
         } finally {
             if (stmt != null) {
                 stmt.close();

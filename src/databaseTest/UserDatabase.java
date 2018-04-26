@@ -34,7 +34,7 @@ public class UserDatabase {
             stmt = connIn.createStatement();
             stmt.executeUpdate(createString);
         } catch (SQLException d){
-            System.out.println("No create");
+            System.out.println("No create User");
         } finally {
             if (stmt != null) {
                 stmt.close();
