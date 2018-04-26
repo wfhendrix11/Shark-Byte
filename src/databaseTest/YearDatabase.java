@@ -1,3 +1,5 @@
+package databaseTest;
+
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,7 +24,7 @@ public class YearDatabase {
     }
 
     static void createTable(Connection connIn, String dbNameIn) throws SQLException {
-        String createString = "create table " + + dbNameIn + ".YEARS " +
+        String createString = "create table " + dbNameIn + ".YEARS " +
                 "(YEAR_OF int NOT NULL, " + "USER_ID int NOT NULL, " +
                 "FOREIGN KEY (USER_ID) REFERENCES USERS(USER_ID))";
         Statement stmt = null;

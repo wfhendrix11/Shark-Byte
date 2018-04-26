@@ -43,10 +43,6 @@ public class UserDatabase {
                 connIn.close();
             }
         }
-        catch (SQLException se) {
-            // TODO probably should do something here
-            System.out.println(se.getMessage());
-        }
     }
 
     // This method inserts a new user into the user table

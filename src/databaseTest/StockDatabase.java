@@ -1,3 +1,5 @@
+package databaseTest;
+
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
 import java.sql.DriverManager;
