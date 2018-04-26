@@ -772,7 +772,7 @@ public class FXController {
     }
 
     private void fillBudgetTransactionsTable(){
-        DatabaseConnector db = new DatabaseConnector;
+        DatabaseConnector db = new DatabaseConnector();
         //ObservableList<Category> categories = db.get
         //TODO
 
