@@ -25,7 +25,7 @@ public class LabelDatabase {
 
     public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".LABELS " +
-                "(LABEL varchar(32) NOT NULL, " +  "L_USER_ID int NOT NULL";
+                "(LABEL varchar(32) NOT NULL, " +  "L_USER_ID int NOT NULL)";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();
