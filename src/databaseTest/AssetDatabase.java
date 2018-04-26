@@ -27,7 +27,7 @@ public class AssetDatabase {
         String createString = "create table " + dbNameIn + ".ASSETS " +
                 "(ASSET_NAME varchar(32) NOT NULL, " + "ASSET_VALUE double NOT NULL, " +
                 "INTEREST_RATE double NOT NULL, " + "USER_ID int NOT NULL, " +
-                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID)";
+                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID))";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();

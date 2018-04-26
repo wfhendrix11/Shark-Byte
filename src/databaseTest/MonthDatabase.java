@@ -27,7 +27,7 @@ public class MonthDatabase {
         String createString = "create table " + dbNameIn + ".MONTHS " +
                 "(BUDGET_MONTH int NOT NULL, " +  "BUDGET_YEAR int NOT NULL, " +
                 "USER_ID int NOT NULL, " +
-                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID)";
+                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID))";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();

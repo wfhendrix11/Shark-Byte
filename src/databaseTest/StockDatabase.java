@@ -27,7 +27,7 @@ public class StockDatabase {
         String createString = "create table " +dbNameIn+ ".STOCKS " +
                 "(STOCK_SYMBOL varchar(10) NOT NULL, " + "SHARES int NOT NULL, " +
                 "STOCK_TOTAL double NOT NULL, " + "USER_ID int NOT NULL, " +
-                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID)";
+                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID))";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();

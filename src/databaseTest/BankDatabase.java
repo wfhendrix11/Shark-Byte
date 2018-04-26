@@ -28,7 +28,7 @@ public class BankDatabase {
                 "(ACCOUNT_NAME varchar(32) NOT NULL, " +
                 "BALANCE double NOT NULL, " + "FROZEN bit NOT NULL, " +
                 "BANK_INTEREST double NOT NULL, " + "USER_ID int NOT NULL, " +
-                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID)";
+                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID))";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();

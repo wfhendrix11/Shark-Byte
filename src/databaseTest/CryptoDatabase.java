@@ -27,7 +27,7 @@ public class CryptoDatabase {
         String createString = "create table " + dbNameIn + ".CRYPTO " +
                 "(CRYPTO_SYMBOL varchar(10) NOT NULL, " + "OWNED double NOT NULL, " +
                 "CRYPTO_TOTAL double NOT NULL, " + "USER_ID int NOT NULL, " +
-                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID)";
+                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID))";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();

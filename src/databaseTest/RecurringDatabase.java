@@ -31,7 +31,7 @@ public class RecurringDatabase {
                 "INTERVAL_OF int NOT NULL, " + "EXECUTIONS int NOT NULL, " +
                 "PERPETUAL bit NOT NULL, " + "REC_MERCHANT varchar(32) NOT NULL, " +
                 "REC_BANK_ACC varchar(32) NOT NULL, " + "USER_ID int NOT NULL, " +
-                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID)";
+                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID))";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();
