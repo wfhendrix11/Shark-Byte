@@ -48,16 +48,27 @@ public class UserDatabase {
     // This method inserts a new user into the user table
 
     public void insertRow(String userName, String password, int userID) throws SQLException {
-        Statement stmt = null;
-        stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        ResultSet uprs = stmt.executeQuery("SELECT * FROM USERS");
-        uprs.moveToInsertRow();
-        uprs.updateString("USERNAME", userName);
-        uprs.updateString("PASSWORD", password);
-        uprs.updateInt("USER_ID", userID);
-        uprs.insertRow();
-        uprs.beforeFirst();
-        con.commit();
+        PreparedStatement insertStmt = null;
+        String insertInto = "insert into " + dbName + ".USERS " +
+                "values (?, ?, ?)";
+        try {
+            con.setAutoCommit(false);
+            insertStmt = con.prepareStatement(insertInto);
+            insertStmt.setString(1, userName);
+            insertStmt.setString(2, password);
+            insertStmt.setInt(3, userID);
+            insertStmt.executeUpdate();
+            con.commit();
+        } catch (SQLException d) {
+
+        } finally {
+            if (insertStmt != null) {
+                insertStmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
     }
 
     // Changes a user's username in the table
@@ -65,14 +76,24 @@ public class UserDatabase {
     public void updateUserName(String oldName, String newName)  throws SQLException {
         PreparedStatement updateName = null;
         String updateString =
-                "update USERS " + "set USERNAME = ? where USERNAME = ?";
+                "update " + dbName + ".USERS " + "set USERNAME = ? where USERNAME = ?";
+        try {
+            con.setAutoCommit(false);
+            updateName = con.prepareStatement(updateString);
+            updateName.setString(1, newName);
+            updateName.setString(2, oldName);
+            updateName.executeUpdate();
+            con.commit();
+        } catch (SQLException d) {
 
-        con.setAutoCommit(false);
-        updateName = con.prepareStatement(updateString);
-        updateName.setString(1, newName);
-        updateName.setString(2, oldName);
-        updateName.executeUpdate();
-        con.commit();
+        } finally {
+            if (updateName != null) {
+                updateName.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
     }
 
     // Changes a user's password in the table
@@ -80,14 +101,24 @@ public class UserDatabase {
     public void updatePassword(String newPassword, int userID)  throws SQLException {
         PreparedStatement updatePassword = null;
         String updateString =
-                "update USERS " + "set PASSWORD = ? where USER_ID = ?";
+                "update " + dbName + ".USERS " + "set PASSWORD = ? where USER_ID = ?";
+        try {
+            con.setAutoCommit(false);
+            updatePassword = con.prepareStatement(updateString);
+            updatePassword.setString(1, newPassword);
+            updatePassword.setInt(2, userID);
+            updatePassword.executeUpdate();
+            con.commit();
+        } catch (SQLException d) {
 
-        con.setAutoCommit(false);
-        updatePassword = con.prepareStatement(updateString);
-        updatePassword.setString(1, newPassword);
-        updatePassword.setInt(2, userID);
-        updatePassword.executeUpdate();
-        con.commit();
+        } finally {
+            if (updatePassword != null) {
+                updatePassword.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
     }
 
     // Checks if a submitted password is the correct password from the table
@@ -95,12 +126,23 @@ public class UserDatabase {
     public boolean correctPassword(String username, String password)  throws SQLException {
         PreparedStatement checkPassword = null;
         String correctPass = null;
-        String getPassword = "select PASSWORD " + "from USERS where USERNAME = \'"
+        String getPassword = "select PASSWORD " + "from " + dbName + ".USERS where USERNAME = \'"
                 + username + "\'";
-        con.setAutoCommit(false);
-        checkPassword = con.prepareStatement(getPassword);
-        ResultSet rs = checkPassword.executeQuery();
-        correctPass = rs.getString(2);
+        try {
+            con.setAutoCommit(false);
+            checkPassword = con.prepareStatement(getPassword);
+            ResultSet rs = checkPassword.executeQuery();
+            correctPass = rs.getString(2);
+        } catch (SQLException d) {
+
+        } finally {
+            if (checkPassword != null) {
+                checkPassword.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
         if(correctPass == null){
             return false;
         }
@@ -117,12 +159,23 @@ public class UserDatabase {
     public boolean correctUsername(String username)  throws SQLException {
         PreparedStatement checkUsername = null;
         String correctName = null;
-        String getUsername = "select USERNAME " + "from USERS where USERNAME = \'"
+        String getUsername = "select USERNAME " + "from " + dbName + ".USERS where USERNAME = \'"
                 + username + "\'";
-        con.setAutoCommit(false);
-        checkUsername = con.prepareStatement(getUsername);
-        ResultSet rs = checkUsername.executeQuery();
-        correctName = rs.getString(1);
+        try {
+            con.setAutoCommit(false);
+            checkUsername = con.prepareStatement(getUsername);
+            ResultSet rs = checkUsername.executeQuery();
+            correctName = rs.getString(1);
+        } catch (SQLException d) {
+
+        } finally {
+            if (checkUsername != null) {
+                checkUsername.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
         if(correctName == null){
             return false;
         }

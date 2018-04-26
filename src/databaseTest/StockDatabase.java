@@ -43,4 +43,30 @@ public class StockDatabase {
             }
         }
     }
+
+    public void insertRow(String symbolIn, int sharesIn, double totalIn,
+                          int userID) throws SQLException {
+        PreparedStatement insertStmt = null;
+        String insertInto = "insert into " + dbName + ".STOCKS " +
+                "values (?, ?, ?, ?)";
+        try {
+            con.setAutoCommit(false);
+            insertStmt = con.prepareStatement(insertInto);
+            insertStmt.setString(1, symbolIn);
+            insertStmt.setInt(2, sharesIn);
+            insertStmt.setDouble(3, totalIn);
+            insertStmt.setInt(4, userID);
+            insertStmt.executeUpdate();
+            con.commit();
+        } catch (SQLException d) {
+
+        } finally {
+            if (insertStmt != null) {
+                insertStmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 }

@@ -44,4 +44,36 @@ public class TransactionDatabase {
             }
         }
     }
+
+    public void insertRow(java.sql.Date dateIn, double amountIn,
+                          String labelIn, int IDIn,
+                          boolean recurringIn, String merchantIn,
+                          String bankAccountIn, int userID) throws SQLException {
+        PreparedStatement insertStmt = null;
+        String insertInto = "insert into " + dbName + ".TRANSACTIONS " +
+                "values (?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            con.setAutoCommit(false);
+            insertStmt = con.prepareStatement(insertInto);
+            insertStmt.setDate(1, dateIn);
+            insertStmt.setDouble(2, amountIn);
+            insertStmt.setString(3, labelIn);
+            insertStmt.setInt(4, IDIn);
+            insertStmt.setBoolean(5, recurringIn);
+            insertStmt.setString(6, merchantIn);
+            insertStmt.setString(7, bankAccountIn);
+            insertStmt.setInt(8, userID);
+            insertStmt.executeUpdate();
+            con.commit();
+        } catch (SQLException d) {
+
+        } finally {
+            if (insertStmt != null) {
+                insertStmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 }

@@ -44,4 +44,29 @@ public class CryptoDatabase {
         }
     }
 
+    public void insertRow(String symbolIn, double ownedIn, double totalIn,
+                          int userID) throws SQLException {
+        PreparedStatement insertStmt = null;
+        String insertInto = "insert into " + dbName + ".CRYPTO " +
+                "values (?, ?, ?, ?)";
+        try {
+            con.setAutoCommit(false);
+            insertStmt = con.prepareStatement(insertInto);
+            insertStmt.setString(1, symbolIn);
+            insertStmt.setDouble(2, ownedIn);
+            insertStmt.setDouble(3, totalIn);
+            insertStmt.setInt(4, userID);
+            insertStmt.executeUpdate();
+            con.commit();
+        } catch (SQLException d) {
+
+        } finally {
+            if (insertStmt != null) {
+                insertStmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 }

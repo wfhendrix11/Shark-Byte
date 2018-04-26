@@ -44,4 +44,31 @@ public class CategoryDatabase {
             }
         }
     }
+
+    public void insertRow(int mon, int yr, String labelIn, double limitIn,
+                          int userID) throws SQLException {
+        PreparedStatement insertStmt = null;
+        String insertInto = "insert into " + dbName + ".CATEGORY " +
+                "values (?, ?, ?, ?, ?)";
+        try {
+            con.setAutoCommit(false);
+            insertStmt = con.prepareStatement(insertInto);
+            insertStmt.setInt(1, mon);
+            insertStmt.setInt(2, yr);
+            insertStmt.setString(3, labelIn);
+            insertStmt.setDouble(4, limitIn);
+            insertStmt.setInt(5, userID);
+            insertStmt.executeUpdate();
+            con.commit();
+        } catch (SQLException d) {
+
+        } finally {
+            if (insertStmt != null) {
+                insertStmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 }

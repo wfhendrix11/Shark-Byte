@@ -25,7 +25,7 @@ public class MonthDatabase {
 
     static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".MONTHS " +
-                "(MONTH int NOT NULL, " +  "YEAR_OF int NOT NULL, " +
+                "(MONTH_OF int NOT NULL, " +  "YEAR_OF int NOT NULL, " +
                 "USER_ID int NOT NULL, " +
                 "FOREIGN KEY (USER_ID) REFERENCES USERS(USER_ID))";
         Statement stmt = null;
@@ -40,6 +40,30 @@ public class MonthDatabase {
             }
             if (connIn != null) {
                 connIn.close();
+            }
+        }
+    }
+
+    public void insertRow(int mon, int yr, int userID) throws SQLException {
+        PreparedStatement insertStmt = null;
+        String insertInto = "insert into " + dbName + ".MONTHS " +
+                "values (?, ?, ?)";
+        try {
+            con.setAutoCommit(false);
+            insertStmt = con.prepareStatement(insertInto);
+            insertStmt.setInt(1, mon);
+            insertStmt.setInt(2, yr);
+            insertStmt.setInt(3, userID);
+            insertStmt.executeUpdate();
+            con.commit();
+        } catch (SQLException d) {
+
+        } finally {
+            if (insertStmt != null) {
+                insertStmt.close();
+            }
+            if (con != null) {
+                con.close();
             }
         }
     }

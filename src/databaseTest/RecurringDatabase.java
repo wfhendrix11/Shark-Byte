@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
+import java.sql.Date;
 
 public class RecurringDatabase {
 
@@ -27,7 +28,7 @@ public class RecurringDatabase {
         String createString = "create table " + dbNameIn + ".RECURRING " + "(DATE_OF date NOT NULL, " +
                 "LAST_DATE date NOT NULL, " + "AMOUNT double NOT NULL, " +
                 "LABEL varchar(32) NOT NULL, " + "ID int NOT NULL, " +
-                "INTERVAL int NOT NULL, " + "EXECUTIONS int NOT NULL, " +
+                "INTERVAL_OF int NOT NULL, " + "EXECUTIONS int NOT NULL, " +
                 "PERPETUAL bit NOT NULL, " + "MERCHANT varchar(32) NOT NULL, " +
                 "BANK_ACC varchar(32) NOT NULL, " + "USER_ID int NOT NULL, " +
                 "FOREIGN KEY (USER_ID) REFERENCES USERS(USER_ID))";
@@ -43,6 +44,41 @@ public class RecurringDatabase {
             }
             if (connIn != null) {
                 connIn.close();
+            }
+        }
+    }
+
+    public void insertRow(java.sql.Date dateIn, java.sql.Date lastDateIn, double amountIn,
+                          String labelIn, int IDIn, int intervalIn,
+                          int executionsIn, boolean perpetualIn, String merchantIn,
+                          String bankAccountIn, int userID) throws SQLException {
+        PreparedStatement insertStmt = null;
+        String insertInto = "insert into " + dbName + ".RECURRING " +
+                "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
+            con.setAutoCommit(false);
+            insertStmt = con.prepareStatement(insertInto);
+            insertStmt.setDate(1, dateIn);
+            insertStmt.setDate(2, lastDateIn);
+            insertStmt.setDouble(3, amountIn);
+            insertStmt.setString(4, labelIn);
+            insertStmt.setInt(5, IDIn);
+            insertStmt.setInt(6, intervalIn);
+            insertStmt.setInt(7, executionsIn);
+            insertStmt.setBoolean(8, perpetualIn);
+            insertStmt.setString(9, merchantIn);
+            insertStmt.setString(10, bankAccountIn);
+            insertStmt.setInt(11, userID);
+            insertStmt.executeUpdate();
+            con.commit();
+        } catch (SQLException d) {
+
+        } finally {
+            if (insertStmt != null) {
+                insertStmt.close();
+            }
+            if (con != null) {
+                con.close();
             }
         }
     }

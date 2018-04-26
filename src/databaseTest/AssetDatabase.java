@@ -43,4 +43,30 @@ public class AssetDatabase {
             }
         }
     }
+
+    public void insertRow(String nameIn, double valueIn, double rateIn,
+                          int userID) throws SQLException {
+        PreparedStatement insertStmt = null;
+        String insertInto = "insert into " + dbName + ".ASSETS " +
+                "values (?, ?, ?, ?)";
+        try {
+            con.setAutoCommit(false);
+            insertStmt = con.prepareStatement(insertInto);
+            insertStmt.setString(1, nameIn);
+            insertStmt.setDouble(2, valueIn);
+            insertStmt.setDouble(3, rateIn);
+            insertStmt.setInt(4, userID);
+            insertStmt.executeUpdate();
+            con.commit();
+        } catch (SQLException d) {
+
+        } finally {
+            if (insertStmt != null) {
+                insertStmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 }

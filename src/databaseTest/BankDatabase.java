@@ -44,4 +44,31 @@ public class BankDatabase {
             }
         }
     }
+
+    public void insertRow(String accountIn, double balanceIn, boolean frozenIn,
+                          double rateIn, int userID) throws SQLException {
+        PreparedStatement insertStmt = null;
+        String insertInto = "insert into " + dbName + ".BANKACCOUNTS " +
+                "values (?, ?, ?, ?, ?)";
+        try {
+            con.setAutoCommit(false);
+            insertStmt = con.prepareStatement(insertInto);
+            insertStmt.setString(1, accountIn);
+            insertStmt.setDouble(2, balanceIn);
+            insertStmt.setBoolean(3, frozenIn);
+            insertStmt.setDouble(2, rateIn);
+            insertStmt.setInt(5, userID);
+            insertStmt.executeUpdate();
+            con.commit();
+        } catch (SQLException d) {
+
+        } finally {
+            if (insertStmt != null) {
+                insertStmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 }
