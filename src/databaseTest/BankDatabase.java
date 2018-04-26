@@ -1,5 +1,8 @@
 package databaseTest;
 
+
+import main.DatabaseConnector;
+
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,7 +29,7 @@ public class BankDatabase {
     public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".BANKACCOUNTS " +
                 "(ACCOUNT_NAME varchar(32) NOT NULL, " +
-                "BALANCE double NOT NULL, " + "FROZEN bit, " +
+                "BALANCE double NOT NULL, " + "FROZEN boolean NOT NULL, " +
                 "BANK_INTEREST double NOT NULL, " + "B_USER_ID int NOT NULL)";
         Statement stmt = null;
         try {
@@ -34,6 +37,7 @@ public class BankDatabase {
             stmt.executeUpdate(createString);
         } catch (SQLException d){
             System.out.println("No create Bank Account");
+            DatabaseConnector.printSQLException(d);
         } finally {
             if (stmt != null) {
                 stmt.close();
@@ -57,7 +61,7 @@ public class BankDatabase {
             insertStmt.executeUpdate();
             con.commit();
         } catch (SQLException d) {
-
+            DatabaseConnector.printSQLException(d);
         } finally {
             if (insertStmt != null) {
                 insertStmt.close();

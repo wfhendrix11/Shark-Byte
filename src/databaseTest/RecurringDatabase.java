@@ -29,7 +29,7 @@ public class RecurringDatabase {
                 "LAST_DATE date NOT NULL, " + "REC_AMOUNT double NOT NULL, " +
                 "REC_LABEL varchar(32) NOT NULL, " + "REC_ID int NOT NULL, " +
                 "INTERVAL_OF int NOT NULL, " + "EXECUTIONS int NOT NULL, " +
-                "PERPETUAL bit, " + "REC_MERCHANT varchar(32) NOT NULL, " +
+                "PERPETUAL boolean NOT NULL, " + "REC_MERCHANT varchar(32) NOT NULL, " +
                 "REC_BANK_ACC varchar(32) NOT NULL, " + "R_USER_ID int NOT NULL)";
         Statement stmt = null;
         try {
@@ -37,6 +37,10 @@ public class RecurringDatabase {
             stmt.executeUpdate(createString);
         } catch (SQLException d){
             System.out.println("No create Recurring");
+            do {
+                System.out.println(d.getMessage());
+                d = d.getNextException();
+            } while(d != null);
         } finally {
             if (stmt != null) {
                 stmt.close();

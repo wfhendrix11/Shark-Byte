@@ -180,4 +180,11 @@ public class DatabaseConnector {
     public double getCategorySpending(String label, int month, int year){
         return 0.0;
     }
+
+    public static void printSQLException(SQLException e) {
+        do {
+            System.out.println(e.getMessage());
+            e = e.getNextException();
+        } while(e != null);
+    }
 }

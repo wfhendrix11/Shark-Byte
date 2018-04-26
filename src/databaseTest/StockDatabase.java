@@ -1,5 +1,7 @@
 package databaseTest;
 
+import main.DatabaseConnector;
+
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -33,6 +35,7 @@ public class StockDatabase {
             stmt.executeUpdate(createString);
         } catch (SQLException d){
             System.out.println("No create Stock");
+            DatabaseConnector.printSQLException(d);
         } finally {
             if (stmt != null) {
                 stmt.close();
@@ -55,7 +58,7 @@ public class StockDatabase {
             insertStmt.executeUpdate();
             con.commit();
         } catch (SQLException d) {
-
+            DatabaseConnector.printSQLException(d);
         } finally {
             if (insertStmt != null) {
                 insertStmt.close();

@@ -1,5 +1,7 @@
 package databaseTest;
 
+import main.DatabaseConnector;
+
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -51,7 +53,7 @@ public class LabelDatabase {
             insertStmt.executeUpdate();
             con.commit();
         } catch (SQLException d) {
-
+            DatabaseConnector.printSQLException(d);
         } finally {
             if (insertStmt != null) {
                 insertStmt.close();
