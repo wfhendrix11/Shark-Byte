@@ -27,8 +27,7 @@ public class CategoryDatabase {
         String createString = "create table " + dbNameIn + ".CATEGORY " +
                 "(MONTH_C int NOT NULL, " + "YEAR_C int NOT NULL, " +
                 "CATEGORY_LABEL varchar(32) NOT NULL, " +
-                "LIMIT double NOT NULL, " + "USER_ID int NOT NULL, " +
-                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID))";
+                "LIMIT double NOT NULL, " + "CA_USER_ID int NOT NULL)";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();
