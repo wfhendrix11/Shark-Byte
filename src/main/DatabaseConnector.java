@@ -80,9 +80,9 @@ public class DatabaseConnector {
         System.out.println("Label added");
     }
 
-    public ArrayList<String> selectLabels() {
+    public ObservableList<String> selectLabels() {
         // TODO not implemented, just stubbed
-        ArrayList<String> labels = new ArrayList<String>();
+        ObservableList<String> labels = FXCollections.observableArrayList();
         labels.add("Label1");
         labels.add("Label2");
 
@@ -154,7 +154,9 @@ public class DatabaseConnector {
     }
 
     public ObservableList<BankAccount> getBankAccounts(){
-        return  FXCollections.observableArrayList();
+        ObservableList<BankAccount> bankAccounts = FXCollections.observableArrayList();
+        bankAccounts.add(new BankAccount("Checking", 22));
+        return bankAccounts;
     }
 
     public ObservableList<MonthlyBudget> getMonthlyBudgets(){

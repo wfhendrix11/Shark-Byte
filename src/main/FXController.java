@@ -29,7 +29,7 @@ public class FXController {
     @FXML // fx:id="quitButton"
     private Button quitButton; //Value injected by FXMLLoader
 
-    @FXML // fx:id="selectBankAccountChoiceBox
+    @FXML // fx:id="selectBankAccountChoiceBox"
     private ChoiceBox<BankAccount> selectBankAccountChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="accountTransactionsTable"
@@ -382,7 +382,23 @@ public class FXController {
 
     @FXML
     void newBudgetCategory(ActionEvent event) {
+        Node source = (Node) event.getSource();
+        Window theStage = source.getScene().getWindow();
 
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(theStage);
+        dialog.setTitle("New Budget Category");
+        VBox dialogVBox = new VBox(20);
+
+        DatabaseConnector db = new DatabaseConnector();
+        ObservableList<String> labels =  db.selectLabels();
+        db.close();
+        ChoiceBox<String> labelPicker = new ChoiceBox<String>();
+        labelPicker.setItems(labels);
+        labelPicker.getSelectionModel().selectFirst();
+
+        //TODO FINISH THIS USE CASE
     }
 
     @FXML
@@ -532,7 +548,7 @@ public class FXController {
                 String budgetYear = field11.getCharacters().toString();
 
                 // ADD TO DATABASE
-                MonthlyBudget newMonthlyBudget = new MonthlyBudget(Integer.parseInt(budgetMonth), Integer.parseInt(budgetYear), Double.parseDouble(budgetAmount));
+                //MonthlyBudget newMonthlyBudget = new MonthlyBudget(Integer.parseInt(budgetMonth), Integer.parseInt(budgetYear), Double.parseDouble(budgetAmount));
                 //db.replacePassword(text);
                 dialog.close();
             }
@@ -648,7 +664,7 @@ public class FXController {
 
     void updateTransactionLabels() {
         DatabaseConnector db = new DatabaseConnector();
-        ArrayList<String> labels = db.selectLabels();
+        ObservableList<String> labels = db.selectLabels();
         db.close();
 
         ObservableList labelItems = FXCollections.observableArrayList();
@@ -788,14 +804,14 @@ public class FXController {
 
     private void fillBankAccountTransactionsTable(){
         DatabaseConnector db = new DatabaseConnector();
-        //String bankAccount = selectBankAccountChoiceBox.getValue(); //Maybe BankAccount type
-        //ObservableList<Transaction> transactions = db.getBankAccountTransactions(bankAccount);
+        BankAccount bankAccount = selectBankAccountChoiceBox.getValue();
+        ObservableList<Transaction> transactions = db.getBankAccountTransactions(bankAccount.getName());
         db.close();
-        //accountTransactionDateColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getDate().toString()));
-        //accountTransactionAmountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getAmount())));
-        //accountTransactionLabelColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLabel()));
+        accountTransactionDateColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getDate().toString()));
+        accountTransactionAmountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getAmount())));
+        accountTransactionLabelColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLabel()));
 
-        //accountTransactionsTable.setItems(transactions);
+        accountTransactionsTable.setItems(transactions);
     }
 
     private void populateSelectBankAccountChoiceBox(){
@@ -803,10 +819,11 @@ public class FXController {
         ObservableList<BankAccount> bankAccounts = db.getBankAccounts();
         db.close();
         selectBankAccountChoiceBox.setItems(bankAccounts);
+        selectBankAccountChoiceBox.getSelectionModel().selectFirst();
     }
 
     private void setBankAccountBalanceText(){
-        accountBalance.setText("Balance: $" + selectBankAccountChoiceBox.getValue().getName());
+        accountBalance.setText("Balance: $" + selectBankAccountChoiceBox.getValue().getBalance());
     }
 
     private void populateSelectBudgetChoiceBox(){
@@ -815,6 +832,7 @@ public class FXController {
         db.close();
 
         selectBudgetChoiceBox.setItems(budgets);
+        selectBudgetChoiceBox.getSelectionModel().selectFirst();
     }
 
 
