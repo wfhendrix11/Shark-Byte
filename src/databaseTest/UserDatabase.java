@@ -1,3 +1,5 @@
+package databaseTest;
+
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -31,6 +33,10 @@ public class UserDatabase {
             Statement stmt = null;
             stmt = con.createStatement();
             stmt.executeUpdate(createString);
+        }
+        catch (SQLException se) {
+            // TODO probably should do something here
+            System.out.println(se.getMessage());
         }
     }
 
