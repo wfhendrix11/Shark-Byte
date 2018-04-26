@@ -95,8 +95,7 @@
                         </LineChart>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <Text fx:id="accountName" layoutX="68.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account Name" />
-                              <Text fx:id="accountBalance" layoutX="244.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Balance: $00000" wrappingWidth="107.306640625" />
+                              <Text fx:id="accountBalance" layoutX="167.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Balance: $00000" wrappingWidth="107.306640625" />
                               <TableView fx:id="accountTransactionsTable" layoutY="51.0" prefHeight="427.0" prefWidth="441.0">
                                 <columns>
                                   <TableColumn fx:id="accountTransactionDateColumn" prefWidth="147.0" text="Date" />

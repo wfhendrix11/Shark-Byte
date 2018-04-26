@@ -39,4 +39,8 @@ public class BankAccount {
     public String toString() {
         return name;
     }
+
+    public double getBalance(){
+        return balance;
+    }
 }

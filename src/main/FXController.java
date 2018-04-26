@@ -29,8 +29,11 @@ public class FXController {
     @FXML // fx:id="quitButton"
     private Button quitButton; //Value injected by FXMLLoader
 
-    @FXML // fx:id="selectBankAccountChoiceBox
-    private ChoiceBox<?> selectBankAccountChoiceBox; // Value injected by FXMLLoader
+    @FXML // fx:id="selectBudgetChoiceBox"
+    private ChoiceBox<MonthlyBudget> selectBudgetChoiceBox; // Value injected by FXMLLoader
+
+    @FXML // fx:id="selectBankAccountChoiceBox"
+    private ChoiceBox<BankAccount> selectBankAccountChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="accountTransactionsTable"
     private TableView<Transaction> accountTransactionsTable; // Value injected by FXMLLoader
@@ -387,54 +390,16 @@ public class FXController {
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(theStage);
         dialog.setTitle("New Budget Category");
-        VBox dialogVbox = new VBox(20);
+        VBox dialogVBox = new VBox(20);
 
-        Text CategoryLabel = new Text("Pick a Category Label: ");
+        DatabaseConnector db = new DatabaseConnector();
+        ObservableList<String> labels =  db.selectLabels();
+        db.close();
+        ChoiceBox<String> labelPicker = new ChoiceBox<String>();
+        labelPicker.setItems(labels);
+        labelPicker.getSelectionModel().selectFirst();
 
-        ObservableList labels = FXCollections.observableArrayList();
-        //labels.add("Stock");
-        //labels.add("Crypto");
-        //labels.setItems(labels);
-        //assetTypeChoiceBox.getSelectionModel().selectFirst();
-
-        TextField catLabel = new TextField();
-        catLabel.setPromptText("Category Label");
-
-        Text categoryAmount = new Text("Enter Category Amount: ");
-
-        TextField catAmount = new TextField();
-        catAmount.setPromptText("Category Amount");
-
-        Button submitButton = new Button();
-        submitButton.setText("Submit");
-
-        EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DatabaseConnector db = new DatabaseConnector();
-                // category label
-                String categoryLabel = catLabel.getCharacters().toString();
-                // category amount
-                String categoryAmount = catAmount.getCharacters().toString();
-                // category month and year
-
-                // TODO DATABASE
-
-                dialog.close();
-            }
-        };
-
-        submitButton.setOnAction(handler);
-
-        dialogVbox.getChildren().add(CategoryLabel);
-        dialogVbox.getChildren().add(catLabel);
-        dialogVbox.getChildren().add(categoryAmount);
-        dialogVbox.getChildren().add(catAmount);
-
-        dialogVbox.getChildren().add(submitButton);
-        Scene dialogScene = new Scene(dialogVbox, 300, 300);
-        dialog.setScene(dialogScene);
-        dialog.show();
+        //TODO FINISH THIS USE CASE
     }
 
     @FXML
@@ -482,7 +447,9 @@ public class FXController {
 
     @FXML
     void bankAccountTabChanged(Event event) {
-
+        populateSelectBankAccountChoiceBox();
+        fillBankAccountTransactionsTable();
+        setBankAccountBalanceText();
     }
 
     @FXML
@@ -527,7 +494,8 @@ public class FXController {
 
     @FXML
     void budgetsTabChanged(Event event) {
-
+        populateSelectBudgetChoiceBox();
+        fillBudgetTransactionsTable();
     }
 
     @FXML
@@ -732,7 +700,7 @@ public class FXController {
 
     void updateTransactionLabels() {
         DatabaseConnector db = new DatabaseConnector();
-        ArrayList<String> labels = db.selectLabels();
+        ObservableList<String> labels = db.selectLabels();
         db.close();
 
         ObservableList labelItems = FXCollections.observableArrayList();
@@ -869,19 +837,37 @@ public class FXController {
 
     private void fillBankAccountTransactionsTable(){
         DatabaseConnector db = new DatabaseConnector();
-        //String bankAccount = selectBankAccountChoiceBox.getValue(); //Maybe BankAccount type
-        //ObservableList<Transaction> transactions = db.getBankAccountTransactions(bankAccount);
+        BankAccount bankAccount = selectBankAccountChoiceBox.getValue();
+        ObservableList<Transaction> transactions = db.getBankAccountTransactions(bankAccount.getName());
+        db.close();
+        accountTransactionDateColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getDate().toString()));
+        accountTransactionAmountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getAmount())));
+        accountTransactionLabelColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLabel()));
 
-        //accountTransactionDateColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getDate().toString()));
-        //accountTransactionAmountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getAmount())));
-        //accountTransactionLabelColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLabel()));
+        accountTransactionsTable.setItems(transactions);
+    }
 
-        //accountTransactionsTable.setItems(transactions);
+    private void populateSelectBankAccountChoiceBox(){
+        DatabaseConnector db = new DatabaseConnector();
+        ObservableList<BankAccount> bankAccounts = db.getBankAccounts();
+        db.close();
+        selectBankAccountChoiceBox.setItems(bankAccounts);
+        selectBankAccountChoiceBox.getSelectionModel().selectFirst();
+    }
+
+    private void setBankAccountBalanceText(){
+        accountBalance.setText("Balance: $" + selectBankAccountChoiceBox.getValue().getBalance());
     }
 
 
+    private void populateSelectBudgetChoiceBox(){
+        DatabaseConnector db = new DatabaseConnector();
+        ObservableList<MonthlyBudget> budgets = db.getMonthlyBudgets();
+        db.close();
 
-
+        selectBudgetChoiceBox.setItems(budgets);
+        selectBudgetChoiceBox.getSelectionModel().selectFirst();
+    }
 
 
 

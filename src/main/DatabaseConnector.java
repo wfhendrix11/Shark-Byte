@@ -36,7 +36,6 @@ public class DatabaseConnector {
                 // TODO create tables
                 System.out.println("There are no tables");
 
-
                 AssetDatabase.createTable(conn, dbName);
                 BankDatabase.createTable(conn, dbName);
                 CategoryDatabase.createTable(conn, dbName);
@@ -46,8 +45,8 @@ public class DatabaseConnector {
                 RecurringDatabase.createTable(conn, dbName);
                 StockDatabase.createTable(conn, dbName);
                 TransactionDatabase.createTable(conn, dbName);
-                UserDatabase.createTable(conn, dbName);
                 YearDatabase.createTable(conn, dbName);
+                UserDatabase.createTable(conn, dbName);
             }
 
             theTables.close();
@@ -95,9 +94,9 @@ public class DatabaseConnector {
         System.out.println("Label added");
     }
 
-    public ArrayList<String> selectLabels() {
+    public ObservableList<String> selectLabels() {
         // TODO not implemented, just stubbed
-        ArrayList<String> labels = new ArrayList<String>();
+        ObservableList<String> labels = FXCollections.observableArrayList();
         labels.add("Label1");
         labels.add("Label2");
 
@@ -169,9 +168,9 @@ public class DatabaseConnector {
     }
 
     public ObservableList<BankAccount> getBankAccounts(){
-        ObservableList<BankAccount> ret = FXCollections.observableArrayList();
-        ret.add(new BankAccount("Account1", -1));
-        return  ret;
+        ObservableList<BankAccount> bankAccounts = FXCollections.observableArrayList();
+        bankAccounts.add(new BankAccount("Checking", 22));
+        return bankAccounts;
     }
 
     public ObservableList<MonthlyBudget> getMonthlyBudgets(){
