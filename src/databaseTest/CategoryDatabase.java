@@ -23,24 +23,21 @@ public class CategoryDatabase {
 
     }
 
-    static void createTable(Connection connIn, String dbNameIn) throws SQLException {
+    public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".CATEGORY " +
                 "(MONTH int NOT NULL, " + "YEAR_OF int NOT NULL, " +
                 "LABEL varchar(32) NOT NULL, " +
                 "LIMIT double NOT NULL, " + "USER_ID int NOT NULL, " +
-                "FOREIGN KEY (USER_ID) REFERENCES USERS(USER_ID))";
+                "FOREIGN KEY (USER_ID) REFERENCES " + dbNameIn + ".USERS(USER_ID))";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();
             stmt.executeUpdate(createString);
         } catch (SQLException d){
-
+            System.out.println("No create");
         } finally {
             if (stmt != null) {
                 stmt.close();
-            }
-            if (connIn != null) {
-                connIn.close();
             }
         }
     }
@@ -65,9 +62,6 @@ public class CategoryDatabase {
         } finally {
             if (insertStmt != null) {
                 insertStmt.close();
-            }
-            if (con != null) {
-                con.close();
             }
         }
     }

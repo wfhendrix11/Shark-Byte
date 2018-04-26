@@ -25,7 +25,7 @@ public class UserDatabase {
 
     // This method creates the initial user database table.
 
-    static void createTable(Connection connIn, String dbNameIn) throws SQLException {
+    public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".USERS " + "(USERNAME varchar(32) NOT NULL, " +
                 "PASSWORD varchar(32) NOT NULL, " + "USER_ID int NOT NULL, " +
                 "PRIMARY KEY (USER_ID))";
@@ -34,7 +34,7 @@ public class UserDatabase {
             stmt = connIn.createStatement();
             stmt.executeUpdate(createString);
         } catch (SQLException d){
-
+            System.out.println("No create");
         } finally {
             if (stmt != null) {
                 stmt.close();
@@ -65,9 +65,6 @@ public class UserDatabase {
             if (insertStmt != null) {
                 insertStmt.close();
             }
-            if (con != null) {
-                con.close();
-            }
         }
     }
 
@@ -89,9 +86,6 @@ public class UserDatabase {
         } finally {
             if (updateName != null) {
                 updateName.close();
-            }
-            if (con != null) {
-                con.close();
             }
         }
     }
@@ -115,9 +109,6 @@ public class UserDatabase {
             if (updatePassword != null) {
                 updatePassword.close();
             }
-            if (con != null) {
-                con.close();
-            }
         }
     }
 
@@ -138,9 +129,6 @@ public class UserDatabase {
         } finally {
             if (checkPassword != null) {
                 checkPassword.close();
-            }
-            if (con != null) {
-                con.close();
             }
         }
         if(correctPass == null){
@@ -171,9 +159,6 @@ public class UserDatabase {
         } finally {
             if (checkUsername != null) {
                 checkUsername.close();
-            }
-            if (con != null) {
-                con.close();
             }
         }
         if(correctName == null){
