@@ -532,7 +532,7 @@ public class FXController {
                 String budgetYear = field11.getCharacters().toString();
 
                 // ADD TO DATABASE
-                MonthlyBudget newMonthlyBudget = new MonthlyBudget(Integer.parseInt(budgetMonth), Integer.parseInt(budgetYear), Double.parseDouble(budgetAmount));
+                MonthlyBudget newMonthlyBudget = new MonthlyBudget(Integer.parseInt(budgetMonth), Integer.parseInt(budgetYear));
                 //db.replacePassword(text);
                 dialog.close();
             }

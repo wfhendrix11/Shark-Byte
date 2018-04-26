@@ -36,6 +36,7 @@ public class DatabaseConnector {
                 // TODO create tables
                 System.out.println("There are no tables");
 
+
                 AssetDatabase.createTable(conn, dbName);
                 BankDatabase.createTable(conn, dbName);
                 CategoryDatabase.createTable(conn, dbName);
@@ -168,7 +169,9 @@ public class DatabaseConnector {
     }
 
     public ObservableList<BankAccount> getBankAccounts(){
-        return  FXCollections.observableArrayList();
+        ObservableList<BankAccount> ret = FXCollections.observableArrayList();
+        ret.add(new BankAccount("Account1", -1));
+        return  ret;
     }
 
     public ObservableList<MonthlyBudget> getMonthlyBudgets(){
