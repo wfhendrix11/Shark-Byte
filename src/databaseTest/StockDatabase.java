@@ -37,9 +37,6 @@ public class StockDatabase {
             if (stmt != null) {
                 stmt.close();
             }
-            if (connIn != null) {
-                connIn.close();
-            }
         }
     }
 
