@@ -8,12 +8,18 @@ import java.util.TreeSet;
 public class MonthlyBudget {
     private int month;
     private int year;
+    private double spendingAmount;
+    private double budgetAmount;
     private Set<Transaction> transactions;
     private Map<String, Category> categories;
     private Set<String> labels;
     private Map<String, Integer> budgets;
 
-    MonthlyBudget(int newMonth, int newYear) {
+    MonthlyBudget(int newMonth, int newYear, double newBudgetAmount) {
+        month = newMonth;
+        year = newYear;
+        spendingAmount = 0;
+        budgetAmount = newBudgetAmount;
         transactions = new TreeSet<Transaction>();
         categories = new TreeMap<String, Category>();
         labels = new TreeSet<String>();
@@ -28,4 +34,6 @@ public class MonthlyBudget {
         categories.put(key, c);
         System.out.print("Category added.");
     }
+
+    //public
 }
