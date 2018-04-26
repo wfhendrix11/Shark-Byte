@@ -25,8 +25,9 @@ public class MonthDatabase {
 
     public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".MONTHS " +
-                "(MONTH_OF int NOT NULL, " +  "YEAR_OF int NOT NULL, " +
-                "USER_ID int NOT NULL)";
+                "(BUDGET_MONTH int NOT NULL, " +  "BUDGET_YEAR int NOT NULL, " +
+                "USER_ID int NOT NULL, " +
+                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID)";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();

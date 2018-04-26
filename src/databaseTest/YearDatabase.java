@@ -25,7 +25,8 @@ public class YearDatabase {
 
     public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".YEARS " +
-                "(YEAR_OF int NOT NULL, " + "USER_ID int NOT NULL)";
+                "(YEAR_OF int NOT NULL, " + "USER_ID int NOT NULL, " +
+                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID)";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();

@@ -25,8 +25,9 @@ public class StockDatabase {
 
     public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " +dbNameIn+ ".STOCKS " +
-                "(SYMBOL varchar(10) NOT NULL, " + "SHARES int NOT NULL, " +
-                "TOTAL double NOT NULL, " + "USER_ID int NOT NULL)";
+                "(STOCK_SYMBOL varchar(10) NOT NULL, " + "SHARES int NOT NULL, " +
+                "STOCK_TOTAL double NOT NULL, " + "USER_ID int NOT NULL, " +
+                "foreign key(USER_ID) references "+ dbNameIn + ".USERS (USER_ID)";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();
