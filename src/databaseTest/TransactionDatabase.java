@@ -26,7 +26,7 @@ public class TransactionDatabase {
     public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table "+ dbNameIn + ".TRANSACTIONS " + "(TRANS_DATE_OF date NOT NULL, " +
                 "TRANS_AMOUNT double NOT NULL, " + "TRANS_LABEL varchar(32) NOT NULL, " +
-                "TRANS_ID int NOT NULL, " + "RECURRING bit NOT NULL, " +
+                "TRANS_ID int NOT NULL, " + "RECURRING bit, " +
                 "TRANS_MERCHANT varchar(32) NOT NULL, " + "TRANS_BANK_ACC varchar(32) NOT NULL, " +
                 "T_USER_ID int NOT NULL)";
         Statement stmt = null;
