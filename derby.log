@@ -1,19 +1,11 @@
-<<<<<<< Updated upstream
 ----------------------------------------------------------------
-Wed Apr 25 19:15:39 CDT 2018:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0162-ff4e-3913-000009ab0798 
+Thu Apr 26 16:40:13 CDT 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0163-03e6-46d3-00000e583558 
 on database directory C:\Users\Lawrence\Documents\comp3700\Implementation\shark-byte\sharkByteDatabase with class loader sun.misc.Launcher$AppClassLoader@2a84aee7 
 Loaded from file:/C:/Program%20Files/Java/jdk1.8.0_71/db/lib/derby.jar
-=======
-----------------------------------------------------------------
-Wed Apr 25 19:04:07 CDT 2018:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0162-ff43-aaf7-00000e88bbc8 
-on database directory C:\Users\Jeremy\IdeaProjects\shark-byte\sharkByteDatabase with class loader sun.misc.Launcher$AppClassLoader@27716f4 
-Loaded from file:/C:/Program%20Files/Java/jdk1.8.0_144/db/lib/derby.jar
->>>>>>> Stashed changes
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_144-b01
-user.dir=C:\Users\Jeremy\IdeaProjects\shark-byte
+java.runtime.version=1.8.0_71-b15
+user.dir=C:\Users\Lawrence\Documents\comp3700\Implementation\shark-byte
 os.name=Windows 10
 os.arch=amd64
 os.version=10.0

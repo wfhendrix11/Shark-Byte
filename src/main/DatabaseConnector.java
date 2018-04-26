@@ -1,4 +1,5 @@
 package main;
+import databaseTest.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -11,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 
+import java.time.Month;
 import java.util.ArrayList;
 
 public class DatabaseConnector {
@@ -33,6 +35,18 @@ public class DatabaseConnector {
                 // database was just created, we must create the tables
                 // TODO create tables
                 System.out.println("There are no tables");
+
+                AssetDatabase.createTable(conn, dbName);
+                BankDatabase.createTable(conn, dbName);
+                CategoryDatabase.createTable(conn, dbName);
+                CryptoDatabase.createTable(conn, dbName);
+                LabelDatabase.createTable(conn, dbName);
+                MonthDatabase.createTable(conn, dbName);
+                RecurringDatabase.createTable(conn, dbName);
+                StockDatabase.createTable(conn, dbName);
+                TransactionDatabase.createTable(conn, dbName);
+                UserDatabase.createTable(conn, dbName);
+                YearDatabase.createTable(conn, dbName);
             }
 
             theTables.close();
@@ -153,4 +167,15 @@ public class DatabaseConnector {
         return null;
     }
 
+    public ObservableList<BankAccount> getBankAccounts(){
+        return  FXCollections.observableArrayList();
+    }
+
+    public ObservableList<MonthlyBudget> getMonthlyBudgets(){
+        return FXCollections.observableArrayList();
+    }
+
+    public double getCategorySpending(String label, int month, int year){
+        return 0.0;
+    }
 }
