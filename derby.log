@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Thu Apr 26 17:39:45 CDT 2018:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0163-041c-c94f-00000e589910 
+Thu Apr 26 18:13:06 CDT 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): instance a816c00e-0163-043b-519c-00000e5844d8 
 on database directory C:\Users\Lawrence\Documents\comp3700\Implementation\shark-byte\sharkByteDatabase with class loader sun.misc.Launcher$AppClassLoader@2a84aee7 
 Loaded from file:/C:/Program%20Files/Java/jdk1.8.0_71/db/lib/derby.jar
 java.vendor=Oracle Corporation
