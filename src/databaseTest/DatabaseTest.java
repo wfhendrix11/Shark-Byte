@@ -1,5 +1,7 @@
 package databaseTest;
 
+import main.DatabaseConnector;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.DatabaseMetaData;
@@ -32,7 +34,7 @@ public class DatabaseTest {
             theTables.close();
         }
         catch (SQLException e) {
-            System.out.println(e.getMessage());
+            DatabaseConnector.printSQLException(e);
         }
     }
 

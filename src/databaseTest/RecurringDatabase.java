@@ -25,18 +25,23 @@ public class RecurringDatabase {
     }
 
     public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
-        String createString = "create table " + dbNameIn + ".RECURRING " + "(DATE_OF date NOT NULL, " +
+        String createString = "create table " + dbNameIn + ".RECURRING " + "(REC_DATE_OF date NOT NULL, " +
                 "LAST_DATE date NOT NULL, " + "REC_AMOUNT double NOT NULL, " +
                 "REC_LABEL varchar(32) NOT NULL, " + "REC_ID int NOT NULL, " +
                 "INTERVAL_OF int NOT NULL, " + "EXECUTIONS int NOT NULL, " +
-                "PERPETUAL bit NOT NULL, " + "REC_MERCHANT varchar(32) NOT NULL, " +
-                "REC_BANK_ACC varchar(32) NOT NULL, " + "R_USER_ID int NOT NULL)";
+                "PERPETUAL boolean NOT NULL, " + "REC_MERCHANT varchar(32) NOT NULL, " +
+                "REC_BANK_ACC varchar(32) NOT NULL, " + "USER_ID int NOT NULL, " +
+                "foreign key (USER_ID) references " + dbNameIn + ".USERS(USER_ID))";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();
             stmt.executeUpdate(createString);
         } catch (SQLException d){
             System.out.println("No create Recurring");
+            do {
+                System.out.println(d.getMessage());
+                d = d.getNextException();
+            } while(d != null);
         } finally {
             if (stmt != null) {
                 stmt.close();

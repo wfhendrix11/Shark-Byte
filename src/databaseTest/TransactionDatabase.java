@@ -24,9 +24,9 @@ public class TransactionDatabase {
     }
 
     public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
-        String createString = "create table "+ dbNameIn + ".TRANSACTIONS " + "(DATEOF date NOT NULL, " +
+        String createString = "create table " + dbNameIn + ".TRANSACTIONS " + "(TRANS_DATE_OF date NOT NULL, " +
                 "TRANS_AMOUNT double NOT NULL, " + "TRANS_LABEL varchar(32) NOT NULL, " +
-                "TRANS_ID int NOT NULL, " + "RECURRING bit NOT NULL, " +
+                "TRANS_ID int NOT NULL, " + "RECURRING boolean NOT NULL, " +
                 "TRANS_MERCHANT varchar(32) NOT NULL, " + "TRANS_BANK_ACC varchar(32) NOT NULL, " +
                 "T_USER_ID int NOT NULL)";
         Statement stmt = null;
@@ -35,6 +35,10 @@ public class TransactionDatabase {
             stmt.executeUpdate(createString);
         } catch (SQLException d){
             System.out.println("No create Transaction");
+            do {
+                System.out.println(d.getMessage());
+                d = d.getNextException();
+            } while(d != null);
         } finally {
             if (stmt != null) {
                 stmt.close();

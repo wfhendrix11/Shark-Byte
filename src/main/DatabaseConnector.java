@@ -36,6 +36,7 @@ public class DatabaseConnector {
                 // TODO create tables
                 System.out.println("There are no tables");
 
+                UserDatabase.createTable(conn, dbName);
                 AssetDatabase.createTable(conn, dbName);
                 BankDatabase.createTable(conn, dbName);
                 CategoryDatabase.createTable(conn, dbName);
@@ -46,7 +47,6 @@ public class DatabaseConnector {
                 StockDatabase.createTable(conn, dbName);
                 TransactionDatabase.createTable(conn, dbName);
                 YearDatabase.createTable(conn, dbName);
-                UserDatabase.createTable(conn, dbName);
             }
 
             theTables.close();
@@ -196,6 +196,13 @@ public class DatabaseConnector {
         return transactions;
 
         //todo actually implement
+    }
+
+    public static void printSQLException(SQLException e) {
+        do {
+            System.out.println(e.getMessage());
+            e = e.getNextException();
+        } while(e != null);
     }
 }
 

@@ -1,5 +1,7 @@
 package databaseTest;
 
+import main.DatabaseConnector;
+
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -39,9 +41,6 @@ public class UserDatabase {
             if (stmt != null) {
                 stmt.close();
             }
-            if (connIn != null) {
-                connIn.close();
-            }
         }
     }
 
@@ -60,7 +59,7 @@ public class UserDatabase {
             insertStmt.executeUpdate();
             con.commit();
         } catch (SQLException d) {
-
+            DatabaseConnector.printSQLException(d);
         } finally {
             if (insertStmt != null) {
                 insertStmt.close();
@@ -82,7 +81,7 @@ public class UserDatabase {
             updateName.executeUpdate();
             con.commit();
         } catch (SQLException d) {
-
+            DatabaseConnector.printSQLException(d);
         } finally {
             if (updateName != null) {
                 updateName.close();
@@ -104,7 +103,7 @@ public class UserDatabase {
             updatePassword.executeUpdate();
             con.commit();
         } catch (SQLException d) {
-
+            DatabaseConnector.printSQLException(d);
         } finally {
             if (updatePassword != null) {
                 updatePassword.close();
@@ -125,7 +124,7 @@ public class UserDatabase {
             ResultSet rs = checkPassword.executeQuery();
             correctPass = rs.getString(2);
         } catch (SQLException d) {
-
+            DatabaseConnector.printSQLException(d);
         } finally {
             if (checkPassword != null) {
                 checkPassword.close();
@@ -155,7 +154,7 @@ public class UserDatabase {
             ResultSet rs = checkUsername.executeQuery();
             correctName = rs.getString(1);
         } catch (SQLException d) {
-
+            DatabaseConnector.printSQLException(d);
         } finally {
             if (checkUsername != null) {
                 checkUsername.close();
