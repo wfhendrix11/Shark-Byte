@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.*;
 
 public class FXController {
 
@@ -244,6 +244,8 @@ public class FXController {
     void homeTabChanged(Event event) {
         if(homeTab.isSelected()){
             fillHomeScreenTransactionsTable();
+            populateSelectBudgetChoiceBox();
+            drawHomeScreenPieCharts();
         }
     }
 
@@ -399,7 +401,35 @@ public class FXController {
         labelPicker.setItems(labels);
         labelPicker.getSelectionModel().selectFirst();
 
-        //TODO FINISH THIS USE CASE
+        TextField amount = new TextField();
+        amount.setPromptText("Price Limit");
+
+        Button addNewCategoryButton = new Button();
+        addNewCategoryButton.setText("Add new category");
+
+        EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DatabaseConnector db = new DatabaseConnector();
+                String label = labelPicker.getValue();
+                double priceLimit = Double.parseDouble(amount.getText());
+                int month = selectBudgetChoiceBox.getValue().getMonth();
+                int year = selectBudgetChoiceBox.getValue().getYear();
+                Category newCategory = new Category(label, priceLimit, month, year);
+                db.insertCategory(newCategory);
+                db.close();
+                dialog.close();
+;            }
+        };
+
+        addNewCategoryButton.setOnAction(handler);
+
+        dialogVBox.getChildren().add(labelPicker);
+        dialogVBox.getChildren().add(amount);
+        dialogVBox.getChildren().add(addNewCategoryButton);
+        Scene dialogScene = new Scene(dialogVBox, 300, 300);
+        dialog.setScene(dialogScene);
+        dialog.show();
     }
 
     @FXML
@@ -867,6 +897,49 @@ public class FXController {
 
         selectBudgetChoiceBox.setItems(budgets);
         selectBudgetChoiceBox.getSelectionModel().selectFirst();
+    }
+
+    private void drawHomeScreenPieCharts(){
+        //home_thisMonthSpendingChart
+        //home_thisMonthBudgetChart
+        MonthlyBudget thisMonth = selectBudgetChoiceBox.getValue();
+        ObservableList<Category> thisMonthCategories= thisMonth.getCategories();
+        ObservableList<PieChart.Data> SpendingPieChartData = FXCollections.observableArrayList();
+        ObservableList<PieChart.Data> BudgetPieChartData = FXCollections.observableArrayList();
+        for(int i = 0; i < thisMonthCategories.size(); i++){
+            Category c = thisMonthCategories.get(i);
+            BudgetPieChartData.add(new PieChart.Data(c.getLabel(), c.getPriceLimit()));
+        }
+
+        DatabaseConnector db = new DatabaseConnector();
+        ObservableList<Transaction> thisMonthTransactions = db.getThisMonthTransactions();
+        db.close();
+
+
+        //Now tally up the amounts on each of the labels
+        HashMap<String, Double> labelAmounts = new HashMap<String, Double>();
+        for(int i = 0; i < thisMonthTransactions.size(); i++){
+            String label = thisMonthTransactions.get(i).getLabel();
+            double transactionAmount = thisMonthTransactions.get(i).getAmount();
+            if(labelAmounts.containsKey(label)){
+                labelAmounts.put(label, (labelAmounts.get(label)+transactionAmount));
+            } else {
+                labelAmounts.put(label, transactionAmount);
+            }
+        }
+
+        //Get those amounts in the data list
+        Set<Map.Entry<String, Double>> labelAmountsSet = labelAmounts.entrySet();
+        Iterator<Map.Entry<String, Double>> labelAmountItr = labelAmountsSet.iterator();
+        while(labelAmountItr.hasNext()){
+            Map.Entry<String, Double> transactionData = labelAmountItr.next();
+            SpendingPieChartData.add(new PieChart.Data(transactionData.getKey(), transactionData.getValue()));
+        }
+
+        home_thisMonthBudgetChart.setData(BudgetPieChartData);
+        home_thisMonthSpendingChart.setData(SpendingPieChartData);
+
+
     }
 
 

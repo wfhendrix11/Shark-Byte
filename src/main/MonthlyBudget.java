@@ -43,4 +43,16 @@ public class MonthlyBudget {
         result.addAll(categories);
         return result;
     }
+
+    public int getMonth(){
+        return month;
+    }
+
+    public int getYear(){
+        return year;
+    }
+
+    public String toString(){
+        return month + "/" + year;
+    }
 }

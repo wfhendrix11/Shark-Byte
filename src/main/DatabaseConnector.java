@@ -174,10 +174,28 @@ public class DatabaseConnector {
     }
 
     public ObservableList<MonthlyBudget> getMonthlyBudgets(){
-        return FXCollections.observableArrayList();
+        MonthlyBudget budget = new MonthlyBudget(4,2018);
+        ObservableList<MonthlyBudget>  list = FXCollections.observableArrayList();
+        list.add(budget);
+        return list;
     }
 
     public double getCategorySpending(String label, int month, int year){
         return 0.0;
     }
+
+
+    public void insertCategory(Category c){
+        //Todo
+    }
+
+    public ObservableList<Transaction> getThisMonthTransactions(){
+        Transaction t1 = new Transaction(LocalDate.now(), 22, "Grocery", 003, "Kroger", "Checking");
+        ObservableList<Transaction> transactions = FXCollections.observableArrayList();
+        transactions.add(t1);
+        return transactions;
+
+        //todo actually implement
+    }
 }
+
