@@ -3,14 +3,8 @@ import databaseTest.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.*;
 import java.time.LocalDate;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.DatabaseMetaData;
-import java.sql.Statement;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
 
 import java.time.Month;
 import java.util.ArrayList;
@@ -95,11 +89,10 @@ public class DatabaseConnector {
         LabelDatabase db = new LabelDatabase(conn, dbName, dbms);
         try {
             db.insertRow(label, Main.userID);
+            System.out.println("Label added");
         } catch (SQLException e) {
             System.out.println("Could not close statement");
         }
-
-        System.out.println("Label added");
     }
 
     public ObservableList<String> selectLabels() {
@@ -120,12 +113,11 @@ public class DatabaseConnector {
         UserDatabase db = new UserDatabase(conn, dbName, dbms);
         try {
             db.updatePassword(password, Main.userID);
+            System.out.println("Password Changed!");
         } catch(SQLException e) {
             System.out.println("Password update failed");
             printSQLException(e);
         }
-
-        System.out.println("Password Changed!");
     }
 
     public boolean verifyPassword(String password) {
@@ -153,11 +145,44 @@ public class DatabaseConnector {
     }
 
     public void insertTransaction(Transaction transaction) {
-        System.out.println("Transaction inserted");
+        TransactionDatabase tDb = new TransactionDatabase(conn, dbName, dbms);
+        Date date = Date.valueOf(transaction.getDate());
+        double amount = transaction.getAmount();
+        String label = transaction.getLabel();
+        int id = transaction.getId();
+        boolean recurring = false;
+        String merchant = transaction.getMerchant();
+        String account = transaction.getAccount();
+
+        try {
+            tDb.insertRow(date, amount, label, id, recurring, merchant, account, Main.userID);
+            System.out.println("Transaction inserted");
+        } catch (SQLException e) {
+            System.out.println("Failed to insert transaction");
+            printSQLException(e);
+        }
     }
 
     public void insertRecurringTransaction(RecurringTransaction recurringTransaction) {
-        System.out.println("RecurringTransaction inserted");
+        RecurringDatabase rDb = new RecurringDatabase(conn, dbName, dbms);
+        Date date = Date.valueOf(recurringTransaction.getDate());
+        double amount = recurringTransaction.getAmount();
+        String label = recurringTransaction.getLabel();
+        int id = recurringTransaction.getId();
+        String merchant = recurringTransaction.getMerchant();
+        String account = recurringTransaction.getAccount();
+        int interval = recurringTransaction.getIntervalInDays();
+        int executions = recurringTransaction.getNumberOfExecutions();
+        boolean perpetual = recurringTransaction.isPerpetual();
+
+        try {
+            rDb.insertRow(date, date, amount, label, id, interval, executions, perpetual, merchant,
+                    account, Main.userID);
+            System.out.println("RecurringTransaction inserted");
+        } catch (SQLException e) {
+            System.out.println("Failed to insert transaction");
+            printSQLException(e);
+        }
     }
 
     public void insertInvestment(Investment newInvestment){
@@ -181,18 +206,27 @@ public class DatabaseConnector {
 
     public ObservableList<Transaction> getRecentTransactions(){
         //Some dummy transactions
+        /*
         Transaction x1 = new Transaction(LocalDate.now(), 20, "Label", 001, "Wally World", "Checking");
         Transaction x2 = new Transaction(LocalDate.now(), 23, "Label", 002, "Moe's", "Savings");
         Transaction x3 = new Transaction(LocalDate.now(), 40, "Label", 003, "AU Bookstore", "Checking");
         Transaction x4 = new RecurringTransaction(LocalDate.now(), 69, "Entertainment", 004, "Love Stuff", "Checking", 30, 4, false);
         Transaction x5 = new RecurringTransaction(LocalDate.now(), 42, "Grocery", 005, "Kroger", "Checking", 30, 0, true);
-
+        */
+        TransactionDatabase db = new TransactionDatabase(conn, dbName, dbms);
         ObservableList<Transaction> recentTransactions = FXCollections.observableArrayList();
-        recentTransactions.add(x1);
-        recentTransactions.add(x2);
-        recentTransactions.add(x3);
-        recentTransactions.add(x4);
-        recentTransactions.add(x5);
+        Iterable<Transaction> selection = db.selectRows(Main.userID);
+
+        for (Transaction t : selection) {
+            LocalDate date = t.getDate();
+            LocalDate now = LocalDate.now();
+
+            if (date.getMonthValue() == now.getMonthValue() && date.getYear() == now.getYear()) {
+                recentTransactions.add(t);
+            }
+
+        }
+
         return recentTransactions;
     }
 

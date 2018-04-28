@@ -10,11 +10,11 @@ public class Transaction {
     private String merchant;
     private String account;
 
-    Transaction() {
+    public Transaction() {
 
     }
 
-    Transaction(LocalDate newDate, double newAmount, String newLabel, int newId, String newMerchant, String newAccount) {
+    public Transaction(LocalDate newDate, double newAmount, String newLabel, int newId, String newMerchant, String newAccount) {
         date = newDate;
         amount = newAmount;
         label = newLabel;
@@ -23,23 +23,23 @@ public class Transaction {
         account = newAccount;
     }
 
-    String getLabel() {
+    public String getLabel() {
         return label;
     }
 
-    double getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    int getId() {
+    public int getId() {
         return id;
     }
 
-    LocalDate getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    String getMerchant() {return merchant;}
+    public String getMerchant() {return merchant;}
 
-    String getAccount() {return account;}
+    public String getAccount() {return account;}
 }

@@ -387,6 +387,7 @@ public class FXController {
             db.insertTransaction(transaction);
         }
         db.close();
+        fillTransactionsTable();
     }
 
     @FXML
