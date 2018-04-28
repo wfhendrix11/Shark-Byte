@@ -20,6 +20,7 @@ public class DatabaseConnector {
     private static final String driver = "org.apache.derby.jdbc.EmbeddedDriver";
     private static final String dbName = "sharkByteDatabase";
     private static final String connectionURL = "jdbc:derby:" + dbName + ";create=true";
+    private static final String dbms = "derby";
     //String createString
 
     private Connection conn = null;
@@ -91,14 +92,25 @@ public class DatabaseConnector {
 
     public void insertLabel(String label) {
         // TODO not implemented, just stubbed
+        LabelDatabase db = new LabelDatabase(conn, dbName, dbms);
+        try {
+            db.insertRow(label, Main.userID);
+        } catch (SQLException e) {
+            System.out.println("Could not close statement");
+        }
+
         System.out.println("Label added");
     }
 
     public ObservableList<String> selectLabels() {
         // TODO not implemented, just stubbed
         ObservableList<String> labels = FXCollections.observableArrayList();
-        labels.add("Label1");
-        labels.add("Label2");
+        LabelDatabase db = new LabelDatabase(conn, dbName, dbms);
+        Iterable<String> selection = db.selectRows(Main.userID);
+
+        for (String s : selection) {
+            labels.add(s);
+        }
 
         return labels;
     }

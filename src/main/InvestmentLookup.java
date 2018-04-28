@@ -74,9 +74,9 @@ public class InvestmentLookup {
             searchResult = content.toString();
 
         } catch (MalformedURLException urlException) {
-
+            System.out.println(urlException.getMessage());
         } catch (IOException ioException) {
-
+            System.out.println(ioException.getMessage());
         }
         return searchResult;
     }
