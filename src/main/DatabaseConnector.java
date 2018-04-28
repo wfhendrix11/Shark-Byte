@@ -117,7 +117,28 @@ public class DatabaseConnector {
 
     public void replacePassword(String password) {
         // Add code to change password in the database
-        System.out.print("Password Changed!");
+        UserDatabase db = new UserDatabase(conn, dbName, dbms);
+        try {
+            db.updatePassword(password, Main.userID);
+        } catch(SQLException e) {
+            System.out.println("Password update failed");
+            printSQLException(e);
+        }
+
+        System.out.println("Password Changed!");
+    }
+
+    public boolean verifyPassword(String password) {
+        UserDatabase db = new UserDatabase(conn, dbName, dbms);
+        boolean ret = false;
+        try {
+            String username = db.selectUsername(Main.userID);
+            ret = db.correctPassword(username, password);
+        } catch (SQLException e) {
+            System.out.println("Verify password failed");
+            printSQLException(e);
+        }
+        return ret;
     }
 
     public ArrayList<BankAccount> selectBankAccounts() {

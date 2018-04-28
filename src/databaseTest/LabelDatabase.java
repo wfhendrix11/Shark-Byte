@@ -78,7 +78,7 @@ public class LabelDatabase {
             }
 
             if (rs != null) rs.close();
-            
+
             selectStmt.close();
             con.commit();
         } catch (SQLException e) {
