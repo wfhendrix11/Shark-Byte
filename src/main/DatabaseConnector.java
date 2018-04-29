@@ -140,13 +140,16 @@ public class DatabaseConnector {
         return accounts;
     }
 
-    public int getNextTransactionId() {
+    public int getNextTransactionId() throws SQLException {
         TransactionDatabase db = new TransactionDatabase(conn, dbName, dbms);
-        Iterable<Transaction> selection = db.selectRows(Main.userID);
+        int max = 0;
+        max = db.currentMaxID(Main.userID);
+        /* Iterable<Transaction> selection = db.selectRows(Main.userID);
         int max = 0;
         for (Transaction t : selection) {
             max = Math.max(t.getId(), max);
-        }
+        } */
+
         return max;
     }
 

@@ -49,7 +49,7 @@ public class StockDatabase {
                           int userID) throws SQLException {
         PreparedStatement insertStmt = null;
         String insertInto = "insert into " + dbName + ".STOCKS " +
-                "values (?, ?, ?, ?)";
+                "values (?, ?, ?)";
         try {
             con.setAutoCommit(false);
             insertStmt = con.prepareStatement(insertInto);

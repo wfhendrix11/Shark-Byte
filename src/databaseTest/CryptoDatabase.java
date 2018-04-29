@@ -50,7 +50,7 @@ public class CryptoDatabase {
                           int userID) throws SQLException {
         PreparedStatement insertStmt = null;
         String insertInto = "insert into " + dbName + ".CRYPTO " +
-                "values (?, ?, ?, ?)";
+                "values (?, ?, ?)";
         try {
             con.setAutoCommit(false);
             insertStmt = con.prepareStatement(insertInto);
