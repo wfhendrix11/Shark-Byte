@@ -237,21 +237,39 @@ public class DatabaseConnector {
     }
 
     public ObservableList<Investment> getPortfolio(){
+        /*
         //Some dummy investments
         Stock stock1 = new Stock("TSLA", 10);
         Crypto crypto1 = new Crypto("ETH", 3.6200);
         CustomAsset asset1 = new CustomAsset("Boy with a Pipe", 1, 1, 104000000);
-
+        CustomAsset asset1 = new CustomAsset("Boy with a Pipe", 1, 1, 104000000); */
         ObservableList<Investment> portfolio = FXCollections.observableArrayList();
-
         StockDatabase sDb = new StockDatabase(conn, dbName, dbms);
+        Iterable<Stock> stocks = sDb.selectRows(Main.userID);
+        for (Stock s : stocks) {
+            portfolio.add(s);
+        }
+        CryptoDatabase cDb = new CryptoDatabase(conn, dbName, dbms);
+        Iterable<Crypto> cryptos = cDb.selectRows(Main.userID);
+        for (Crypto c : cryptos) {
+            portfolio.add(c);
+        }
+        AssetDatabase aDb = new AssetDatabase(conn, dbName, dbms);
+        Iterable<CustomAsset> assets = aDb.selectRows(Main.userID);
+        for (CustomAsset a : assets) {
 
+            portfolio.add(a);
+
+        }
+        /*
         //Add dummies to portfolio
         portfolio.add(stock1);
         portfolio.add(crypto1);
         portfolio.add(asset1);
+        portfolio.add(asset1); */
         return portfolio;
     }
+
 
     public ObservableList<Transaction> getRecentTransactions(){
         //Some dummy transactions
