@@ -695,6 +695,7 @@ public class FXController {
         ObservableList<String> labels = db.selectLabels();
         db.close();
 
+
         ObservableList labelItems = FXCollections.observableArrayList();
 
         for (String s : labels) {

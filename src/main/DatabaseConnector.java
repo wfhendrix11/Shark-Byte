@@ -331,10 +331,7 @@ public class DatabaseConnector {
     }
 
     public ObservableList<Transaction> getThisMonthTransactions(){
-        Transaction t1 = new Transaction(LocalDate.now(), 22, "Grocery", 003, "Kroger", "Checking");
-        ObservableList<Transaction> transactions = FXCollections.observableArrayList();
-        transactions.add(t1);
-        return transactions;
+        return getRecentTransactions();
 
         //todo actually implement
     }
