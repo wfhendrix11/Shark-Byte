@@ -340,6 +340,7 @@ public class DatabaseConnector {
     }
 
     public ObservableList<MonthlyBudget> getMonthlyBudgets() {
+        // TODO IMPLEMENT THIS
         MonthlyBudget budget = new MonthlyBudget(4, 2018);
         ObservableList<MonthlyBudget> list = FXCollections.observableArrayList();
         list.add(budget);
@@ -435,12 +436,14 @@ public class DatabaseConnector {
     }
 
     public ObservableList<Category> getBudgetCategories(int month, int year){
+        //TODO IMPLEMENT
         //select categories with matching month and year
         //return that list
         return FXCollections.observableArrayList();
     }
 
     public void insertBudget(int month, int year){
+        // TODO IMPLEMENT
         //simple enough
     }
 
