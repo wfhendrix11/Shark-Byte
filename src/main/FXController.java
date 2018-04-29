@@ -553,11 +553,13 @@ public class FXController {
                         DatabaseConnector db = new DatabaseConnector();
 
                         db.insertBudget(Integer.parseInt(monthField.getText()), Integer.parseInt(yearField.getText()));
+                        populateSelectBudgetChoiceBox();
                         dialog.close();
                     }
                 };
                 // ADD TO DATABASE
                 //MonthlyBudget newMonthlyBudget = new MonthlyBudget(Integer.parseInt(budgetMonth), Integer.parseInt(budgetYear));
+                submitMonthlyBudgetButton.setOnAction(submitMonthlyHandler);
 
                 dialogVbox.getChildren().add(monthText);
                 dialogVbox.getChildren().add(monthField);
@@ -603,7 +605,7 @@ public class FXController {
                             }
                         }
                         db.close();
-
+                        populateSelectBudgetChoiceBox();
                     }
                 };
 
@@ -860,15 +862,19 @@ public class FXController {
     }
 
     private void fillBudgetTransactionsTable(){
-        DatabaseConnector db = new DatabaseConnector();
+
         MonthlyBudget budget = selectBudgetChoiceBox.getValue();
-        ObservableList<Category> categories = db.getBudgetCategories(budget.getMonth(), budget.getYear());
+        if(budget != null) {
+            System.out.println("In fillBudgetTransactionsTable: budget NOT null");
+            DatabaseConnector db = new DatabaseConnector();
+            ObservableList<Category> categories = db.getBudgetCategories(budget.getMonth(), budget.getYear());
+            db.close();
+            budgetCategoryColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLabel()));
+            budgetSpendingColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getAmountSpent())));
+            budgetAmountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getPriceLimit())));
 
-        budgetCategoryColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLabel()));
-        budgetSpendingColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getAmountSpent())));
-        budgetAmountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getPriceLimit())));
-
-        budgetCategoriesTable.setItems(categories);
+            budgetCategoriesTable.setItems(categories);
+        }
     }
 
     private void fillBankAccountTransactionsTable(){
@@ -897,7 +903,7 @@ public class FXController {
 
     private void setBankAccountBalanceText(){
         BankAccount bankAccount = selectBankAccountChoiceBox.getValue();
-        if(bankAccount != null) accountBalance.setText("Balance: $" + selectBankAccountChoiceBox.getValue().getBalance());
+        if(bankAccount != null) accountBalance.setText("Balance: $" + (selectBankAccountChoiceBox.getValue().getBalance()) * -1);
     }
 
 
