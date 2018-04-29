@@ -63,9 +63,6 @@ public class MonthDatabase {
             if (insertStmt != null) {
                 insertStmt.close();
             }
-            if (con != null) {
-                con.close();
-            }
         }
     }
 
