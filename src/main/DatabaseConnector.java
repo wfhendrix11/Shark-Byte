@@ -372,7 +372,7 @@ public class DatabaseConnector {
     }
 
 
-    //public int attemptLogin(String username, String password){
+    public int attemptLogin(String username, String password){
         /*
             if(NOT username exists) return -1
             else
@@ -380,12 +380,12 @@ public class DatabaseConnector {
                 2. if password matches, return associated userID
                     else return -1
         */
+        return 33;
+    }
 
-   // }
 
-    /*
     public boolean insertUserAccount(String username, String password){
-        if(username exists in DB) return false;
+        /*if(username exists in DB) return false;
 
         UserAccount newAccount = new UserAccount(username, password);
         int userID = Math.rand(10000);
@@ -393,9 +393,10 @@ public class DatabaseConnector {
             userID = Math.rand(10000);
         }
         insert newAccount w/ userID
+        return true;*/
         return true;
     }
 
-     */
+
 }
 

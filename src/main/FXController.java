@@ -29,6 +29,10 @@ public class FXController {
     @FXML // fx:id="quitButton"
     private Button quitButton; //Value injected by FXMLLoader
 
+    @FXML // fx:id="bankAccountRefreshButton"
+    private Button bankAccountRefreshButton; // value injected by FXMLLoader
+
+
     @FXML // fx:id="selectBudgetChoiceBox"
     private ChoiceBox<MonthlyBudget> selectBudgetChoiceBox; // Value injected by FXMLLoader
 
@@ -911,6 +915,12 @@ public class FXController {
         home_thisMonthSpendingChart.setData(SpendingPieChartData);
 
 
+    }
+
+    @FXML
+    void refreshBankAccountTab(ActionEvent e){
+        fillBankAccountTransactionsTable();
+        setBankAccountBalanceText();
     }
 
 
