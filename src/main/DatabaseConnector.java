@@ -178,6 +178,22 @@ public class DatabaseConnector {
         }
     }
 
+    public void insertBankAccount(BankAccount bankAccount) {
+        BankDatabase db = new BankDatabase(conn, dbName, dbms);
+        String account = bankAccount.getName();
+        double balance = bankAccount.getBalance();
+        boolean frozen = false;
+        double rate = 0.0;
+
+        try {
+            db.insertRow(account, balance, frozen, rate, Main.userID);
+            System.out.println("Bank account inserted");
+        } catch (SQLException e) {
+            System.out.println("Could not insert bank account");
+            printSQLException(e);
+        }
+    }
+
     /*
     public void insertRecurringTransaction(RecurringTransaction recurringTransaction) {
         RecurringDatabase rDb = new RecurringDatabase(conn, dbName, dbms);
