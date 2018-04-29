@@ -47,7 +47,8 @@ public class DatabaseConnector {
             theTables.close();
         }
         catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Failed to create database");
+            printSQLException(e);
         }
     }
 
