@@ -107,6 +107,7 @@ public class Main extends Application {
 
                 TextField usernameField = new TextField();
                 usernameField.setPromptText("Username");
+                usernameField.setPrefWidth(8);
 
                 Text passwordText = new Text("Enter Password: ");
 

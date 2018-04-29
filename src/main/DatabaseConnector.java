@@ -350,9 +350,16 @@ public class DatabaseConnector {
     }
 
     public double getCategorySpending(String label, int month, int year) {
-        //find transactions matching the three parameters
-        //get sum of all transactions
-        return 0.0;
+        TransactionDatabase db = new TransactionDatabase(conn, dbName, dbms);
+        Iterable<Transaction> selection = db.selectRowsByLabel(label, Main.userID);
+        double catSpent = 0;
+        for (Transaction t : selection) {
+            LocalDate date = t.getDate();
+            if (date.getMonthValue() == month && date.getYear() == year) {
+                catSpent += t.getAmount();
+            }
+        }
+        return catSpent;
     }
 
 
@@ -375,6 +382,18 @@ public class DatabaseConnector {
 
 
     public int attemptLogin(String username, String password){
+        UserDatabase db = new UserDatabase(conn, dbName, dbms);
+
+        try {
+            if (!db.correctUsername(username)) return -1;
+
+            if (!db.correctPassword(username, password)) return -1;
+
+            return db.getUserID(username);
+        } catch(SQLException e) {
+            System.out.println("Could not access user database");
+            printSQLException(e);
+        }
         /*
             if(NOT username exists) return -1
             else
@@ -382,11 +401,21 @@ public class DatabaseConnector {
                 2. if password matches, return associated userID
                     else return -1
         */
-        return 33;
+        return -1;
     }
 
 
     public boolean insertUserAccount(String username, String password){
+        UserDatabase db = new UserDatabase(conn, dbName, dbms);
+
+        try {
+            if (db.correctUsername(username)) return false;
+            
+        } catch (SQLException e) {
+            System.out.println("Could not access user database");
+            printSQLException(e);
+        }
+
         /*if(username exists in DB) return false;
 
         UserAccount newAccount = new UserAccount(username, password);

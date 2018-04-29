@@ -293,10 +293,10 @@ public class FXController {
                 }
                 else {
                     // TODO notify incorrect password
+                    dialogVbox.getChildren().add(new Text("Password incorrect"));
                 }
 
                 //TODO remove this line once the above is implemented
-                dialog.close();
             }
         };
 
