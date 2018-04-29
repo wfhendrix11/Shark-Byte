@@ -350,6 +350,8 @@ public class DatabaseConnector {
     }
 
     public double getCategorySpending(String label, int month, int year) {
+        //find transactions matching the three parameters
+        //get sum of all transactions
         return 0.0;
     }
 
@@ -395,6 +397,16 @@ public class DatabaseConnector {
         insert newAccount w/ userID
         return true;*/
         return true;
+    }
+
+    public ObservableList<Category> getBudgetCategories(int month, int year){
+        //select categories with matching month and year
+        //return that list
+        return FXCollections.observableArrayList();
+    }
+
+    public void insertBudget(int month, int year){
+        //simple enough
     }
 
 

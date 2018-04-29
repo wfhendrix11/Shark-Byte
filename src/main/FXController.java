@@ -32,6 +32,8 @@ public class FXController {
     @FXML // fx:id="bankAccountRefreshButton"
     private Button bankAccountRefreshButton; // value injected by FXMLLoader
 
+    @FXML // fx:id="budgetRefreshButton"
+    private Button budgetRefreshButton; // Value injected by FXMLLoader
 
     @FXML // fx:id="selectBudgetChoiceBox"
     private ChoiceBox<MonthlyBudget> selectBudgetChoiceBox; // Value injected by FXMLLoader
@@ -923,6 +925,10 @@ public class FXController {
         setBankAccountBalanceText();
     }
 
+    @FXML
+    void refreshBudgetTab(ActionEvent e){
+        fillBudgetTransactionsTable();
+    }
 
 
 

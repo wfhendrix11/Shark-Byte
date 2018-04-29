@@ -108,8 +108,7 @@
                         </AnchorPane>
                      </children>
                   </GridPane>
-                  <ChoiceBox fx:id="selectBankAccountChoiceBox" layoutX="90.0" layoutY="10.0" prefWidth="150.0" />
-                  <Button fx:id="bankAccountRefreshButton" layoutX="266.0" layoutY="10.0" mnemonicParsing="false" onAction="#refreshBankAccountTab" prefHeight="25.0" prefWidth="98.0" text="Refresh" />
+                  <ChoiceBox fx:id="selectBankAccountChoiceBox" layoutX="206.0" layoutY="10.0" prefWidth="150.0" />
                </children></AnchorPane>
         </content>
       </Tab>
@@ -119,7 +118,7 @@
                <children>
                   <PieChart fx:id="thisMonthSpendingChart" layoutX="93.0" layoutY="101.0" prefHeight="313.0" prefWidth="303.0" title="This Month's Spending" AnchorPane.leftAnchor="93.0" AnchorPane.topAnchor="101.0" />
                   <PieChart fx:id="thisMonthBudgetChart" layoutX="496.0" layoutY="101.0" prefHeight="312.0" prefWidth="310.0" title="This Month's Budget" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="101.0" />
-                  <Button fx:id="newBudgetButton" layoutX="271.0" layoutY="44.0" mnemonicParsing="false" onAction="#addNewBudget" text="New Budget" />
+                  <Button fx:id="newBudgetButton" layoutX="129.0" layoutY="44.0" mnemonicParsing="false" onAction="#addNewBudget" text="New Budget" />
                   <TableView fx:id="budgetCategoriesTable" layoutX="8.0" layoutY="411.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="budgetCategoryColumn" prefWidth="287.0" text="Spending Category" />
@@ -127,8 +126,9 @@
                         <TableColumn fx:id="budgetAmountColumn" minWidth="0.0" prefWidth="306.0" text="Budget Amount" />
                     </columns>
                   </TableView>
-                  <Button fx:id="newCategoryButton" layoutX="390.0" layoutY="44.0" mnemonicParsing="false" onAction="#newBudgetCategory" text="New Budget Category" />
-                  <ChoiceBox fx:id="selectBudgetChoiceBox" layoutX="566.0" layoutY="44.0" prefWidth="150.0" />
+                  <Button fx:id="newCategoryButton" layoutX="245.0" layoutY="44.0" mnemonicParsing="false" onAction="#newBudgetCategory" text="New Budget Category" />
+                  <ChoiceBox fx:id="selectBudgetChoiceBox" layoutX="470.0" layoutY="44.0" prefWidth="150.0" />
+                  <Button fx:id="budgetRefreshButton" layoutX="660.0" layoutY="44.0" mnemonicParsing="false" onAction="#refreshBudgetTab" prefHeight="25.0" prefWidth="115.0" text="Refresh" />
                </children></AnchorPane>
         </content>
       </Tab>
