@@ -3,6 +3,8 @@ package databaseTest;
 import main.Transaction;
 import main.DatabaseConnector;
 
+import javax.xml.crypto.Data;
+import java.awt.image.DataBuffer;
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -72,7 +74,7 @@ public class TransactionDatabase {
             insertStmt.executeUpdate();
             con.commit();
         } catch (SQLException d) {
-
+            DatabaseConnector.printSQLException(d);
         } finally {
             if (insertStmt != null) {
                 insertStmt.close();
@@ -194,6 +196,7 @@ public class TransactionDatabase {
             con.setAutoCommit(false);
             maxStmt = con.prepareStatement(findMax);
             rs = maxStmt.executeQuery();
+            if (!rs.next()) return max;
             max = rs.getInt(1);
             con.commit();
         } catch (SQLException d) {
