@@ -97,4 +97,34 @@ public class MonthDatabase {
 
         return months;
     }
+
+    public boolean budgetExists(int month, int year, int userID) {
+        PreparedStatement selectStmt = null;
+        String selectFrom = "select * from " + dbName
+                + ".Months where M_USER_ID = " + userID
+                + " and BUDGET_MONTH = " + month + " and BUDGET_YEAR = "
+                + year;
+        ResultSet rs = null;
+        boolean ret = false;
+
+        try {
+            con.setAutoCommit(false);
+            selectStmt = con.prepareStatement(selectFrom);
+            rs = selectStmt.executeQuery();
+
+            if (!rs.next()) ret = false;
+            else ret = true;
+
+
+            if (rs != null) rs.close();
+
+            selectStmt.close();
+            con.commit();
+        } catch (SQLException e) {
+            DatabaseConnector.printSQLException(e);
+        }
+
+        return ret;
+    }
+
 }

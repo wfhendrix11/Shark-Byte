@@ -364,9 +364,14 @@ public class DatabaseConnector {
     }
 
 
-    public void insertCategory(Category c) throws SQLException {
+    public void insertCategory(Category c) {
         CategoryDatabase db = new CategoryDatabase(conn, dbName, dbms);
-        db.insertRow(c.getMonth(), c.getYear(), c.getLabel(), c.getPriceLimit(), Main.userID);
+        try {
+            db.insertRow(c.getMonth(), c.getYear(), c.getLabel(), c.getPriceLimit(), Main.userID);
+        } catch (SQLException e) {
+            System.out.println("Failed to insert category");
+            printSQLException(e);
+        }
     }
 
     public ObservableList<Transaction> getThisMonthTransactions() {
@@ -451,11 +456,19 @@ public class DatabaseConnector {
         return categories;
     }
 
-    public void insertBudget(int month, int year) throws SQLException {
+    public void insertBudget(int month, int year) {
         MonthDatabase db = new MonthDatabase(conn, dbName, dbms);
-        db.insertRow(month, year, Main.userID);
+        try {
+            db.insertRow(month, year, Main.userID);
+        } catch (SQLException e) {
+            System.out.println("Failed to insert budget");
+            printSQLException(e);
+        }
     }
 
-
+    public boolean doesBudgetExist(int month, int year) {
+        MonthDatabase db = new MonthDatabase(conn, dbName, dbms);
+        boolean ret = db.budgetExists(month, year, Main.userID);
+        return ret;
+    }
 }
-
