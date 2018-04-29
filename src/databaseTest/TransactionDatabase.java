@@ -197,7 +197,7 @@ public class TransactionDatabase {
             max = rs.getInt(1);
             con.commit();
         } catch (SQLException d) {
-
+            DatabaseConnector.printSQLException(d);
         } finally {
             if (maxStmt != null) {
                 maxStmt.close();
