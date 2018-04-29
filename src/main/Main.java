@@ -107,10 +107,10 @@ public class Main extends Application {
                 TextField passwordField = new TextField();
                 passwordField.setPromptText("Password");
 
-                Text confirmText = new Text("Confirm Password: ");
+                Text confirmText = new Text("Enter Password: ");
 
                 TextField confirmField = new TextField();
-                passwordField.setPromptText("Password");
+                confirmField.setPromptText("Confirm Password");
 
                 Button submitButton = new Button();
                 submitButton.setText("Submit");
@@ -133,7 +133,7 @@ public class Main extends Application {
                 dialogVbox.getChildren().add(confirmText);
                 dialogVbox.getChildren().add(confirmField);
                 dialogVbox.getChildren().add(submitButton);
-                Scene dialogScene = new Scene(dialogVbox, 300, 350);
+                Scene dialogScene = new Scene(dialogVbox, 325, 350);
                 dialog.setScene(dialogScene);
                 dialog.show();
             }
