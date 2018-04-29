@@ -26,9 +26,9 @@ public class StockDatabase {
     }
 
     public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
-        String createString = "create table " +dbNameIn+ ".STOCKS " +
-                "(STOCK_SYMBOL varchar(10) NOT NULL, " + "SHARES int NOT NULL, " +
-                "STOCK_TOTAL double NOT NULL, " + "S_USER_ID int NOT NULL)";
+        String createString = "create table " + dbNameIn + ".STOCKS " +
+                "(STOCK_SYMBOL varchar(10) NOT NULL, " + "SHARES int NOT NULL, "
+                + "S_USER_ID int NOT NULL)";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();
@@ -43,7 +43,7 @@ public class StockDatabase {
         }
     }
 
-    public void insertRow(String symbolIn, int sharesIn, double totalIn,
+    public void insertRow(String symbolIn, int sharesIn,
                           int userID) throws SQLException {
         PreparedStatement insertStmt = null;
         String insertInto = "insert into " + dbName + ".STOCKS " +
@@ -53,8 +53,7 @@ public class StockDatabase {
             insertStmt = con.prepareStatement(insertInto);
             insertStmt.setString(1, symbolIn);
             insertStmt.setInt(2, sharesIn);
-            insertStmt.setDouble(3, totalIn);
-            insertStmt.setInt(4, userID);
+            insertStmt.setInt(3, userID);
             insertStmt.executeUpdate();
             con.commit();
         } catch (SQLException d) {

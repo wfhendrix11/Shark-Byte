@@ -27,8 +27,8 @@ public class CryptoDatabase {
 
     public static void createTable(Connection connIn, String dbNameIn) throws SQLException {
         String createString = "create table " + dbNameIn + ".CRYPTO " +
-                "(CRYPTO_SYMBOL varchar(10) NOT NULL, " + "OWNED double NOT NULL, " +
-                "CRYPTO_TOTAL double NOT NULL, " + "CR_USER_ID int NOT NULL)";
+                "(CRYPTO_SYMBOL varchar(10) NOT NULL, " + "OWNED double NOT NULL, "
+                + "CR_USER_ID int NOT NULL)";
         Statement stmt = null;
         try {
             stmt = connIn.createStatement();
@@ -43,7 +43,7 @@ public class CryptoDatabase {
         }
     }
 
-    public void insertRow(String symbolIn, double ownedIn, double totalIn,
+    public void insertRow(String symbolIn, double ownedIn,
                           int userID) throws SQLException {
         PreparedStatement insertStmt = null;
         String insertInto = "insert into " + dbName + ".CRYPTO " +
@@ -53,8 +53,7 @@ public class CryptoDatabase {
             insertStmt = con.prepareStatement(insertInto);
             insertStmt.setString(1, symbolIn);
             insertStmt.setDouble(2, ownedIn);
-            insertStmt.setDouble(3, totalIn);
-            insertStmt.setInt(4, userID);
+            insertStmt.setInt(3, userID);
             insertStmt.executeUpdate();
             con.commit();
         } catch (SQLException d) {

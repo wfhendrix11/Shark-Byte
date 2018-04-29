@@ -141,7 +141,13 @@ public class DatabaseConnector {
     }
 
     public int getNextTransactionId() {
-        return 0;
+        TransactionDatabase db = new TransactionDatabase(conn, dbName, dbms);
+        Iterable<Transaction> selection = db.selectRows(Main.userID);
+        int max = 0;
+        for (Transaction t : selection) {
+            max = Math.max(t.getId(), max);
+        }
+        return max;
     }
 
     public void insertTransaction(Transaction transaction) {
@@ -187,6 +193,44 @@ public class DatabaseConnector {
 
     public void insertInvestment(Investment newInvestment){
         //TODO
+        if (newInvestment instanceof CustomAsset) {
+            AssetDatabase db = new AssetDatabase(conn, dbName, dbms);
+            String name = newInvestment.getName();
+            double value = ((CustomAsset) newInvestment).getCurrentValue();
+            double rate = ((CustomAsset) newInvestment).getInterestRate();
+            int quantity = ((CustomAsset) newInvestment).getQuantity();
+
+            try {
+                db.insertRow(name, value, rate, quantity, Main.userID);
+            } catch (SQLException e) {
+                System.out.println("Could not insert custom asset");
+                printSQLException(e);
+            }
+        }
+        else if (newInvestment instanceof Crypto) {
+            CryptoDatabase db = new CryptoDatabase(conn, dbName, dbms);
+            String symbol = newInvestment.getName();
+            double owned = ((Crypto) newInvestment).getNumberOwned();
+
+            try {
+                db.insertRow(symbol, owned, Main.userID);
+            } catch (SQLException e) {
+                System.out.println("Could not insert crypto asset");
+                printSQLException(e);
+            }
+        }
+        else if (newInvestment instanceof Stock) {
+            StockDatabase db = new StockDatabase(conn, dbName, dbms);
+            String symbol = newInvestment.getName();
+            int owned = ((Stock) newInvestment).getNumberOfShares();
+
+            try {
+                db.insertRow(symbol, owned, Main.userID);
+            } catch (SQLException e) {
+                System.out.println("Could not insert crypto asset");
+                printSQLException(e);
+            }
+        }
     }
 
     public ObservableList<Investment> getPortfolio(){
@@ -196,6 +240,8 @@ public class DatabaseConnector {
         CustomAsset asset1 = new CustomAsset("Boy with a Pipe", 1, 1, 104000000);
 
         ObservableList<Investment> portfolio = FXCollections.observableArrayList();
+
+        StockDatabase sDb = new StockDatabase(conn, dbName, dbms);
 
         //Add dummies to portfolio
         portfolio.add(stock1);
