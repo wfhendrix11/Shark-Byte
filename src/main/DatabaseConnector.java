@@ -310,7 +310,12 @@ public class DatabaseConnector {
 
     public ObservableList<BankAccount> getBankAccounts(){
         ObservableList<BankAccount> bankAccounts = FXCollections.observableArrayList();
-        bankAccounts.add(new BankAccount("Checking", 22));
+        //bankAccounts.add(new BankAccount("Checking", 22)); //DUMMY ACCOUNT
+        BankDatabase bDb = new BankDatabase(conn, dbName, dbms);
+        Iterable<BankAccount> bankAccountIterable = bDb.selectRows(Main.userID);
+        for (BankAccount b : bankAccountIterable) {
+           bankAccounts.add(b);
+        }
         return bankAccounts;
     }
 
