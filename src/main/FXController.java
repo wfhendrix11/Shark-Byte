@@ -328,66 +328,10 @@ public class FXController {
         int id = db.getNextTransactionId();
         String label = transactionLabelChoiceBox.getValue().toString();
         String account = transactionBankAccountChoiceBox.getValue().toString();
+        boolean recurring = recurringRadio.isSelected();
 
-        // recurring transaction
-        if (recurringRadio.isSelected()) {
-            // TODO Lawrence working on this
-            Node source = (Node) event.getSource();
-            Window theStage = source.getScene().getWindow();
-
-            final Stage dialog = new Stage();
-            dialog.initModality(Modality.APPLICATION_MODAL);
-            dialog.initOwner(theStage);
-            dialog.setTitle("Add Recurring Transaction");
-            VBox dialogVbox = new VBox(20);
-
-            Text intervalPrompt = new Text("Interval in days: ");
-
-            TextField intervalField = new TextField();
-            intervalField.setPromptText("Interval");
-
-            Text executionsPromprt = new Text("Number of executions: ");
-
-            TextField executionsField = new TextField();
-            intervalField.setPromptText("Executions");
-
-            RadioButton perpetualRadio = new RadioButton();
-            perpetualRadio.setText("Perpetual");
-
-            Button submitButton = new Button();
-            submitButton.setText("Submit");
-
-            EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    boolean perpetual = perpetualRadio.isSelected();
-                    int interval = Integer.parseInt(intervalField.getText());
-                    int executions = Integer.parseInt(executionsField.getText());
-
-                    RecurringTransaction recurringTransaction =
-                            new RecurringTransaction(date, amount, label, id, merchant, account, interval, executions, perpetual);
-                    db.insertRecurringTransaction(recurringTransaction);
-                    dialog.close();
-                }
-            };
-
-            submitButton.setOnAction(handler);
-
-            dialogVbox.getChildren().add(intervalPrompt);
-            dialogVbox.getChildren().add(intervalField);
-            dialogVbox.getChildren().add(executionsPromprt);
-            dialogVbox.getChildren().add(executionsField);
-            dialogVbox.getChildren().add(perpetualRadio);
-            dialogVbox.getChildren().add(submitButton);
-            Scene dialogScene = new Scene(dialogVbox, 300, 300);
-            dialog.setScene(dialogScene);
-            dialog.show();
-        }
-        // transaction
-        else {
-            Transaction transaction = new Transaction(date, amount, label, id, merchant, account);
-            db.insertTransaction(transaction);
-        }
+        Transaction transaction = new Transaction(date, amount, label, id, merchant, account, recurring);
+        db.insertTransaction(transaction);
         db.close();
         fillTransactionsTable();
     }
@@ -865,11 +809,14 @@ public class FXController {
         TransactionLabelColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLabel()));
         TransactionBankAccountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getAccount()));
         TransactionPerpetualColumn.setCellValueFactory(data -> {
+            if ((data.getValue() instanceof Transaction) && (data.getValue().isRecurring())) return new ReadOnlyStringWrapper("Yes");
+            else return new ReadOnlyStringWrapper("No");
+            /*
             if(data.getValue() instanceof Transaction && !(data.getValue() instanceof RecurringTransaction)) return new ReadOnlyStringWrapper("No");
             else {
                 if(((RecurringTransaction) data.getValue()).isPerpetual()) return new ReadOnlyStringWrapper("Yes");
                 else return new ReadOnlyStringWrapper("No");
-            }
+            } */
         });
 
         TransactionsTable.setItems(transactions);
