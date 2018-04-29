@@ -101,6 +101,7 @@ public class BankDatabase {
     }
 
     public void updateRow(String account, double amount, int userID) {
+        PreparedStatement selectStmt = null;
         PreparedStatement updateStmt = null;
         String selectFrom = "select * from " + dbName
                 + ".BANKACCOUNTS where B_USER_ID = " + userID
@@ -108,14 +109,20 @@ public class BankDatabase {
         ResultSet rs = null;
         try {
             con.setAutoCommit(false);
-            updateStmt = con.prepareStatement(selectFrom);
-            rs = updateStmt.executeQuery();
+            selectStmt = con.prepareStatement(selectFrom);
+            rs = selectStmt.executeQuery();
+            rs.next();
             double current = rs.getDouble(2);
             current += amount;
-            rs.updateDouble(2, current);
-            rs.updateRow();
+
+            String update = "update " + dbName + ".BANKACCOUNTS set BALANCE = " + current
+                    + " where ACCOUNT_NAME = \'" + account + "\'";
+            updateStmt = con.prepareStatement(update);
+            updateStmt.executeUpdate();
+
             rs.close();
             updateStmt.close();
+            selectStmt.close();
             con.commit();
         } catch (SQLException e) {
             System.out.println("Failed to update account row");

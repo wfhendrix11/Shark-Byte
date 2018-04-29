@@ -178,8 +178,7 @@ public class DatabaseConnector {
         }
 
         BankDatabase bDb = new BankDatabase(conn, dbName, dbms);
-        //bDb.updateRow(account, amount, Main.userID);
-        //bDb.close();
+        bDb.updateRow(account, amount, Main.userID);
     }
 
     public void insertBankAccount(BankAccount bankAccount) {
