@@ -116,7 +116,7 @@ public class BankDatabase {
             current += amount;
 
             String update = "update " + dbName + ".BANKACCOUNTS set BALANCE = " + current
-                    + " where ACCOUNT_NAME = \'" + account + "\'";
+                    + " where ACCOUNT_NAME = \'" + account + "\' and B_USER_ID = " + userID;
             updateStmt = con.prepareStatement(update);
             updateStmt.executeUpdate();
 
