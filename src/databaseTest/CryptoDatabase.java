@@ -1,6 +1,8 @@
 package databaseTest;
 
+import main.Crypto;
 import main.DatabaseConnector;
+import org.apache.commons.codec.digest.Crypt;
 
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
@@ -10,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class CryptoDatabase {
 
@@ -63,5 +66,34 @@ public class CryptoDatabase {
                 insertStmt.close();
             }
         }
+    }
+
+    public Iterable<Crypto> selectRows(int userID) {
+        PreparedStatement selectStmt = null;
+        String selectFrom = "select * from " + dbName
+                + ".CRYPTO where CR_USER_ID = " + userID;
+        ResultSet rs = null;
+        ArrayList<Crypto> cryptos = new ArrayList<Crypto>();
+        try {
+            con.setAutoCommit(false);
+            selectStmt = con.prepareStatement(selectFrom);
+            rs = selectStmt.executeQuery();
+
+            while (rs != null && rs.next()) {
+                String symbol = rs.getString(1);
+                double owned = rs.getDouble(2);
+                Crypto crypto = new Crypto(symbol, owned);
+                cryptos.add(crypto);
+            }
+
+            if (rs != null) rs.close();
+
+            selectStmt.close();
+            con.commit();
+        } catch (SQLException e) {
+            DatabaseConnector.printSQLException(e);
+        }
+
+        return cryptos;
     }
 }

@@ -1,6 +1,7 @@
 package databaseTest;
 
 import main.DatabaseConnector;
+import main.Stock;
 
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
@@ -10,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class StockDatabase {
 
@@ -63,5 +65,34 @@ public class StockDatabase {
                 insertStmt.close();
             }
         }
+    }
+
+    public Iterable<Stock> selectRows(int userID) {
+        PreparedStatement selectStmt = null;
+        String selectFrom = "select * from " + dbName
+                + ".STOCKS where S_USER_ID = " + userID;
+        ResultSet rs = null;
+        ArrayList<Stock> stocks = new ArrayList<Stock>();
+        try {
+            con.setAutoCommit(false);
+            selectStmt = con.prepareStatement(selectFrom);
+            rs = selectStmt.executeQuery();
+
+            while (rs != null && rs.next()) {
+                String symbol = rs.getString(1);
+                int shares = rs.getInt(2);
+                Stock stock = new Stock(symbol, shares);
+                stocks.add(stock);
+            }
+
+            if (rs != null) rs.close();
+
+            selectStmt.close();
+            con.commit();
+        } catch (SQLException e) {
+            DatabaseConnector.printSQLException(e);
+        }
+
+        return stocks;
     }
 }
