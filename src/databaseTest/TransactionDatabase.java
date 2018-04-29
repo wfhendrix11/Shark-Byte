@@ -149,6 +149,41 @@ public class TransactionDatabase {
         return transactions;
     }
 
+    public Iterable<Transaction> selectRowsByLabel(String labelIn, int userID) {
+        PreparedStatement selectStmt = null;
+        String selectFrom = "select * from " + dbName
+                + ".TRANSACTIONS where TRANS_LABEL = \'" + labelIn
+                + "\' and T_USER_ID = " + userID;
+        ResultSet rs = null;
+        ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+        try {
+            con.setAutoCommit(false);
+            selectStmt = con.prepareStatement(selectFrom);
+            rs = selectStmt.executeQuery();
+
+            while (rs != null && rs.next()) {
+                LocalDate date = rs.getDate(1).toLocalDate();
+                double amount = rs.getDouble(2);
+                String label = rs.getString(3);
+                int id = rs.getInt(4);
+                boolean recurring = rs.getBoolean(5);
+                String merchant = rs.getString(6);
+                String account = rs.getString(7);
+                Transaction transaction = new Transaction(date, amount, label, id, merchant, account, recurring);
+                transactions.add(transaction);
+            }
+
+            if (rs != null) rs.close();
+
+            selectStmt.close();
+            con.commit();
+        } catch (SQLException e) {
+            DatabaseConnector.printSQLException(e);
+        }
+
+        return transactions;
+    }
+
     public int currentMaxID(int userID) throws SQLException {
         PreparedStatement maxStmt = null;
         String findMax = "select max(TRANS_ID) from " + dbName + ".TRANSACTIONS " +

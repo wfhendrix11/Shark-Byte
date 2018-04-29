@@ -350,7 +350,16 @@ public class DatabaseConnector {
     }
 
     public double getCategorySpending(String label, int month, int year) {
-        return 0.0;
+        TransactionDatabase db = new TransactionDatabase(conn, dbName, dbms);
+        Iterable<Transaction> selection = db.selectRowsByLabel(label, Main.userID);
+        double catSpent = 0;
+        for (Transaction t : selection) {
+            LocalDate date = t.getDate();
+            if (date.getMonthValue() == month && date.getYear() == year) {
+                catSpent += t.getAmount();
+            }
+        }
+        return catSpent;
     }
 
 
