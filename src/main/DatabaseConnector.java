@@ -176,6 +176,10 @@ public class DatabaseConnector {
             System.out.println("Failed to insert transaction");
             printSQLException(e);
         }
+
+        BankDatabase bDb = new BankDatabase(conn, dbName, dbms);
+        //bDb.updateRow(account, amount, Main.userID);
+        //bDb.close();
     }
 
     public void insertBankAccount(BankAccount bankAccount) {
@@ -372,5 +376,9 @@ public class DatabaseConnector {
             e = e.getNextException();
         } while(e != null);
     }
+
+
+
+    //public int attemptLogin(String username, String password)
 }
 

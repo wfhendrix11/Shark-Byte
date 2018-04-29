@@ -99,4 +99,27 @@ public class BankDatabase {
 
         return bankAccounts;
     }
+
+    public void updateRow(String account, double amount, int userID) {
+        PreparedStatement updateStmt = null;
+        String selectFrom = "select * from " + dbName
+                + ".BANKACCOUNTS where B_USER_ID = " + userID
+                + " and ACCOUNT_NAME = \'" + account + "\'";
+        ResultSet rs = null;
+        try {
+            con.setAutoCommit(false);
+            updateStmt = con.prepareStatement(selectFrom);
+            rs = updateStmt.executeQuery();
+            double current = rs.getDouble(2);
+            current += amount;
+            rs.updateDouble(2, current);
+            rs.updateRow();
+            rs.close();
+            updateStmt.close();
+            con.commit();
+        } catch (SQLException e) {
+            System.out.println("Failed to update account row");
+            DatabaseConnector.printSQLException(e);
+        }
+    }
 }
