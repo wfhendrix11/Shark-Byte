@@ -215,4 +215,27 @@ public class UserDatabase {
 
         return ret;
     }
+
+    public int currentMaxID() throws SQLException {
+        PreparedStatement maxStmt = null;
+        String findMax = "select max(USER_ID) from " + dbName + ".USERS ";
+        int max = 0;
+        ResultSet rs = null;
+        try {
+            con.setAutoCommit(false);
+            maxStmt = con.prepareStatement(findMax);
+            rs = maxStmt.executeQuery();
+            if(rs.next()) {
+                max = rs.getInt(1);
+            }
+            con.commit();
+        } catch (SQLException d) {
+            DatabaseConnector.printSQLException(d);
+        } finally {
+            if (maxStmt != null) {
+                maxStmt.close();
+            }
+        }
+        return max;
+    }
 }
