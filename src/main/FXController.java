@@ -99,7 +99,7 @@ public class FXController {
     private TableColumn<Transaction, String> TransactionPerpetualColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="budgetSpendingColumn"
-    private TableColumn<Transaction, String> budgetSpendingColumn; // Value injected by FXMLLoader
+    private TableColumn<Category, String> budgetSpendingColumn; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioValueColumn"
     private TableColumn<Investment, String> portfolioValueColumn; // Value injected by FXMLLoader
@@ -831,10 +831,14 @@ public class FXController {
 
     private void fillBudgetTransactionsTable(){
         DatabaseConnector db = new DatabaseConnector();
-        //ObservableList<Category> categories = db.get
-        //TODO
+        MonthlyBudget budget = selectBudgetChoiceBox.getValue();
+        ObservableList<Category> categories = db.getBudgetCategories(budget.getMonth(), budget.getYear());
 
-        //budgetCategoriesTable.setItems(categories);
+        budgetCategoryColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLabel()));
+        budgetSpendingColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getAmountSpent())));
+        budgetAmountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getPriceLimit())));
+
+        budgetCategoriesTable.setItems(categories);
     }
 
     private void fillBankAccountTransactionsTable(){
