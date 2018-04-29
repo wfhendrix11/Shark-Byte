@@ -6,7 +6,7 @@ public class Category {
     private double priceLimit;
     private String label;
 
-    Category(String newLabel, double newPriceLimit, int newMonth, int newYear) {
+    public Category(String newLabel, double newPriceLimit, int newMonth, int newYear) {
         label = newLabel;
         month = newMonth;
         year = newYear;

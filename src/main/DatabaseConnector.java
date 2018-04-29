@@ -321,7 +321,16 @@ public class DatabaseConnector {
     }
 
     public ObservableList<Transaction> getBankAccountTransactions(String accountName){
-        return null;
+
+        TransactionDatabase db = new TransactionDatabase(conn, dbName, dbms);
+        ObservableList<Transaction> bankAccountTransactions = FXCollections.observableArrayList();
+        Iterable<Transaction> selection = db.selectRows(accountName, Main.userID);
+
+        for (Transaction t : selection) {
+            bankAccountTransactions.add(t);
+        }
+
+        return bankAccountTransactions;
     }
 
     public ObservableList<BankAccount> getBankAccounts(){

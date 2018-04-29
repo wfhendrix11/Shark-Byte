@@ -191,4 +191,28 @@ public class UserDatabase {
 
         return ret;
     }
+
+    public int getUserID(String username) {
+        PreparedStatement selectStmt = null;
+        String selectFrom = "select USER_ID from " + dbName
+                + ".USERS where USERNAME = \'" + username + "\'";
+        ResultSet rs = null;
+        int ret = 0;
+        try {
+            con.setAutoCommit(false);
+            selectStmt = con.prepareStatement(selectFrom);
+            rs = selectStmt.executeQuery();
+
+            ret = rs.getInt(1);
+
+            if (rs != null) rs.close();
+
+            selectStmt.close();
+            con.commit();
+        } catch (SQLException e) {
+            DatabaseConnector.printSQLException(e);
+        }
+
+        return ret;
+    }
 }
