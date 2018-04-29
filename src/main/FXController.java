@@ -716,14 +716,20 @@ public class FXController {
                 int sharesOwned = Integer.parseInt(newInvestmentQtyField.getText());
                 Stock stockToRecord = new Stock(stockName, sharesOwned);
                 //System.out.print(stockToRecord);
-                //TODO: send stock to database
+                DatabaseConnector db = new DatabaseConnector();
+                db.insertInvestment(stockToRecord);
+                db.close();
+                fillPortfolio();
                 break;
             case "Crypto":
                 String cryptoName = newInvestmentSymbolField.getText();
                 double numberOwned = Double.parseDouble(newInvestmentQtyField.getText());
                 Crypto cryptoToRecord = new Crypto(cryptoName, numberOwned);
                 //System.out.print(cryptoToRecord);
-                //TODO: send crypto to database
+                DatabaseConnector db2 = new DatabaseConnector();
+                db2.insertInvestment(cryptoToRecord);
+                db2.close();
+                fillPortfolio();
                 break;
             case "Custom":
                 String assetName = newInvestmentSymbolField.getText();
@@ -732,7 +738,10 @@ public class FXController {
                 int quantity = Integer.parseInt(newInvestmentQtyField.getText());
                 CustomAsset assetToRecord = new CustomAsset(assetName, quantity, interestRate, price);
                 //System.out.print(assetToRecord);
-                //TODO: send asset to database
+                DatabaseConnector db3 = new DatabaseConnector();
+                db3.insertInvestment(assetToRecord);
+                db3.close();
+                fillPortfolio();
                 break;
         }
     }
