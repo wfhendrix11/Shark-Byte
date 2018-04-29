@@ -175,8 +175,7 @@ public class DatabaseConnector {
         }
 
         BankDatabase bDb = new BankDatabase(conn, dbName, dbms);
-        //bDb.updateRow(account, amount, Main.userID);
-        //bDb.close();
+        bDb.updateRow(account, amount, Main.userID);
     }
 
     public void insertBankAccount(BankAccount bankAccount) {
@@ -351,7 +350,16 @@ public class DatabaseConnector {
     }
 
     public double getCategorySpending(String label, int month, int year) {
-        return 0.0;
+        TransactionDatabase db = new TransactionDatabase(conn, dbName, dbms);
+        Iterable<Transaction> selection = db.selectRowsByLabel(label, Main.userID);
+        double catSpent = 0;
+        for (Transaction t : selection) {
+            LocalDate date = t.getDate();
+            if (date.getMonthValue() == month && date.getYear() == year) {
+                catSpent += t.getAmount();
+            }
+        }
+        return catSpent;
     }
 
 
@@ -373,7 +381,7 @@ public class DatabaseConnector {
     }
 
 
-    //public int attemptLogin(String username, String password){
+    public int attemptLogin(String username, String password){
         /*
             if(NOT username exists) return -1
             else
@@ -381,12 +389,12 @@ public class DatabaseConnector {
                 2. if password matches, return associated userID
                     else return -1
         */
+        return 33;
+    }
 
-   // }
 
-    /*
     public boolean insertUserAccount(String username, String password){
-        if(username exists in DB) return false;
+        /*if(username exists in DB) return false;
 
         UserAccount newAccount = new UserAccount(username, password);
         int userID = Math.rand(10000);
@@ -394,9 +402,10 @@ public class DatabaseConnector {
             userID = Math.rand(10000);
         }
         insert newAccount w/ userID
+        return true;*/
         return true;
     }
 
-     */
+
 }
 

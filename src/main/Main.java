@@ -76,10 +76,16 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent e) {
                 // open home screen
-                loginStage.close();
-                DatabaseConnector db = new DatabaseConnector();
 
-                primaryStage.show();
+                DatabaseConnector db = new DatabaseConnector();
+                userID = db.attemptLogin(userName.getText(), pw.getText());
+                db.close();
+
+                if(userID > 0) {
+                    loginStage.close();
+                    primaryStage.show();
+                }
+                else grid.add(new Text("Invalid Login"), 1, 5);
             }
         });
 
@@ -121,9 +127,18 @@ public class Main extends Application {
 
                     @Override
                     public void handle(ActionEvent e) {
-                        // open home screen
-                        dialog.close();
-                        DatabaseConnector db = new DatabaseConnector();
+                        if(passwordField.getText().equals(confirmField.getText())){
+                            DatabaseConnector db = new DatabaseConnector();
+                            boolean accountCreated = db.insertUserAccount(usernameField.getText(), passwordField.getText());
+                            if(accountCreated) dialog.close();
+                            else dialogVbox.getChildren().add(new Text("Username already exists"));
+                        }
+                        else {
+                            dialogVbox.getChildren().add(new Text("Passwords do not match"));
+                        }
+
+
+
                     }
                 });
 
