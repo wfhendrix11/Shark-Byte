@@ -21,11 +21,11 @@ public class DatabaseConnector {
 
     //Attempt to connect to existing Database.
     //If fails, creates the Database.
-    public DatabaseConnector(){
+    public DatabaseConnector() {
         try {
             conn = DriverManager.getConnection(connectionURL);
             DatabaseMetaData metaData = conn.getMetaData();
-            ResultSet theTables = metaData.getTables(null, null, "%", new String[] {"TABLE"});
+            ResultSet theTables = metaData.getTables(null, null, "%", new String[]{"TABLE"});
             if (!theTables.next()) {
                 // database was just created, we must create the tables
                 // TODO create tables
@@ -45,8 +45,7 @@ public class DatabaseConnector {
             }
 
             theTables.close();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Failed to create database");
             printSQLException(e);
         }
@@ -76,11 +75,9 @@ public class DatabaseConnector {
 
         try {
             conn.close();
-        }
-        catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("No connection to close");
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -115,7 +112,7 @@ public class DatabaseConnector {
         try {
             db.updatePassword(password, Main.userID);
             System.out.println("Password Changed!");
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Password update failed");
             printSQLException(e);
         }
@@ -220,7 +217,7 @@ public class DatabaseConnector {
         }
     } */
 
-    public void insertInvestment(Investment newInvestment){
+    public void insertInvestment(Investment newInvestment) {
         //TODO
         if (newInvestment instanceof CustomAsset) {
             AssetDatabase db = new AssetDatabase(conn, dbName, dbms);
@@ -235,8 +232,7 @@ public class DatabaseConnector {
                 System.out.println("Could not insert custom asset");
                 printSQLException(e);
             }
-        }
-        else if (newInvestment instanceof Crypto) {
+        } else if (newInvestment instanceof Crypto) {
             CryptoDatabase db = new CryptoDatabase(conn, dbName, dbms);
             String symbol = newInvestment.getName();
             double owned = ((Crypto) newInvestment).getNumberOwned();
@@ -247,8 +243,7 @@ public class DatabaseConnector {
                 System.out.println("Could not insert crypto asset");
                 printSQLException(e);
             }
-        }
-        else if (newInvestment instanceof Stock) {
+        } else if (newInvestment instanceof Stock) {
             StockDatabase db = new StockDatabase(conn, dbName, dbms);
             String symbol = newInvestment.getName();
             int owned = ((Stock) newInvestment).getNumberOfShares();
@@ -262,7 +257,7 @@ public class DatabaseConnector {
         }
     }
 
-    public ObservableList<Investment> getPortfolio(){
+    public ObservableList<Investment> getPortfolio() {
         /*
         //Some dummy investments
         Stock stock1 = new Stock("TSLA", 10);
@@ -297,7 +292,7 @@ public class DatabaseConnector {
     }
 
 
-    public ObservableList<Transaction> getRecentTransactions(){
+    public ObservableList<Transaction> getRecentTransactions() {
         //Some dummy transactions
         /*
         Transaction x1 = new Transaction(LocalDate.now(), 20, "Label", 001, "Wally World", "Checking");
@@ -323,7 +318,7 @@ public class DatabaseConnector {
         return recentTransactions;
     }
 
-    public ObservableList<Transaction> getBankAccountTransactions(String accountName){
+    public ObservableList<Transaction> getBankAccountTransactions(String accountName) {
 
         TransactionDatabase db = new TransactionDatabase(conn, dbName, dbms);
         ObservableList<Transaction> bankAccountTransactions = FXCollections.observableArrayList();
@@ -336,34 +331,34 @@ public class DatabaseConnector {
         return bankAccountTransactions;
     }
 
-    public ObservableList<BankAccount> getBankAccounts(){
+    public ObservableList<BankAccount> getBankAccounts() {
         ObservableList<BankAccount> bankAccounts = FXCollections.observableArrayList();
         //bankAccounts.add(new BankAccount("Checking", 22)); //DUMMY ACCOUNT
         BankDatabase bDb = new BankDatabase(conn, dbName, dbms);
         Iterable<BankAccount> bankAccountIterable = bDb.selectRows(Main.userID);
         for (BankAccount b : bankAccountIterable) {
-           bankAccounts.add(b);
+            bankAccounts.add(b);
         }
         return bankAccounts;
     }
 
-    public ObservableList<MonthlyBudget> getMonthlyBudgets(){
-        MonthlyBudget budget = new MonthlyBudget(4,2018);
-        ObservableList<MonthlyBudget>  list = FXCollections.observableArrayList();
+    public ObservableList<MonthlyBudget> getMonthlyBudgets() {
+        MonthlyBudget budget = new MonthlyBudget(4, 2018);
+        ObservableList<MonthlyBudget> list = FXCollections.observableArrayList();
         list.add(budget);
         return list;
     }
 
-    public double getCategorySpending(String label, int month, int year){
+    public double getCategorySpending(String label, int month, int year) {
         return 0.0;
     }
 
 
-    public void insertCategory(Category c){
+    public void insertCategory(Category c) {
         //Todo
     }
 
-    public ObservableList<Transaction> getThisMonthTransactions(){
+    public ObservableList<Transaction> getThisMonthTransactions() {
         return getRecentTransactions();
 
         //todo actually implement
@@ -373,11 +368,34 @@ public class DatabaseConnector {
         do {
             System.out.println(e.getMessage());
             e = e.getNextException();
-        } while(e != null);
+        } while (e != null);
     }
 
 
+    //public int attemptLogin(String username, String password){
+        /*
+            if(NOT username exists) return -1
+            else
+                1. check if password matches row where username is
+                2. if password matches, return associated userID
+                    else return -1
+        */
 
-    //public int attemptLogin(String username, String password)
+   // }
+
+    /*
+    public boolean insertUserAccount(String username, String password){
+        if(username exists in DB) return false;
+
+        UserAccount newAccount = new UserAccount(username, password);
+        int userID = Math.rand(10000);
+        while(userID exists in DB){
+            userID = Math.rand(10000);
+        }
+        insert newAccount w/ userID
+        return true;
+    }
+
+     */
 }
 

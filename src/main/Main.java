@@ -6,13 +6,16 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -20,6 +23,7 @@ import javafx.scene.control.Button;
 
 import java.awt.*;
 import javafx.scene.text.Text;
+import javafx.stage.Window;
 
 public class Main extends Application {
 
@@ -30,7 +34,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         // Login Screen
         Stage loginStage = new Stage();
-        loginStage.setTitle("JavaFX Welcome");
+        loginStage.setTitle("Welcome to Shark Byte");
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
@@ -72,19 +76,66 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent e) {
                 // open home screen
+                loginStage.close();
                 DatabaseConnector db = new DatabaseConnector();
-                
+
                 primaryStage.show();
             }
         });
 
-        // Action for Sign In button
+        // Action for create account button
         btn1.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent e) {
                 // open home screen
-                System.out.print("CREATE NEW ACCOUNT");
+                Node source = (Node) e.getSource();
+                Window theStage = source.getScene().getWindow();
+                final Stage dialog = new Stage();
+                dialog.initModality(Modality.APPLICATION_MODAL);
+                dialog.initOwner(theStage);
+                dialog.setTitle("Create New Account");
+                VBox dialogVbox = new VBox(20);
+
+                Text usernameText = new Text("Enter Username: ");
+
+                TextField usernameField = new TextField();
+                usernameField.setPromptText("Username");
+
+                Text passwordText = new Text("Enter Password: ");
+
+                TextField passwordField = new TextField();
+                passwordField.setPromptText("Password");
+
+                Text confirmText = new Text("Enter Password: ");
+
+                TextField confirmField = new TextField();
+                confirmField.setPromptText("Confirm Password");
+
+                Button submitButton = new Button();
+                submitButton.setText("Submit");
+
+                // Action for submit button
+                submitButton.setOnAction(new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent e) {
+                        // open home screen
+                        dialog.close();
+                        DatabaseConnector db = new DatabaseConnector();
+                    }
+                });
+
+                dialogVbox.getChildren().add(usernameText);
+                dialogVbox.getChildren().add(usernameField);
+                dialogVbox.getChildren().add(passwordText);
+                dialogVbox.getChildren().add(passwordField);
+                dialogVbox.getChildren().add(confirmText);
+                dialogVbox.getChildren().add(confirmField);
+                dialogVbox.getChildren().add(submitButton);
+                Scene dialogScene = new Scene(dialogVbox, 325, 350);
+                dialog.setScene(dialogScene);
+                dialog.show();
             }
         });
 
