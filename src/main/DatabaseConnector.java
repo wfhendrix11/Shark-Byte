@@ -133,13 +133,13 @@ public class DatabaseConnector {
         }
         return ret;
     }
-
+    /*
     public ArrayList<BankAccount> selectBankAccounts() {
         ArrayList<BankAccount> accounts = new ArrayList<BankAccount>();
         accounts.add(new BankAccount("Account1", 0));
         accounts.add(new BankAccount("Account2", 0));
         return accounts;
-    }
+    }*/
 
     public int getNextTransactionId() {
         TransactionDatabase db = new TransactionDatabase(conn, dbName, dbms);
@@ -176,6 +176,10 @@ public class DatabaseConnector {
             System.out.println("Failed to insert transaction");
             printSQLException(e);
         }
+
+        BankDatabase bDb = new BankDatabase(conn, dbName, dbms);
+        //bDb.updateRow(account, amount, Main.userID);
+        //bDb.close();
     }
 
     public void insertBankAccount(BankAccount bankAccount) {
@@ -321,7 +325,16 @@ public class DatabaseConnector {
     }
 
     public ObservableList<Transaction> getBankAccountTransactions(String accountName){
-        return null;
+
+        TransactionDatabase db = new TransactionDatabase(conn, dbName, dbms);
+        ObservableList<Transaction> bankAccountTransactions = FXCollections.observableArrayList();
+        Iterable<Transaction> selection = db.selectRows(accountName, Main.userID);
+
+        for (Transaction t : selection) {
+            bankAccountTransactions.add(t);
+        }
+
+        return bankAccountTransactions;
     }
 
     public ObservableList<BankAccount> getBankAccounts(){
@@ -363,5 +376,9 @@ public class DatabaseConnector {
             e = e.getNextException();
         } while(e != null);
     }
+
+
+
+    //public int attemptLogin(String username, String password)
 }
 
