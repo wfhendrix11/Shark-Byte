@@ -2,7 +2,7 @@ package databaseTest;
 
 import main.Crypto;
 import main.DatabaseConnector;
-import org.apache.commons.codec.digest.Crypt;
+//import org.apache.commons.codec.digest.Crypt;
 
 import java.sql.BatchUpdateException;
 import java.sql.Connection;

@@ -340,10 +340,14 @@ public class DatabaseConnector {
     }
 
     public ObservableList<MonthlyBudget> getMonthlyBudgets() {
-        MonthlyBudget budget = new MonthlyBudget(4, 2018);
-        ObservableList<MonthlyBudget> list = FXCollections.observableArrayList();
-        list.add(budget);
-        return list;
+        ObservableList<MonthlyBudget> months = FXCollections.observableArrayList();
+        MonthDatabase db = new MonthDatabase(conn, dbName, dbms);
+        Iterable<MonthlyBudget> selection = db.selectRows(Main.userID);
+        double catSpent = 0;
+        for (MonthlyBudget m : selection) {
+            months.add(m);
+        }
+        return months;
     }
 
     public double getCategorySpending(String label, int month, int year) {
@@ -360,8 +364,9 @@ public class DatabaseConnector {
     }
 
 
-    public void insertCategory(Category c) {
-        //Todo
+    public void insertCategory(Category c) throws SQLException {
+        CategoryDatabase db = new CategoryDatabase(conn, dbName, dbms);
+        db.insertRow(c.getMonth(), c.getYear(), c.getLabel(), c.getPriceLimit(), Main.userID);
     }
 
     public ObservableList<Transaction> getThisMonthTransactions() {
@@ -435,13 +440,20 @@ public class DatabaseConnector {
     }
 
     public ObservableList<Category> getBudgetCategories(int month, int year){
-        //select categories with matching month and year
-        //return that list
-        return FXCollections.observableArrayList();
+        CategoryDatabase db = new CategoryDatabase(conn, dbName, dbms);
+        ObservableList<Category> categories = FXCollections.observableArrayList();
+        Iterable<Category> selection = db.selectRows(month, year, Main.userID);
+
+        for (Category c : selection) {
+                categories.add(c);
+        }
+
+        return categories;
     }
 
-    public void insertBudget(int month, int year){
-        //simple enough
+    public void insertBudget(int month, int year) throws SQLException {
+        MonthDatabase db = new MonthDatabase(conn, dbName, dbms);
+        db.insertRow(month, year, Main.userID);
     }
 
 

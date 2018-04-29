@@ -26,4 +26,8 @@ public class Category {
     public double getPriceLimit(){
         return priceLimit;
     }
+
+    public int getMonth() { return month;}
+
+    public int getYear() { return year;}
 }

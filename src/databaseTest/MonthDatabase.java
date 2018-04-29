@@ -1,6 +1,7 @@
 package databaseTest;
 
 import main.DatabaseConnector;
+import main.MonthlyBudget;
 
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
@@ -10,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class MonthDatabase {
 
@@ -65,5 +67,34 @@ public class MonthDatabase {
                 con.close();
             }
         }
+    }
+
+    public Iterable<MonthlyBudget> selectRows(int userID) {
+        PreparedStatement selectStmt = null;
+        String selectFrom = "select * from " + dbName
+                + ".Months where M_USER_ID = " + userID;
+        ResultSet rs = null;
+        ArrayList<MonthlyBudget> months = new ArrayList<MonthlyBudget>();
+        try {
+            con.setAutoCommit(false);
+            selectStmt = con.prepareStatement(selectFrom);
+            rs = selectStmt.executeQuery();
+
+            while (rs != null && rs.next()) {
+                int mon = rs.getInt(1);
+                int yr = rs.getInt(2);
+                MonthlyBudget month = new MonthlyBudget(mon, yr);
+                months.add(month);
+            }
+
+            if (rs != null) rs.close();
+
+            selectStmt.close();
+            con.commit();
+        } catch (SQLException e) {
+            DatabaseConnector.printSQLException(e);
+        }
+
+        return months;
     }
 }
