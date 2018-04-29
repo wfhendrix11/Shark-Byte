@@ -84,7 +84,13 @@ public class InvestmentLookup {
     public static double getMostRecentStockPrice(String symbol){
         String searchResult = lookupStockDaily(symbol);
         int indexOfMostRecentClose = searchResult.indexOf("4. close") + 12;
-        double mostRecentClose = Double.parseDouble(searchResult.substring(indexOfMostRecentClose, indexOfMostRecentClose + 7));
+        double mostRecentClose = -1;
+        try {
+           mostRecentClose = Double.parseDouble(searchResult.substring(indexOfMostRecentClose, indexOfMostRecentClose + 7));
+        } catch (Exception e){
+            //mostRecentClose = -1;
+            System.out.println("error in most recent stock price lookup");
+        }
         return mostRecentClose;
     }
 
@@ -92,7 +98,13 @@ public class InvestmentLookup {
         String searchResult = InvestmentLookup.lookupCryptoDaily(symbol);
         int indexOfMostRecentClose = searchResult.indexOf("close") + 15;
         int indexOfEndOfClose = searchResult.indexOf("\"", indexOfMostRecentClose);
-        double mostRecentClose = Double.parseDouble(searchResult.substring(indexOfMostRecentClose, indexOfEndOfClose));
+        double mostRecentClose = -1;
+        try {
+            mostRecentClose = Double.parseDouble(searchResult.substring(indexOfMostRecentClose, indexOfEndOfClose));
+        } catch (Exception e){
+            //mostRecentClose = -1;
+            System.out.println("error in crypto lookup");
+        }
         return mostRecentClose;
     }
 }

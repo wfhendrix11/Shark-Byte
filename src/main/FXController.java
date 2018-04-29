@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.*;
 
 public class FXController {
 
@@ -162,7 +162,7 @@ public class FXController {
     private ChoiceBox<?> filterDateChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="transactionBankAccountChoiceBox"
-    private ChoiceBox<?> transactionBankAccountChoiceBox; // Value injected by FXMLLoader
+    private ChoiceBox<BankAccount> transactionBankAccountChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioTable"
     private TableView<Investment> portfolioTable; // Value injected by FXMLLoader
@@ -244,6 +244,8 @@ public class FXController {
     void homeTabChanged(Event event) {
         if(homeTab.isSelected()){
             fillHomeScreenTransactionsTable();
+            //populateSelectBudgetChoiceBox();
+            //drawHomeScreenPieCharts();
         }
     }
 
@@ -326,66 +328,10 @@ public class FXController {
         int id = db.getNextTransactionId();
         String label = transactionLabelChoiceBox.getValue().toString();
         String account = transactionBankAccountChoiceBox.getValue().toString();
+        boolean recurring = recurringRadio.isSelected();
 
-        // recurring transaction
-        if (recurringRadio.isSelected()) {
-            // TODO Lawrence working on this
-            Node source = (Node) event.getSource();
-            Window theStage = source.getScene().getWindow();
-
-            final Stage dialog = new Stage();
-            dialog.initModality(Modality.APPLICATION_MODAL);
-            dialog.initOwner(theStage);
-            dialog.setTitle("Add Recurring Transaction");
-            VBox dialogVbox = new VBox(20);
-
-            Text intervalPrompt = new Text("Interval in days: ");
-
-            TextField intervalField = new TextField();
-            intervalField.setPromptText("Interval");
-
-            Text executionsPromprt = new Text("Number of executions: ");
-
-            TextField executionsField = new TextField();
-            intervalField.setPromptText("Executions");
-
-            RadioButton perpetualRadio = new RadioButton();
-            perpetualRadio.setText("Perpetual");
-
-            Button submitButton = new Button();
-            submitButton.setText("Submit");
-
-            EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    boolean perpetual = perpetualRadio.isSelected();
-                    int interval = Integer.parseInt(intervalField.getText());
-                    int executions = Integer.parseInt(executionsField.getText());
-
-                    RecurringTransaction recurringTransaction =
-                            new RecurringTransaction(date, amount, label, id, merchant, account, interval, executions, perpetual);
-                    db.insertRecurringTransaction(recurringTransaction);
-                    dialog.close();
-                }
-            };
-
-            submitButton.setOnAction(handler);
-
-            dialogVbox.getChildren().add(intervalPrompt);
-            dialogVbox.getChildren().add(intervalField);
-            dialogVbox.getChildren().add(executionsPromprt);
-            dialogVbox.getChildren().add(executionsField);
-            dialogVbox.getChildren().add(perpetualRadio);
-            dialogVbox.getChildren().add(submitButton);
-            Scene dialogScene = new Scene(dialogVbox, 300, 300);
-            dialog.setScene(dialogScene);
-            dialog.show();
-        }
-        // transaction
-        else {
-            Transaction transaction = new Transaction(date, amount, label, id, merchant, account);
-            db.insertTransaction(transaction);
-        }
+        Transaction transaction = new Transaction(date, amount, label, id, merchant, account, recurring);
+        db.insertTransaction(transaction);
         db.close();
         fillTransactionsTable();
     }
@@ -408,7 +354,35 @@ public class FXController {
         labelPicker.setItems(labels);
         labelPicker.getSelectionModel().selectFirst();
 
-        //TODO FINISH THIS USE CASE
+        TextField amount = new TextField();
+        amount.setPromptText("Price Limit");
+
+        Button addNewCategoryButton = new Button();
+        addNewCategoryButton.setText("Add new category");
+
+        EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DatabaseConnector db = new DatabaseConnector();
+                String label = labelPicker.getValue();
+                double priceLimit = Double.parseDouble(amount.getText());
+                int month = selectBudgetChoiceBox.getValue().getMonth();
+                int year = selectBudgetChoiceBox.getValue().getYear();
+                Category newCategory = new Category(label, priceLimit, month, year);
+                db.insertCategory(newCategory);
+                db.close();
+                dialog.close();
+;            }
+        };
+
+        addNewCategoryButton.setOnAction(handler);
+
+        dialogVBox.getChildren().add(labelPicker);
+        dialogVBox.getChildren().add(amount);
+        dialogVBox.getChildren().add(addNewCategoryButton);
+        Scene dialogScene = new Scene(dialogVBox, 300, 300);
+        dialog.setScene(dialogScene);
+        dialog.show();
     }
 
     @FXML
@@ -686,14 +660,20 @@ public class FXController {
                 int sharesOwned = Integer.parseInt(newInvestmentQtyField.getText());
                 Stock stockToRecord = new Stock(stockName, sharesOwned);
                 //System.out.print(stockToRecord);
-                //TODO: send stock to database
+                DatabaseConnector db = new DatabaseConnector();
+                db.insertInvestment(stockToRecord);
+                db.close();
+                fillPortfolio();
                 break;
             case "Crypto":
                 String cryptoName = newInvestmentSymbolField.getText();
                 double numberOwned = Double.parseDouble(newInvestmentQtyField.getText());
                 Crypto cryptoToRecord = new Crypto(cryptoName, numberOwned);
                 //System.out.print(cryptoToRecord);
-                //TODO: send crypto to database
+                DatabaseConnector db2 = new DatabaseConnector();
+                db2.insertInvestment(cryptoToRecord);
+                db2.close();
+                fillPortfolio();
                 break;
             case "Custom":
                 String assetName = newInvestmentSymbolField.getText();
@@ -702,7 +682,10 @@ public class FXController {
                 int quantity = Integer.parseInt(newInvestmentQtyField.getText());
                 CustomAsset assetToRecord = new CustomAsset(assetName, quantity, interestRate, price);
                 //System.out.print(assetToRecord);
-                //TODO: send asset to database
+                DatabaseConnector db3 = new DatabaseConnector();
+                db3.insertInvestment(assetToRecord);
+                db3.close();
+                fillPortfolio();
                 break;
         }
     }
@@ -711,6 +694,7 @@ public class FXController {
         DatabaseConnector db = new DatabaseConnector();
         ObservableList<String> labels = db.selectLabels();
         db.close();
+
 
         ObservableList labelItems = FXCollections.observableArrayList();
 
@@ -732,16 +716,16 @@ public class FXController {
     }
     void updateTransactionBankAccounts() {
         DatabaseConnector db = new DatabaseConnector();
-        ArrayList<BankAccount> accounts = db.selectBankAccounts();
+        ObservableList<BankAccount> accounts = db.getBankAccounts();
         db.close();
 
-        ObservableList accountItems = FXCollections.observableArrayList();
+        /*ObservableList accountItems = FXCollections.observableArrayList();
 
         for (BankAccount ba : accounts) {
             accountItems.add(ba);
-        }
+        }*/
 
-        transactionBankAccountChoiceBox.setItems(accountItems);
+        transactionBankAccountChoiceBox.setItems(accounts);
         transactionBankAccountChoiceBox.getSelectionModel().selectFirst();
     }
 
@@ -826,11 +810,14 @@ public class FXController {
         TransactionLabelColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLabel()));
         TransactionBankAccountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getAccount()));
         TransactionPerpetualColumn.setCellValueFactory(data -> {
+            if ((data.getValue() instanceof Transaction) && (data.getValue().isRecurring())) return new ReadOnlyStringWrapper("Yes");
+            else return new ReadOnlyStringWrapper("No");
+            /*
             if(data.getValue() instanceof Transaction && !(data.getValue() instanceof RecurringTransaction)) return new ReadOnlyStringWrapper("No");
             else {
                 if(((RecurringTransaction) data.getValue()).isPerpetual()) return new ReadOnlyStringWrapper("Yes");
                 else return new ReadOnlyStringWrapper("No");
-            }
+            } */
         });
 
         TransactionsTable.setItems(transactions);
@@ -845,27 +832,32 @@ public class FXController {
     }
 
     private void fillBankAccountTransactionsTable(){
-        DatabaseConnector db = new DatabaseConnector();
-        BankAccount bankAccount = selectBankAccountChoiceBox.getValue();
-        ObservableList<Transaction> transactions = db.getBankAccountTransactions(bankAccount.getName());
-        db.close();
-        accountTransactionDateColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getDate().toString()));
-        accountTransactionAmountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getAmount())));
-        accountTransactionLabelColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLabel()));
 
-        accountTransactionsTable.setItems(transactions);
+        BankAccount bankAccount = selectBankAccountChoiceBox.getValue();
+        if (bankAccount != null) {
+            DatabaseConnector db = new DatabaseConnector();
+            ObservableList<Transaction> transactions = db.getBankAccountTransactions(bankAccount.getName());
+            db.close();
+            accountTransactionDateColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getDate().toString()));
+            accountTransactionAmountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getAmount())));
+            accountTransactionLabelColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLabel()));
+
+            accountTransactionsTable.setItems(transactions);
+        }
     }
 
     private void populateSelectBankAccountChoiceBox(){
         DatabaseConnector db = new DatabaseConnector();
         ObservableList<BankAccount> bankAccounts = db.getBankAccounts();
+
         db.close();
         selectBankAccountChoiceBox.setItems(bankAccounts);
         selectBankAccountChoiceBox.getSelectionModel().selectFirst();
     }
 
     private void setBankAccountBalanceText(){
-        accountBalance.setText("Balance: $" + selectBankAccountChoiceBox.getValue().getBalance());
+        BankAccount bankAccount = selectBankAccountChoiceBox.getValue();
+        if(bankAccount != null) accountBalance.setText("Balance: $" + selectBankAccountChoiceBox.getValue().getBalance());
     }
 
 
@@ -876,6 +868,49 @@ public class FXController {
 
         selectBudgetChoiceBox.setItems(budgets);
         selectBudgetChoiceBox.getSelectionModel().selectFirst();
+    }
+
+    private void drawHomeScreenPieCharts(){
+        //home_thisMonthSpendingChart
+        //home_thisMonthBudgetChart
+        MonthlyBudget thisMonth = selectBudgetChoiceBox.getValue();
+        ObservableList<Category> thisMonthCategories= thisMonth.getCategories();
+        ObservableList<PieChart.Data> SpendingPieChartData = FXCollections.observableArrayList();
+        ObservableList<PieChart.Data> BudgetPieChartData = FXCollections.observableArrayList();
+        for(int i = 0; i < thisMonthCategories.size(); i++){
+            Category c = thisMonthCategories.get(i);
+            BudgetPieChartData.add(new PieChart.Data(c.getLabel(), c.getPriceLimit()));
+        }
+
+        DatabaseConnector db = new DatabaseConnector();
+        ObservableList<Transaction> thisMonthTransactions = db.getThisMonthTransactions();
+        db.close();
+
+
+        //Now tally up the amounts on each of the labels
+        HashMap<String, Double> labelAmounts = new HashMap<String, Double>();
+        for(int i = 0; i < thisMonthTransactions.size(); i++){
+            String label = thisMonthTransactions.get(i).getLabel();
+            double transactionAmount = thisMonthTransactions.get(i).getAmount();
+            if(labelAmounts.containsKey(label)){
+                labelAmounts.put(label, (labelAmounts.get(label)+transactionAmount));
+            } else {
+                labelAmounts.put(label, transactionAmount);
+            }
+        }
+
+        //Get those amounts in the data list
+        Set<Map.Entry<String, Double>> labelAmountsSet = labelAmounts.entrySet();
+        Iterator<Map.Entry<String, Double>> labelAmountItr = labelAmountsSet.iterator();
+        while(labelAmountItr.hasNext()){
+            Map.Entry<String, Double> transactionData = labelAmountItr.next();
+            SpendingPieChartData.add(new PieChart.Data(transactionData.getKey(), transactionData.getValue()));
+        }
+
+        home_thisMonthBudgetChart.setData(BudgetPieChartData);
+        home_thisMonthSpendingChart.setData(SpendingPieChartData);
+
+
     }
 
 

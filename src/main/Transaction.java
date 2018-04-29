@@ -9,18 +9,20 @@ public class Transaction {
     private int id;
     private String merchant;
     private String account;
+    private boolean recurring;
 
     public Transaction() {
 
     }
 
-    public Transaction(LocalDate newDate, double newAmount, String newLabel, int newId, String newMerchant, String newAccount) {
+    public Transaction(LocalDate newDate, double newAmount, String newLabel, int newId, String newMerchant, String newAccount, boolean newRecurring) {
         date = newDate;
         amount = newAmount;
         label = newLabel;
         id = newId;
         merchant = newMerchant;
         account = newAccount;
+        recurring = newRecurring;
     }
 
     public String getLabel() {
@@ -42,4 +44,8 @@ public class Transaction {
     public String getMerchant() {return merchant;}
 
     public String getAccount() {return account;}
+
+    public boolean isRecurring() {
+        return recurring;
+    }
 }

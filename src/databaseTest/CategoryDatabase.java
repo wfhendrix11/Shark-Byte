@@ -1,5 +1,6 @@
 package databaseTest;
 
+import main.Category;
 import main.DatabaseConnector;
 
 import java.sql.BatchUpdateException;
@@ -10,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class CategoryDatabase {
 
@@ -66,5 +68,37 @@ public class CategoryDatabase {
                 insertStmt.close();
             }
         }
+    }
+
+    public Iterable<Category> selectRows(int mon, int yr, int userID) {
+        PreparedStatement selectStmt = null;
+        String selectFrom = "select * from " + dbName
+                + ".CATEGORY where MONTH_C = " + mon + " and YEAR_C = " + yr +
+                " and CA_USER_ID = " + userID;
+        ResultSet rs = null;
+        ArrayList<Category> categories = new ArrayList<Category>();
+        try {
+            con.setAutoCommit(false);
+            selectStmt = con.prepareStatement(selectFrom);
+            rs = selectStmt.executeQuery();
+
+            while (rs != null && rs.next()) {
+                int month = rs.getInt(1);
+                int year = rs.getInt(2);
+                String label = rs.getString(3);
+                double limit = rs.getDouble(4);
+                Category cat = new Category(label, limit, month, year);
+                categories.add(cat);
+            }
+
+            if (rs != null) rs.close();
+
+            selectStmt.close();
+            con.commit();
+        } catch (SQLException e) {
+            DatabaseConnector.printSQLException(e);
+        }
+
+        return categories;
     }
 }

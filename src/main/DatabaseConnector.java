@@ -47,7 +47,8 @@ public class DatabaseConnector {
             theTables.close();
         }
         catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Failed to create database");
+            printSQLException(e);
         }
     }
 
@@ -132,13 +133,13 @@ public class DatabaseConnector {
         }
         return ret;
     }
-
+    /*
     public ArrayList<BankAccount> selectBankAccounts() {
         ArrayList<BankAccount> accounts = new ArrayList<BankAccount>();
         accounts.add(new BankAccount("Account1", 0));
         accounts.add(new BankAccount("Account2", 0));
         return accounts;
-    }
+    }*/
 
     public int getNextTransactionId() {
         TransactionDatabase db = new TransactionDatabase(conn, dbName, dbms);
@@ -164,7 +165,7 @@ public class DatabaseConnector {
         double amount = transaction.getAmount();
         String label = transaction.getLabel();
         int id = transaction.getId();
-        boolean recurring = false;
+        boolean recurring = transaction.isRecurring();
         String merchant = transaction.getMerchant();
         String account = transaction.getAccount();
 
@@ -177,6 +178,23 @@ public class DatabaseConnector {
         }
     }
 
+    public void insertBankAccount(BankAccount bankAccount) {
+        BankDatabase db = new BankDatabase(conn, dbName, dbms);
+        String account = bankAccount.getName();
+        double balance = bankAccount.getBalance();
+        boolean frozen = false;
+        double rate = 0.0;
+
+        try {
+            db.insertRow(account, balance, frozen, rate, Main.userID);
+            System.out.println("Bank account inserted");
+        } catch (SQLException e) {
+            System.out.println("Could not insert bank account");
+            printSQLException(e);
+        }
+    }
+
+    /*
     public void insertRecurringTransaction(RecurringTransaction recurringTransaction) {
         RecurringDatabase rDb = new RecurringDatabase(conn, dbName, dbms);
         Date date = Date.valueOf(recurringTransaction.getDate());
@@ -197,7 +215,7 @@ public class DatabaseConnector {
             System.out.println("Failed to insert transaction");
             printSQLException(e);
         }
-    }
+    } */
 
     public void insertInvestment(Investment newInvestment){
         //TODO
@@ -303,21 +321,49 @@ public class DatabaseConnector {
     }
 
     public ObservableList<Transaction> getBankAccountTransactions(String accountName){
-        return null;
+
+        TransactionDatabase db = new TransactionDatabase(conn, dbName, dbms);
+        ObservableList<Transaction> bankAccountTransactions = FXCollections.observableArrayList();
+        Iterable<Transaction> selection = db.selectRows(accountName, Main.userID);
+
+        for (Transaction t : selection) {
+            bankAccountTransactions.add(t);
+        }
+
+        return bankAccountTransactions;
     }
 
     public ObservableList<BankAccount> getBankAccounts(){
         ObservableList<BankAccount> bankAccounts = FXCollections.observableArrayList();
-        bankAccounts.add(new BankAccount("Checking", 22));
+        //bankAccounts.add(new BankAccount("Checking", 22)); //DUMMY ACCOUNT
+        BankDatabase bDb = new BankDatabase(conn, dbName, dbms);
+        Iterable<BankAccount> bankAccountIterable = bDb.selectRows(Main.userID);
+        for (BankAccount b : bankAccountIterable) {
+           bankAccounts.add(b);
+        }
         return bankAccounts;
     }
 
     public ObservableList<MonthlyBudget> getMonthlyBudgets(){
-        return FXCollections.observableArrayList();
+        MonthlyBudget budget = new MonthlyBudget(4,2018);
+        ObservableList<MonthlyBudget>  list = FXCollections.observableArrayList();
+        list.add(budget);
+        return list;
     }
 
     public double getCategorySpending(String label, int month, int year){
         return 0.0;
+    }
+
+
+    public void insertCategory(Category c){
+        //Todo
+    }
+
+    public ObservableList<Transaction> getThisMonthTransactions(){
+        return getRecentTransactions();
+
+        //todo actually implement
     }
 
     public static void printSQLException(SQLException e) {
@@ -327,3 +373,4 @@ public class DatabaseConnector {
         } while(e != null);
     }
 }
+

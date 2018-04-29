@@ -96,9 +96,10 @@ public class TransactionDatabase {
                 double amount = rs.getDouble(2);
                 String label = rs.getString(3);
                 int id = rs.getInt(4);
+                boolean recurring = rs.getBoolean(5);
                 String merchant = rs.getString(6);
                 String account = rs.getString(7);
-                Transaction transaction = new Transaction(date, amount, label, id, merchant, account);
+                Transaction transaction = new Transaction(date, amount, label, id, merchant, account, recurring);
                 transactions.add(transaction);
             }
 
@@ -130,9 +131,10 @@ public class TransactionDatabase {
                 double amount = rs.getDouble(2);
                 String label = rs.getString(3);
                 int id = rs.getInt(4);
+                boolean recurring = rs.getBoolean(5);
                 String merchant = rs.getString(6);
                 String account = rs.getString(7);
-                Transaction transaction = new Transaction(date, amount, label, id, merchant, account);
+                Transaction transaction = new Transaction(date, amount, label, id, merchant, account, recurring);
                 transactions.add(transaction);
             }
 
