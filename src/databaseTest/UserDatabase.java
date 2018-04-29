@@ -116,12 +116,13 @@ public class UserDatabase {
     public boolean correctPassword(String username, String password)  throws SQLException {
         PreparedStatement checkPassword = null;
         String correctPass = null;
-        String getPassword = "select PASSWORD " + "from " + dbName + ".USERS where USERNAME = \'"
+        String getPassword = "select * " + "from " + dbName + ".USERS where USERNAME = \'"
                 + username + "\'";
         try {
             con.setAutoCommit(false);
             checkPassword = con.prepareStatement(getPassword);
             ResultSet rs = checkPassword.executeQuery();
+            if (!rs.next()) return false;
             correctPass = rs.getString(2);
             con.commit();
         } catch (SQLException d) {
@@ -208,7 +209,7 @@ public class UserDatabase {
             con.setAutoCommit(false);
             selectStmt = con.prepareStatement(selectFrom);
             rs = selectStmt.executeQuery();
-
+            if (!rs.next()) return ret;
             ret = rs.getInt(1);
 
             if (rs != null) rs.close();

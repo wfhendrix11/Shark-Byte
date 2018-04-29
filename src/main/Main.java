@@ -78,7 +78,7 @@ public class Main extends Application {
                 // open home screen
 
                 DatabaseConnector db = new DatabaseConnector();
-                userID = db.attemptLogin(userName.getText(), pw.getText());
+                userID = db.attemptLogin(userTextField.getText(), pwBox.getText());
                 db.close();
 
                 if(userID > 0) {
