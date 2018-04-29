@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class LabelDatabase {
 
@@ -59,5 +60,31 @@ public class LabelDatabase {
                 insertStmt.close();
             }
         }
+    }
+
+    public Iterable<String> selectRows(int userID) {
+        PreparedStatement selectStmt = null;
+        String selectFrom = "select LABEL from " + dbName
+                + ".LABELS where L_USER_ID = " + userID;
+        ResultSet rs = null;
+        ArrayList<String> labels = new ArrayList<String>();
+        try {
+            con.setAutoCommit(false);
+            selectStmt = con.prepareStatement(selectFrom);
+            rs = selectStmt.executeQuery();
+
+            while (rs != null && rs.next()) {
+                labels.add(rs.getString(1));
+            }
+
+            if (rs != null) rs.close();
+
+            selectStmt.close();
+            con.commit();
+        } catch (SQLException e) {
+            DatabaseConnector.printSQLException(e);
+        }
+
+        return labels;
     }
 }

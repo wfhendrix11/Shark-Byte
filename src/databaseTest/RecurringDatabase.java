@@ -80,4 +80,26 @@ public class RecurringDatabase {
             }
         }
     }
+
+    public int currentMaxID(int userID) throws SQLException {
+        PreparedStatement maxStmt = null;
+        String findMax = "select max(REC_ID) from " + dbName + ".RECURRING " +
+                "where R_USER_ID = " + userID;
+        int max = 0;
+        ResultSet rs = null;
+        try {
+            con.setAutoCommit(false);
+            maxStmt = con.prepareStatement(findMax);
+            rs = maxStmt.executeQuery();
+            max = rs.getInt(1);
+            con.commit();
+        } catch (SQLException d) {
+
+        } finally {
+            if (maxStmt != null) {
+                maxStmt.close();
+            }
+        }
+        return max;
+    }
 }

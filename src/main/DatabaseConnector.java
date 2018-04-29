@@ -3,14 +3,8 @@ import databaseTest.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.*;
 import java.time.LocalDate;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.DatabaseMetaData;
-import java.sql.Statement;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
 
 import java.time.Month;
 import java.util.ArrayList;
@@ -20,6 +14,7 @@ public class DatabaseConnector {
     private static final String driver = "org.apache.derby.jdbc.EmbeddedDriver";
     private static final String dbName = "sharkByteDatabase";
     private static final String connectionURL = "jdbc:derby:" + dbName + ";create=true";
+    private static final String dbms = "derby";
     //String createString
 
     private Connection conn = null;
@@ -91,21 +86,51 @@ public class DatabaseConnector {
 
     public void insertLabel(String label) {
         // TODO not implemented, just stubbed
-        System.out.println("Label added");
+        LabelDatabase db = new LabelDatabase(conn, dbName, dbms);
+        try {
+            db.insertRow(label, Main.userID);
+            System.out.println("Label added");
+        } catch (SQLException e) {
+            System.out.println("Could not close statement");
+        }
     }
 
     public ObservableList<String> selectLabels() {
         // TODO not implemented, just stubbed
         ObservableList<String> labels = FXCollections.observableArrayList();
-        labels.add("Label1");
-        labels.add("Label2");
+        LabelDatabase db = new LabelDatabase(conn, dbName, dbms);
+        Iterable<String> selection = db.selectRows(Main.userID);
+
+        for (String s : selection) {
+            labels.add(s);
+        }
 
         return labels;
     }
 
     public void replacePassword(String password) {
         // Add code to change password in the database
-        System.out.print("Password Changed!");
+        UserDatabase db = new UserDatabase(conn, dbName, dbms);
+        try {
+            db.updatePassword(password, Main.userID);
+            System.out.println("Password Changed!");
+        } catch(SQLException e) {
+            System.out.println("Password update failed");
+            printSQLException(e);
+        }
+    }
+
+    public boolean verifyPassword(String password) {
+        UserDatabase db = new UserDatabase(conn, dbName, dbms);
+        boolean ret = false;
+        try {
+            String username = db.selectUsername(Main.userID);
+            ret = db.correctPassword(username, password);
+        } catch (SQLException e) {
+            System.out.println("Verify password failed");
+            printSQLException(e);
+        }
+        return ret;
     }
 
     public ArrayList<BankAccount> selectBankAccounts() {
@@ -116,50 +141,164 @@ public class DatabaseConnector {
     }
 
     public int getNextTransactionId() {
-        return 0;
+        TransactionDatabase db = new TransactionDatabase(conn, dbName, dbms);
+        int max = 0;
+        try {
+            max = db.currentMaxID(Main.userID);
+        } catch (SQLException e) {
+            System.out.println("Could not read max ID");
+            printSQLException(e);
+        }
+        /* Iterable<Transaction> selection = db.selectRows(Main.userID);
+        int max = 0;
+        for (Transaction t : selection) {
+            max = Math.max(t.getId(), max);
+        } */
+
+        return max + 1;
     }
 
     public void insertTransaction(Transaction transaction) {
-        System.out.println("Transaction inserted");
+        TransactionDatabase tDb = new TransactionDatabase(conn, dbName, dbms);
+        Date date = Date.valueOf(transaction.getDate());
+        double amount = transaction.getAmount();
+        String label = transaction.getLabel();
+        int id = transaction.getId();
+        boolean recurring = false;
+        String merchant = transaction.getMerchant();
+        String account = transaction.getAccount();
+
+        try {
+            tDb.insertRow(date, amount, label, id, recurring, merchant, account, Main.userID);
+            System.out.println("Transaction inserted");
+        } catch (SQLException e) {
+            System.out.println("Failed to insert transaction");
+            printSQLException(e);
+        }
     }
 
     public void insertRecurringTransaction(RecurringTransaction recurringTransaction) {
-        System.out.println("RecurringTransaction inserted");
+        RecurringDatabase rDb = new RecurringDatabase(conn, dbName, dbms);
+        Date date = Date.valueOf(recurringTransaction.getDate());
+        double amount = recurringTransaction.getAmount();
+        String label = recurringTransaction.getLabel();
+        int id = recurringTransaction.getId();
+        String merchant = recurringTransaction.getMerchant();
+        String account = recurringTransaction.getAccount();
+        int interval = recurringTransaction.getIntervalInDays();
+        int executions = recurringTransaction.getNumberOfExecutions();
+        boolean perpetual = recurringTransaction.isPerpetual();
+
+        try {
+            rDb.insertRow(date, date, amount, label, id, interval, executions, perpetual, merchant,
+                    account, Main.userID);
+            System.out.println("RecurringTransaction inserted");
+        } catch (SQLException e) {
+            System.out.println("Failed to insert transaction");
+            printSQLException(e);
+        }
     }
 
     public void insertInvestment(Investment newInvestment){
         //TODO
+        if (newInvestment instanceof CustomAsset) {
+            AssetDatabase db = new AssetDatabase(conn, dbName, dbms);
+            String name = newInvestment.getName();
+            double value = ((CustomAsset) newInvestment).getCurrentValue();
+            double rate = ((CustomAsset) newInvestment).getInterestRate();
+            int quantity = ((CustomAsset) newInvestment).getQuantity();
+
+            try {
+                db.insertRow(name, value, rate, quantity, Main.userID);
+            } catch (SQLException e) {
+                System.out.println("Could not insert custom asset");
+                printSQLException(e);
+            }
+        }
+        else if (newInvestment instanceof Crypto) {
+            CryptoDatabase db = new CryptoDatabase(conn, dbName, dbms);
+            String symbol = newInvestment.getName();
+            double owned = ((Crypto) newInvestment).getNumberOwned();
+
+            try {
+                db.insertRow(symbol, owned, Main.userID);
+            } catch (SQLException e) {
+                System.out.println("Could not insert crypto asset");
+                printSQLException(e);
+            }
+        }
+        else if (newInvestment instanceof Stock) {
+            StockDatabase db = new StockDatabase(conn, dbName, dbms);
+            String symbol = newInvestment.getName();
+            int owned = ((Stock) newInvestment).getNumberOfShares();
+
+            try {
+                db.insertRow(symbol, owned, Main.userID);
+            } catch (SQLException e) {
+                System.out.println("Could not insert crypto asset");
+                printSQLException(e);
+            }
+        }
     }
 
     public ObservableList<Investment> getPortfolio(){
+        /*
         //Some dummy investments
         Stock stock1 = new Stock("TSLA", 10);
         Crypto crypto1 = new Crypto("ETH", 3.6200);
         CustomAsset asset1 = new CustomAsset("Boy with a Pipe", 1, 1, 104000000);
-
+        CustomAsset asset1 = new CustomAsset("Boy with a Pipe", 1, 1, 104000000); */
         ObservableList<Investment> portfolio = FXCollections.observableArrayList();
+        StockDatabase sDb = new StockDatabase(conn, dbName, dbms);
+        Iterable<Stock> stocks = sDb.selectRows(Main.userID);
+        for (Stock s : stocks) {
+            portfolio.add(s);
+        }
+        CryptoDatabase cDb = new CryptoDatabase(conn, dbName, dbms);
+        Iterable<Crypto> cryptos = cDb.selectRows(Main.userID);
+        for (Crypto c : cryptos) {
+            portfolio.add(c);
+        }
+        AssetDatabase aDb = new AssetDatabase(conn, dbName, dbms);
+        Iterable<CustomAsset> assets = aDb.selectRows(Main.userID);
+        for (CustomAsset a : assets) {
 
+            portfolio.add(a);
+
+        }
+        /*
         //Add dummies to portfolio
         portfolio.add(stock1);
         portfolio.add(crypto1);
         portfolio.add(asset1);
+        portfolio.add(asset1); */
         return portfolio;
     }
 
+
     public ObservableList<Transaction> getRecentTransactions(){
         //Some dummy transactions
+        /*
         Transaction x1 = new Transaction(LocalDate.now(), 20, "Label", 001, "Wally World", "Checking");
         Transaction x2 = new Transaction(LocalDate.now(), 23, "Label", 002, "Moe's", "Savings");
         Transaction x3 = new Transaction(LocalDate.now(), 40, "Label", 003, "AU Bookstore", "Checking");
         Transaction x4 = new RecurringTransaction(LocalDate.now(), 69, "Entertainment", 004, "Love Stuff", "Checking", 30, 4, false);
         Transaction x5 = new RecurringTransaction(LocalDate.now(), 42, "Grocery", 005, "Kroger", "Checking", 30, 0, true);
-
+        */
+        TransactionDatabase db = new TransactionDatabase(conn, dbName, dbms);
         ObservableList<Transaction> recentTransactions = FXCollections.observableArrayList();
-        recentTransactions.add(x1);
-        recentTransactions.add(x2);
-        recentTransactions.add(x3);
-        recentTransactions.add(x4);
-        recentTransactions.add(x5);
+        Iterable<Transaction> selection = db.selectRows(Main.userID);
+
+        for (Transaction t : selection) {
+            LocalDate date = t.getDate();
+            LocalDate now = LocalDate.now();
+
+            if (date.getMonthValue() == now.getMonthValue() && date.getYear() == now.getYear()) {
+                recentTransactions.add(t);
+            }
+
+        }
+
         return recentTransactions;
     }
 

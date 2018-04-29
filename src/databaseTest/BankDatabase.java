@@ -1,6 +1,7 @@
 package databaseTest;
 
 
+import main.BankAccount;
 import main.DatabaseConnector;
 
 import java.sql.BatchUpdateException;
@@ -11,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class BankDatabase {
 
@@ -56,7 +58,7 @@ public class BankDatabase {
             insertStmt.setString(1, accountIn);
             insertStmt.setDouble(2, balanceIn);
             insertStmt.setBoolean(3, frozenIn);
-            insertStmt.setDouble(2, rateIn);
+            insertStmt.setDouble(4, rateIn);
             insertStmt.setInt(5, userID);
             insertStmt.executeUpdate();
             con.commit();
@@ -67,5 +69,34 @@ public class BankDatabase {
                 insertStmt.close();
             }
         }
+    }
+
+    public Iterable<BankAccount> selectRows(int userID) {
+        PreparedStatement selectStmt = null;
+        String selectFrom = "select * from " + dbName
+                + ".BANKACCOUNTS where B_USER_ID = " + userID;
+        ResultSet rs = null;
+        ArrayList<BankAccount> bankAccounts = new ArrayList<BankAccount>();
+        try {
+            con.setAutoCommit(false);
+            selectStmt = con.prepareStatement(selectFrom);
+            rs = selectStmt.executeQuery();
+
+            while (rs != null && rs.next()) {
+                String name = rs.getString(1);
+                double balance = rs.getDouble(2);
+                BankAccount bankAccount = new BankAccount(name, balance);
+                bankAccounts.add(bankAccount);
+            }
+
+            if (rs != null) rs.close();
+
+            selectStmt.close();
+            con.commit();
+        } catch (SQLException e) {
+            DatabaseConnector.printSQLException(e);
+        }
+
+        return bankAccounts;
     }
 }

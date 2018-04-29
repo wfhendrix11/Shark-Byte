@@ -1,5 +1,8 @@
 package databaseTest;
 
+import main.Transaction;
+import main.DatabaseConnector;
+
 import java.sql.BatchUpdateException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class TransactionDatabase {
 
@@ -73,5 +78,94 @@ public class TransactionDatabase {
                 insertStmt.close();
             }
         }
+    }
+
+    public Iterable<Transaction> selectRows(int userID) {
+        PreparedStatement selectStmt = null;
+        String selectFrom = "select * from " + dbName
+                + ".TRANSACTIONS where T_USER_ID = " + userID;
+        ResultSet rs = null;
+        ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+        try {
+            con.setAutoCommit(false);
+            selectStmt = con.prepareStatement(selectFrom);
+            rs = selectStmt.executeQuery();
+
+            while (rs != null && rs.next()) {
+                LocalDate date = rs.getDate(1).toLocalDate();
+                double amount = rs.getDouble(2);
+                String label = rs.getString(3);
+                int id = rs.getInt(4);
+                String merchant = rs.getString(6);
+                String account = rs.getString(7);
+                Transaction transaction = new Transaction(date, amount, label, id, merchant, account);
+                transactions.add(transaction);
+            }
+
+            if (rs != null) rs.close();
+
+            selectStmt.close();
+            con.commit();
+        } catch (SQLException e) {
+            DatabaseConnector.printSQLException(e);
+        }
+
+        return transactions;
+    }
+
+    public Iterable<Transaction> selectRows(String bankAccount, int userID) {
+        PreparedStatement selectStmt = null;
+        String selectFrom = "select * from " + dbName
+                + ".TRANSACTIONS where TRANS_BANK_ACC = \'" + bankAccount
+                + "\' and T_USER_ID = " + userID;
+        ResultSet rs = null;
+        ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+        try {
+            con.setAutoCommit(false);
+            selectStmt = con.prepareStatement(selectFrom);
+            rs = selectStmt.executeQuery();
+
+            while (rs != null && rs.next()) {
+                LocalDate date = rs.getDate(1).toLocalDate();
+                double amount = rs.getDouble(2);
+                String label = rs.getString(3);
+                int id = rs.getInt(4);
+                String merchant = rs.getString(6);
+                String account = rs.getString(7);
+                Transaction transaction = new Transaction(date, amount, label, id, merchant, account);
+                transactions.add(transaction);
+            }
+
+            if (rs != null) rs.close();
+
+            selectStmt.close();
+            con.commit();
+        } catch (SQLException e) {
+            DatabaseConnector.printSQLException(e);
+        }
+
+        return transactions;
+    }
+
+    public int currentMaxID(int userID) throws SQLException {
+        PreparedStatement maxStmt = null;
+        String findMax = "select max(TRANS_ID) from " + dbName + ".TRANSACTIONS " +
+                "where T_USER_ID = " + userID;
+        int max = 0;
+        ResultSet rs = null;
+        try {
+            con.setAutoCommit(false);
+            maxStmt = con.prepareStatement(findMax);
+            rs = maxStmt.executeQuery();
+            max = rs.getInt(1);
+            con.commit();
+        } catch (SQLException d) {
+
+        } finally {
+            if (maxStmt != null) {
+                maxStmt.close();
+            }
+        }
+        return max;
     }
 }

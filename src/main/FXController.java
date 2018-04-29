@@ -280,8 +280,16 @@ public class FXController {
                 String text = newPasswordField.getCharacters().toString();
 
                 // ADD USERNAME TO DATABASE
-                db.replacePassword(text);
-                db.close();
+                if (db.verifyPassword(text)) {
+                    db.replacePassword(text);
+                    db.close();
+                    dialog.close();
+                }
+                else {
+                    // TODO notify incorrect password
+                }
+
+                //TODO remove this line once the above is implemented
                 dialog.close();
             }
         };
@@ -381,6 +389,7 @@ public class FXController {
             db.insertTransaction(transaction);
         }
         db.close();
+        fillTransactionsTable();
     }
 
     @FXML
