@@ -6,9 +6,6 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 import java.time.LocalDate;
 
-import java.time.Month;
-import java.util.ArrayList;
-
 public class DatabaseConnector {
 
     private static final String driver = "org.apache.derby.jdbc.EmbeddedDriver";
@@ -385,10 +382,13 @@ public class DatabaseConnector {
         UserDatabase db = new UserDatabase(conn, dbName, dbms);
 
         try {
-            if (!db.correctUsername(username)) return -1;
+            System.out.println("Checking username existence");
+            if (db.usernameAvailable(username)) return -1;
 
+            System.out.println("Validating password");
             if (!db.correctPassword(username, password)) return -1;
 
+            System.out.println("Checking user id");
             return db.getUserID(username);
         } catch(SQLException e) {
             System.out.println("Could not access user database");
@@ -409,8 +409,13 @@ public class DatabaseConnector {
         UserDatabase db = new UserDatabase(conn, dbName, dbms);
 
         try {
-            if (db.correctUsername(username)) return false;
-            
+            System.out.println("Validating username");
+            if (!db.usernameAvailable(username)) return false;
+            System.out.println("Username not taken");
+            int id = db.currentMaxID() + 1;
+            System.out.println("New id found");
+            db.insertRow(username, password, id);
+            System.out.println("Row inserted");
         } catch (SQLException e) {
             System.out.println("Could not access user database");
             printSQLException(e);
@@ -425,6 +430,7 @@ public class DatabaseConnector {
         }
         insert newAccount w/ userID
         return true;*/
+
         return true;
     }
 

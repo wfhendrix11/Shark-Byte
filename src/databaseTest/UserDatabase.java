@@ -123,6 +123,7 @@ public class UserDatabase {
             checkPassword = con.prepareStatement(getPassword);
             ResultSet rs = checkPassword.executeQuery();
             correctPass = rs.getString(2);
+            con.commit();
         } catch (SQLException d) {
             DatabaseConnector.printSQLException(d);
         } finally {
@@ -143,16 +144,18 @@ public class UserDatabase {
 
     // Checks if a submitted name is the correct username from the table
 
-    public boolean correctUsername(String username)  throws SQLException {
+    public boolean usernameAvailable(String username)  throws SQLException {
         PreparedStatement checkUsername = null;
         String correctName = null;
-        String getUsername = "select USERNAME " + "from " + dbName + ".USERS where USERNAME = \'"
+        String getUsername = "select * " + "from " + dbName + ".USERS where USERNAME = \'"
                 + username + "\'";
+        boolean ret = false;
         try {
             con.setAutoCommit(false);
             checkUsername = con.prepareStatement(getUsername);
             ResultSet rs = checkUsername.executeQuery();
-            correctName = rs.getString(1);
+            if (!rs.next()) ret = true;
+            con.commit();
         } catch (SQLException d) {
             DatabaseConnector.printSQLException(d);
         } finally {
@@ -160,12 +163,15 @@ public class UserDatabase {
                 checkUsername.close();
             }
         }
+
+        return ret;
+        /*
         if(correctName == null){
-            return false;
-        }
-        else {
             return true;
         }
+        else {
+            return false;
+        } */
     }
 
     public String selectUsername(int userID) {
