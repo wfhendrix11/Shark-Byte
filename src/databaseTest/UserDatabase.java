@@ -185,7 +185,7 @@ public class UserDatabase {
             con.setAutoCommit(false);
             selectStmt = con.prepareStatement(selectFrom);
             rs = selectStmt.executeQuery();
-
+            if (!rs.next()) return null;
             ret = rs.getString(1);
 
             if (rs != null) rs.close();
