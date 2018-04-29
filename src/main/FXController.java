@@ -884,27 +884,32 @@ public class FXController {
     }
 
     private void fillBankAccountTransactionsTable(){
-        DatabaseConnector db = new DatabaseConnector();
-        BankAccount bankAccount = selectBankAccountChoiceBox.getValue();
-        ObservableList<Transaction> transactions = db.getBankAccountTransactions(bankAccount.getName());
-        db.close();
-        accountTransactionDateColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getDate().toString()));
-        accountTransactionAmountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getAmount())));
-        accountTransactionLabelColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLabel()));
 
-        accountTransactionsTable.setItems(transactions);
+        BankAccount bankAccount = selectBankAccountChoiceBox.getValue();
+        if (bankAccount != null) {
+            DatabaseConnector db = new DatabaseConnector();
+            ObservableList<Transaction> transactions = db.getBankAccountTransactions(bankAccount.getName());
+            db.close();
+            accountTransactionDateColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getDate().toString()));
+            accountTransactionAmountColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(Double.toString(data.getValue().getAmount())));
+            accountTransactionLabelColumn.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getLabel()));
+
+            accountTransactionsTable.setItems(transactions);
+        }
     }
 
     private void populateSelectBankAccountChoiceBox(){
         DatabaseConnector db = new DatabaseConnector();
         ObservableList<BankAccount> bankAccounts = db.getBankAccounts();
+
         db.close();
         selectBankAccountChoiceBox.setItems(bankAccounts);
         selectBankAccountChoiceBox.getSelectionModel().selectFirst();
     }
 
     private void setBankAccountBalanceText(){
-        accountBalance.setText("Balance: $" + selectBankAccountChoiceBox.getValue().getBalance());
+        BankAccount bankAccount = selectBankAccountChoiceBox.getValue();
+        if(bankAccount != null) accountBalance.setText("Balance: $" + selectBankAccountChoiceBox.getValue().getBalance());
     }
 
 
