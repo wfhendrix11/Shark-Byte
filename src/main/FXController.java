@@ -244,8 +244,8 @@ public class FXController {
     void homeTabChanged(Event event) {
         if(homeTab.isSelected()){
             fillHomeScreenTransactionsTable();
-            populateSelectBudgetChoiceBox();
-            drawHomeScreenPieCharts();
+            //populateSelectBudgetChoiceBox();
+            //drawHomeScreenPieCharts();
         }
     }
 
