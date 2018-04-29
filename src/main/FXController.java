@@ -445,11 +445,9 @@ public class FXController {
         dialog.setTitle("Create New Bank Account");
         VBox dialogVbox = new VBox(20);
 
-        TextField field = new TextField();
-        field.setPromptText("Executions");
 
         TextField labelField = new TextField();
-        labelField.setPromptText("Name");
+        labelField.setPromptText("Account Name");
 
         Button submitButton = new Button();
         submitButton.setText("Submit");
@@ -458,10 +456,12 @@ public class FXController {
             @Override
             public void handle(ActionEvent event) {
                 DatabaseConnector db = new DatabaseConnector();
-                String text = labelField.getCharacters().toString();
-
+                String accountName = labelField.getCharacters().toString();
+                BankAccount bankAccount = new BankAccount(accountName, 0.0);
                 // ADD USERNAME TO DATABASE
-                //db.replacePassword(text);
+                db.insertBankAccount(bankAccount);
+                db.close();
+                populateSelectBankAccountChoiceBox();
                 dialog.close();
             }
         };
