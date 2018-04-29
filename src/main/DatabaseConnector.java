@@ -133,13 +133,13 @@ public class DatabaseConnector {
         }
         return ret;
     }
-
+    /*
     public ArrayList<BankAccount> selectBankAccounts() {
         ArrayList<BankAccount> accounts = new ArrayList<BankAccount>();
         accounts.add(new BankAccount("Account1", 0));
         accounts.add(new BankAccount("Account2", 0));
         return accounts;
-    }
+    }*/
 
     public int getNextTransactionId() {
         TransactionDatabase db = new TransactionDatabase(conn, dbName, dbms);

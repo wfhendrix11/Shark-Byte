@@ -162,7 +162,7 @@ public class FXController {
     private ChoiceBox<?> filterDateChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="transactionBankAccountChoiceBox"
-    private ChoiceBox<?> transactionBankAccountChoiceBox; // Value injected by FXMLLoader
+    private ChoiceBox<BankAccount> transactionBankAccountChoiceBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="portfolioTable"
     private TableView<Investment> portfolioTable; // Value injected by FXMLLoader
@@ -716,16 +716,16 @@ public class FXController {
     }
     void updateTransactionBankAccounts() {
         DatabaseConnector db = new DatabaseConnector();
-        ArrayList<BankAccount> accounts = db.selectBankAccounts();
+        ObservableList<BankAccount> accounts = db.getBankAccounts();
         db.close();
 
-        ObservableList accountItems = FXCollections.observableArrayList();
+        /*ObservableList accountItems = FXCollections.observableArrayList();
 
         for (BankAccount ba : accounts) {
             accountItems.add(ba);
-        }
+        }*/
 
-        transactionBankAccountChoiceBox.setItems(accountItems);
+        transactionBankAccountChoiceBox.setItems(accounts);
         transactionBankAccountChoiceBox.getSelectionModel().selectFirst();
     }
 
