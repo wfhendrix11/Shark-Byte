@@ -3,6 +3,7 @@ package main;
 import java.time.LocalDate;
 
 public class RecurringTransaction extends Transaction {
+    /*
     private int intervalInDays;
     private int numberOfExecutions;
     private boolean isPerpetual;
@@ -31,5 +32,5 @@ public class RecurringTransaction extends Transaction {
 
     boolean isPerpetual() {
         return isPerpetual;
-    }
+    } */
 }

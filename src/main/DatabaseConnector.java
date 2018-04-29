@@ -165,7 +165,7 @@ public class DatabaseConnector {
         double amount = transaction.getAmount();
         String label = transaction.getLabel();
         int id = transaction.getId();
-        boolean recurring = false;
+        boolean recurring = transaction.isRecurring();
         String merchant = transaction.getMerchant();
         String account = transaction.getAccount();
 
@@ -178,6 +178,7 @@ public class DatabaseConnector {
         }
     }
 
+    /*
     public void insertRecurringTransaction(RecurringTransaction recurringTransaction) {
         RecurringDatabase rDb = new RecurringDatabase(conn, dbName, dbms);
         Date date = Date.valueOf(recurringTransaction.getDate());
@@ -198,7 +199,7 @@ public class DatabaseConnector {
             System.out.println("Failed to insert transaction");
             printSQLException(e);
         }
-    }
+    } */
 
     public void insertInvestment(Investment newInvestment){
         //TODO
