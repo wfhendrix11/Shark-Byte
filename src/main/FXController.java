@@ -283,11 +283,13 @@ public class FXController {
             @Override
             public void handle(ActionEvent event) {
                 DatabaseConnector db = new DatabaseConnector();
-                String text = newPasswordField.getCharacters().toString();
+                String newPass = newPasswordField.getCharacters().toString();
+                String oldPass = oldPasswordField.getCharacters().toString();
+
 
                 // ADD USERNAME TO DATABASE
-                if (db.verifyPassword(text)) {
-                    db.replacePassword(text);
+                if (db.verifyPassword(oldPass)) {
+                    db.replacePassword(newPass);
                     db.close();
                     dialog.close();
                 }
