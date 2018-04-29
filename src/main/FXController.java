@@ -544,7 +544,18 @@ public class FXController {
                 TextField yearField = new TextField();
                 yearField.setPromptText("Year");
 
+                Button submitMonthlyBudgetButton = new Button();
+                submitMonthlyBudgetButton.setText("Submit monthly budget");
 
+                EventHandler<ActionEvent> submitMonthlyHandler = new EventHandler<ActionEvent>(){
+                    @Override
+                    public void handle(ActionEvent event){
+                        DatabaseConnector db = new DatabaseConnector();
+
+                        db.insertBudget(Integer.parseInt(monthField.getText()), Integer.parseInt(yearField.getText()));
+                        dialog.close();
+                    }
+                };
                 // ADD TO DATABASE
                 //MonthlyBudget newMonthlyBudget = new MonthlyBudget(Integer.parseInt(budgetMonth), Integer.parseInt(budgetYear));
 
@@ -552,7 +563,7 @@ public class FXController {
                 dialogVbox.getChildren().add(monthField);
                 dialogVbox.getChildren().add(yearText);
                 dialogVbox.getChildren().add(yearField);
-                dialogVbox.getChildren().add(submitButton);
+                dialogVbox.getChildren().add(submitMonthlyBudgetButton);
                 Scene dialogScene = new Scene(dialogVbox, 300, 250);
                 dialog.setScene(dialogScene);
                 dialog.show();
@@ -579,12 +590,29 @@ public class FXController {
                 TextField yearField = new TextField();
                 yearField.setPromptText("Year");
 
-                // ADD TO DATABASE
-                //MonthlyBudget newMonthlyBudget = new MonthlyBudget(Integer.parseInt(budgetMonth), Integer.parseInt(budgetYear));
+                Button submitYearlyBudget = new Button();
+                submitYearlyBudget.setText("Submit yearly budget");
+
+                EventHandler<ActionEvent> submitYearlyHandler = new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        DatabaseConnector db = new DatabaseConnector();
+                        for(int i = 1; i < 13; i++){
+                            if(!db.doesBudgetExist(i, Integer.parseInt(yearField.getText()))){
+                                db.insertBudget(i, Integer.parseInt(yearField.getText()));
+                            }
+                        }
+                        db.close();
+
+                    }
+                };
+
+                submitYearlyBudget.setOnAction(submitYearlyHandler);
+
 
                 dialogVbox.getChildren().add(yearText);
                 dialogVbox.getChildren().add(yearField);
-                dialogVbox.getChildren().add(submitButton);
+                dialogVbox.getChildren().add(submitYearlyBudget);
                 Scene dialogScene = new Scene(dialogVbox, 300, 200);
                 dialog.setScene(dialogScene);
                 dialog.show();
