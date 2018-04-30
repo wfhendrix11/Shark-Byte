@@ -108,7 +108,8 @@
                         </AnchorPane>
                      </children>
                   </GridPane>
-                  <ChoiceBox fx:id="selectBankAccountChoiceBox" layoutX="206.0" layoutY="10.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="selectBankAccountChoiceBox" layoutX="84.0" layoutY="10.0" prefWidth="150.0" />
+                  <Button fx:id="bankAccountRefreshButton" layoutX="262.0" layoutY="10.0" mnemonicParsing="false" onAction="#refreshBankAccountTab" prefHeight="25.0" prefWidth="105.0" text="Refresh" />
                </children></AnchorPane>
         </content>
       </Tab>
